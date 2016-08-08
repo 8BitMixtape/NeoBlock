@@ -54,7 +54,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/mode/clike/clike.js"></script>
     <link href="blockly-demo.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css">
+    <link rel="stylesheet" href="https://bootswatch.com/readable/bootstrap.min.css">
   </head><body>
     <div id="wrapper">
       <nav class="navbar navbar-default">
@@ -487,7 +487,7 @@
               
                 var workspace = Blockly.inject('blocklyDiv',
                     {
-              
+                      css: false,
                       toolbox: toolBox,
                           grid: {
                               spacing: 25,
