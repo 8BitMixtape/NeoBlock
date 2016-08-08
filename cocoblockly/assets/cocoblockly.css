@@ -58,7 +58,7 @@ div#panes>.tab-pane {
     position: absolute;
     top: 0;
     padding: 0;
-    background-color: blue;
+/*     background-color: blue; */
 }
 
 div#panes>.active {
