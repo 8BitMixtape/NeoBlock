@@ -69,3 +69,38 @@ div#panes>.active {
 .full-height {
     height: 100%;
 }
+
+
+*nav.navbar {
+    z-index: 1
+}
+
+.navbar-brand {
+    padding: 9px
+}
+
+.navbar-default {
+    background-color: #fff
+}
+
+#wrapper>nav {
+    height: 55px;
+    min-width: 960px;
+    padding-right: 20px;
+    margin-bottom: 0
+}
+
+.blocklyToolboxDiv {
+   background-color: rgba(239, 239, 239, 0.56);
+    overflow-x: visible;
+    overflow-y: auto;
+    position: absolute;
+
+}
+
+
+.CodeMirror {
+    font-family: monospace;
+    height: 100%;
+    color: black;
+}
