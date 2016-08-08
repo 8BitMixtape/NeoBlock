@@ -51,7 +51,6 @@
   <script src="msg/en.js"></script>
 
   <script src="https://blockly-demo.appspot.com/static/demos/prettify.js"></script>
-  <script src="/blockly/blockly-demo/acorn_interpreter.js"></script>
 
   <link href="https://blockly-demo.appspot.com/static/demos/prettify.css" rel="stylesheet">
   <link rel="stylesheet" href="prettify/arduino.css">
@@ -67,15 +66,19 @@
 
 </head>
 <body>
-<div class="app-container">
-  <div id="blocklyDiv" class="main blockly-panel"></div>
-  <div id="" class="main output-panel">
-  <textarea id="codeDiv"></textarea>
-    <!-- <hr class="POps"> -->
-    <pre></pre>
-  </div>
-</div>
 
+
+<div id="wrapper">
+<div id="main">
+  <div id="panes-wrapper">
+    <div id="panes">
+      <div class="tab-pane active">
+        <div id="blocklyDiv" class="full-height blockly-panel"></div>         
+      </div>
+    </div>
+  </div>
+</div>  
+</div>
 
 
 <xml id="ArduBlocklyToolbox">
@@ -346,9 +349,7 @@
             </category>
             <sep></sep>
     <category id="catCocoMidi" name="CocoMidi">
-
-
-                <block type="cocomidi_sendnote_var">
+      <block type="cocomidi_sendnote_var">
 
 
                      <value name="COCOMIDI_STATE">
@@ -431,6 +432,7 @@
     </category>  
 </xml>
 
+
 <script>
 
 // var toolBox =  Blockly.Xml.textToDom(Ardublockly.TOOLBOX_XML);
@@ -458,11 +460,11 @@
       });
   var defaultBlocks = document.getElementById('blocklyDefault');
 
-  var cm = CodeMirror.fromTextArea(document.getElementById("codeDiv"), {
-    lineNumbers: true,
-    lineWrapping: true,
-    mode: "text/x-c++src"
-  });
+  // var cm = CodeMirror.fromTextArea(document.getElementById("codeDiv"), {
+  //   lineNumbers: true,
+  //   lineWrapping: true,
+  //   mode: "text/x-c++src"
+  // });
 
 
   function myUpdateFunction(event) {
@@ -475,9 +477,9 @@
     // codeHolder.appendChild(code);
     // codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
 
-    var doc = cm.getDoc();
+    // var doc = cm.getDoc();
 
-    cm.getDoc().setValue(Blockly.Arduino.workspaceToCode(workspace))
+    // cm.getDoc().setValue(Blockly.Arduino.workspaceToCode(workspace))
 
     // prettyPrint();
   }
@@ -489,6 +491,6 @@
     console.log('play');
   }
   
-  document.getElementById('playButton').addEventListener('click', executeBlockCode);
+  // document.getElementById('playButton').addEventListener('click', executeBlockCode);
 </script>
 </body>

@@ -1,113 +1,71 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-
-.app-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: visible;
-  background-color: #f2cf3a;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
-  margin: 0px;
+html {
+    height: 100%
 }
 
-.main {
-  position: absolute;
-  top: 8px;
-  bottom: 8px;
+body {
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0px;
 }
 
-.blockly-panel {
-  left: 8px;
-  right: 350px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.37);
+#wrapper {
+    display: flex;
+    display: -webkit-flex;
+    height: 100%;
+    flex-direction: column;
+    -webkit-flex-direction: column
 }
 
-.output-panel {
-  right: 9px;
-  width: 330px;
-  background-color: white;
-  /* overflow: scroll; */
-  /* padding: 8px; */
-  box-shadow: 0 1px 4px rgba(0,0,0,.37);
-  /* height: 100%; */
+#row-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    display: -webkit-flex;
+    -webkit-flex: 1;
+    -webkit-flex-direction: row
 }
 
-.dropdown-bar {
-  display: block;
-  font-family: sans-serif;
-  font-size: 16px;
-  width: 200px;
-  margin-left: auto;
-  margin-right: auto;
+#main {
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+    -webkit-flex: 1;
+    -webkit-flex-direction: column;
+    display: -webkit-flex;
+    border-left: 1px solid #dadada
 }
 
-#languageDropdown {
-  border: 0;
-  background-color: transparent;
-  font-size: 16px;
-  outline: none;
+div#panes-wrapper {
+    flex: 1;
+    -webkit-flex: 1;
+    height: auto;
+    position: relative
 }
 
-#im-just-an-underline {
-  border-bottom: 1px solid;
-  display: inline;
-  padding-right: 5px;
+#panes {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    height: 100%
 }
 
-.POps {
-  height: 1px;
-  border: 0;
-  background-color: rgba(0,0,0,.2);
+div#panes>.tab-pane {
+    visibility: hidden; 
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    padding: 0;
+    background-color: blue;
 }
 
-.play-button {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  border-radius: 100%;
-  color: white;
-  width: 56px;
-  height: 56px;
-  line-height: 56px;
-  box-shadow: 0 1px 4px rgba(0,0,0,.37);
-  transition: box-shadow .3s ease-in-out;
-  text-align: center;
-  font-weight: 500;
-  background-color: #0097A7;
-  cursor: pointer;
+div#panes>.active {
+    visibility: visible
 }
 
-.play-button:hover {
-  box-shadow: 0 2px 2px rgba(0,0,0,.2),0 6px 10px rgba(0,0,0,.3);
-  transition: box-shadow .3s ease-in-out;
-}
-
-.but-not-that-pretty {
-  border: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.CodeMirror {
-  border: 1px solid #eee;
-/* Firefox */
-height: -moz-calc(100vh - 190px);
-/* WebKit */
-height: -webkit-calc(100vh - 190px);
-/* Opera */
-height: -o-calc(100vh - 190px);
-/* Standard */
-height: calc(100vh - 190px);
-}
-
-
-.CodeMirror {
-  /* Set height, width, borders, and global font properties here */
-  font-family: monospace;
-  height: 100%;
-  color: black;
-  border: 0px;
+.full-height {
+    height: 100%;
 }
