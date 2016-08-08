@@ -159,3 +159,11 @@ div#simulator .close {
 .chip-thumbnail {
     padding: 20px;
 }
+
+
+  .gutter {
+    background-color: #eee;
+
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }

@@ -82,4 +82,15 @@ window.addEventListener('load', function load(event) {
     document.getElementById("btn-mode-blocks").onclick = function(){CocoBlockly.tabClick('blocks')};
     document.getElementById("btn-mode-code").onclick = function(){CocoBlockly.tabClick('code')};
     document.getElementById("btn-mode-xml").onclick = function(){CocoBlockly.tabClick('xml')};
+
+    var svgresize = function() {
+        Blockly.svgResize(CocoBlockly.workspace);
+    }
+
+    Split(['#main', '#simulator'], {
+        sizes: [71, 29],
+        minSize: 200,
+        onDragEnd: svgresize
+    });
+
 });
