@@ -19,12 +19,14 @@ CocoBlockly.tabClick = function(clickedName) {
     CocoBlockly.workspace.setVisible(true);
     document.getElementById("pane-blocks").className = "tab-pane active";
     document.getElementById("pane-code").className = "tab-pane";
+    document.body.className = "simulator";
   }
 
   if (clickedName == 'code') {
     CocoBlockly.workspace.setVisible(false);
     document.getElementById("pane-blocks").className = "tab-pane";
     document.getElementById("pane-code").className = "tab-pane active";
+    document.body.className = "";
   }
 };
 

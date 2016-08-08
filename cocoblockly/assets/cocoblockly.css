@@ -112,7 +112,7 @@ body.simulator div#simulator {
 }
 
 div#simulator {
-    /*display: none;*/
+    display: none;
     width: 400px;
     background-color: #fff;
     flex-direction: column;
