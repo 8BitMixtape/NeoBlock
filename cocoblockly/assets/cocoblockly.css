@@ -142,6 +142,19 @@ div#simulator .close {
     /* overflow-x: hidden; */
 }
 
+#simulator>.code-preview-content {
+  position: relative;
+  height: 100%;
+}
+
+#simulator>.code-preview-content>.diagram {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+
+}
+
 
 .chip-thumbnail {
     padding: 20px;
