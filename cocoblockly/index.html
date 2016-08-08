@@ -1,5 +1,8 @@
 <html><head>
     
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/codemirror.min.css">
+    <link rel="stylesheet" href="assets/cocoblockly.css" >
 
     <!-- Ardublockly - These three files contain the compress version
     -->
@@ -19,7 +22,7 @@
     <script src="blockly/blocks/variables.js"></script>
     <script src="blockly/blocks/procedures.js"></script> -->
 
-    
+
     <script src="blockly/blocks/arduino/io.js"></script>
     <script src="blockly/blocks/arduino/map.js"></script>
     <script src="blockly/blocks/arduino/procedures.js"></script>
@@ -62,10 +65,9 @@
     <script type="text/javascript" src="vendor/bootstrap.min.js"></script>
     <script type="text/javascript" src="vendor/codemirror.js"></script>
     <script type="text/javascript" src="vendor/clike.min.js"></script>
-    
-    <link rel="stylesheet" href="vendor/codemirror.min.css">
-    <link rel="stylesheet" href="assets/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/cocoblockly.css" >
+    <script type="text/javascript" src="cocojs/coco.js"></script>
+
+
 
   </head><body>
     <div id="wrapper">
@@ -105,15 +107,15 @@
               <li id="mode-group">
                 <p class="navbar-text">Mode:</p>
                 <div class="btn-group" data-toggle="buttons" role="group">
-                  <label onClick="tabClick('blocks');" class="btn btn-default navbar-btn active">
+                  <label id="btn-mode-blocks" class="btn btn-default navbar-btn active">
                     <input type="radio" name="edit-mode" value="Blocks" autocomplete="off" checked="">
                     <span>Blocks</span>
                   </label>
-                  <label onClick="tabClick('code');" class="btn btn-default navbar-btn">
+                  <label  id="btn-mode-code" class="btn btn-default navbar-btn">
                     <input type="radio" name="edit-mode" value="Code" autocomplete="off">
                     <span>Code</span>
                   </label>
-                  <label onClick="tabClick('xml');" class="btn btn-default navbar-btn">
+                  <label id="btn-mode-xml" class="btn btn-default navbar-btn">
                     <input type="radio" name="edit-mode" value="XML" autocomplete="off">
                     <span>XML</span>
                   </label>
@@ -494,80 +496,8 @@
       </category>
     </xml>
     <script>
-      // var toolBox =  Blockly.Xml.textToDom(Ardublockly.TOOLBOX_XML);
-                var toolBox = document.getElementById('ArduBlocklyToolbox');
-              
-                var workspace = Blockly.inject('blocklyDiv',
-                    {
-                      css: false,
-                      toolbox: toolBox,
-                      media: 'blockly/',
-                          grid: {
-                              spacing: 25,
-                              length: 3,
-                              colour: "#ddd",
-                              snap: !0
-                          },
-                          zoom: {
-                              controls: !0,
-                              wheel: !1,
-                              startScale: 1,
-                              maxScale: 3,
-                              minScale: .3,
-                              scaleSpeed: 1.2
-                          },
-                          trashcan: true
-                    });
-                var defaultBlocks = document.getElementById('blocklyDefault');
-              
-                var cm = CodeMirror.fromTextArea(document.getElementById("codeDiv"), {
-                  lineNumbers: true,
-                  lineWrapping: true,
-                  mode: "text/x-c++src"
-                });
-              
-              
-                function myUpdateFunction(event) {
-                  // var languageDropdown = document.getElementById('languageDropdown');
-                  // var languageSelection = languageDropdown.options[languageDropdown.selectedIndex].value;
-                  // var codeDiv = document.getElementById('codeDiv');
-                  // var codeHolder = document.createElement('pre');
-                  // codeHolder.className = 'prettyprint but-not-that-pretty';
-                  // var code = document.createTextNode(Blockly.Arduino.workspaceToCode(workspace));
-                  // codeHolder.appendChild(code);
-                  // codeDiv.replaceChild(codeHolder, codeDiv.lastElementChild);
-              
-                  var doc = cm.getDoc();
-              
-                  cm.getDoc().setValue(Blockly.Arduino.workspaceToCode(workspace))
-              
-                  // prettyPrint();
-                }
-              
-                workspace.addChangeListener(myUpdateFunction);
-                
-                function executeBlockCode() {
-                  var code = Blockly.Arduino.workspaceToCode(workspace);
-                  console.log('play');
-                }
-                
 
-var tabClick = function(clickedName) {
 
-  if (clickedName == 'blocks') {
-    workspace.setVisible(true);
-    document.getElementById("pane-blocks").className = "tab-pane active";
-    document.getElementById("pane-code").className = "tab-pane";
-  }
-
-  if (clickedName == 'code') {
-    workspace.setVisible(false);
-    document.getElementById("pane-blocks").className = "tab-pane";
-    document.getElementById("pane-code").className = "tab-pane active";
-  }
-
-  //Blockly.svgResize(workspace);
-};
 
                 // document.getElementById('playButton').addEventListener('click', executeBlockCode);
     </script>
