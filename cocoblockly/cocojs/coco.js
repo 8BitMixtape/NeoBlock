@@ -9,6 +9,8 @@ CocoBlockly.executeBlockCode = function() {
 CocoBlockly.myUpdateFunction = function(event) {
   var doc = CocoBlockly.CodeMirror.getDoc();
   CocoBlockly.CodeMirror.getDoc().setValue(Blockly.Arduino.workspaceToCode(CocoBlockly.workspace))
+  CocoBlockly.CodeMirrorPreview.getDoc().setValue(Blockly.Arduino.workspaceToCode(CocoBlockly.workspace))
+
 }
 
 CocoBlockly.tabClick = function(clickedName) {
@@ -57,6 +59,15 @@ window.addEventListener('load', function load(event) {
 
 
     CocoBlockly.CodeMirror = CodeMirror.fromTextArea(document.getElementById("codeDiv"), 
+    {
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: true,
+      mode: "text/x-c++src"
+    });
+
+
+    CocoBlockly.CodeMirrorPreview = CodeMirror.fromTextArea(document.getElementById("codePreviewDiv"), 
     {
       lineNumbers: true,
       lineWrapping: true,

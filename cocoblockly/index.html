@@ -1,19 +1,14 @@
 <html><head>
-    
     <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="vendor/codemirror.min.css">
-    <link rel="stylesheet" href="assets/cocoblockly.css" >
-
-    <!-- Ardublockly - These three files contain the compress version
-    -->
-
+    <link rel="stylesheet" href="assets/blockly_style.css">
+    <link rel="stylesheet" href="assets/cocoblockly.css">
+    <!-- Ardublockly - These three files contain the compress version -->
     <script src="blockly/blockly_compressed.js"></script>
     <script src="blockly/blocks_compressed.js"></script>
     <!-- <script src="blockly/arduino_compressed.js"></script> -->
-
-
     <!-- <script src="blockly/blockly_uncompressed.js"></script> -->
-<!--     <script src="blockly/blocks/logic.js"></script>
+    <!-- <script src="blockly/blocks/logic.js"></script>
     <script src="blockly/blocks/loops.js"></script>
     <script src="blockly/blocks/math.js"></script>
     <script src="blockly/blocks/text.js"></script>
@@ -21,8 +16,6 @@
     <script src="blockly/blocks/colour.js"></script>
     <script src="blockly/blocks/variables.js"></script>
     <script src="blockly/blocks/procedures.js"></script> -->
-
-
     <script src="blockly/blocks/arduino/io.js"></script>
     <script src="blockly/blocks/arduino/map.js"></script>
     <script src="blockly/blocks/arduino/procedures.js"></script>
@@ -54,21 +47,16 @@
     on load -->
     <script src="blockly/en.js"></script>
     <script src="blockly/msg/en.js"></script>
-
     <!-- <script src="https://blockly-demo.appspot.com/static/demos/prettify.js"></script> -->
-    <!-- <link href="https://blockly-demo.appspot.com/static/demos/prettify.css" rel="stylesheet"> -->
+    <!-- <link href="https://blockly-demo.appspot.com/static/demos/prettify.css"
+    rel="stylesheet"> -->
     <!-- <link rel="stylesheet" href="prettify/arduino.css"> -->
     <!-- <script src="ardublockly_toolbox.js"></script> -->
-    
-
     <script type="text/javascript" src="vendor/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/bootstrap.min.js"></script>
     <script type="text/javascript" src="vendor/codemirror.js"></script>
     <script type="text/javascript" src="vendor/clike.min.js"></script>
     <script type="text/javascript" src="cocojs/coco.js"></script>
-
-
-
   </head><body>
     <div id="wrapper">
       <nav class="navbar navbar-default">
@@ -111,7 +99,7 @@
                     <input type="radio" name="edit-mode" value="Blocks" autocomplete="off" checked="">
                     <span>Blocks</span>
                   </label>
-                  <label  id="btn-mode-code" class="btn btn-default navbar-btn">
+                  <label id="btn-mode-code" class="btn btn-default navbar-btn">
                     <input type="radio" name="edit-mode" value="Code" autocomplete="off">
                     <span>Code</span>
                   </label>
@@ -164,16 +152,39 @@
         </div>
         <!-- /.container-fluid -->
       </nav>
-      <div id="main">
-        <div id="panes-wrapper">
-          <div id="panes">
-            <div class="tab-pane active" id="pane-blocks">
-              <div class="full-height blockly-panel" id="blocklyDiv"></div>
-            </div>
-            <div class="tab-pane" id="pane-code">
+      <div id="row-wrapper">
+        <div id="main">
+          <div id="panes-wrapper">
+            <div id="panes">
+              <div class="tab-pane active" id="pane-blocks">
+                <div class="full-height blockly-panel" id="blocklyDiv"></div>
+              </div>
+              <div class="tab-pane" id="pane-code">
                 <textarea id="codeDiv"></textarea>
-            </div>            
+              </div>
+            </div>
           </div>
+        </div>
+        <div id="simulator">
+          <div class="head">
+            <h5 class="text-primary">Chip View</h5>
+            <button type="button" class="close">×</button>
+          </div>
+          <div class="content">
+            <div class="chip-thumbnail">
+              <img src="assets/ATtiny85-pins.jpg" class="img-responsive">
+            </div>
+          </div>
+          <div class="head">
+            <h5 class="text-primary">Code Preview</h5>
+            <button type="button" class="close">×</button>
+          </div>
+          <div class="content">
+            <div class="diagram">
+              <textarea id="codePreviewDiv"></textarea>
+            </div>
+          </div>
+          <!-- /.content -->
         </div>
       </div>
     </div>
@@ -496,10 +507,7 @@
       </category>
     </xml>
     <script>
-
-
-
-                // document.getElementById('playButton').addEventListener('click', executeBlockCode);
+      // document.getElementById('playButton').addEventListener('click', executeBlockCode);
     </script>
   
 

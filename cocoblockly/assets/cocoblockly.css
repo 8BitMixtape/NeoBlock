@@ -102,6 +102,7 @@ div#panes>.active {
     font-family: monospace;
     height: 100%;
     color: black;
+    border: 1px solid #E2E2E2;
 }
 
 
@@ -112,12 +113,13 @@ body.simulator div#simulator {
 
 div#simulator {
     /*display: none;*/
-    width: 200px;
+    width: 400px;
     background-color: #fff;
     flex-direction: column;
     -webkit-flex-direction: column;
     -webkit-user-select: none;
-    user-select: none
+    user-select: none;
+    padding: 0px;
 }
 
 
@@ -129,14 +131,18 @@ div#simulator .close {
 #simulator>.head {
     background-color: #fff;
     border-bottom: 1px solid #dadada;
-    height: 42px;
-    padding: 11px 0 0 26px
+    /* height: 42px; */
+    padding-left: 20px;
 }
 
 #simulator>.content {
     flex-grow: 1;
     -webkit-flex-grow: 1;
-    overflow-y: auto;
-    overflow-x: hidden
+    /* overflow-y: auto; */
+    /* overflow-x: hidden; */
 }
 
+
+.chip-thumbnail {
+    padding: 20px;
+}
