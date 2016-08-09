@@ -55,7 +55,7 @@ Blockly.Arduino.Boards.profiles = new Object();
 Blockly.Arduino.Boards.profiles.cocomake7 = {
   name: 'CocoMake7',
   description: 'CocoMake7 ATtiny85 board',
-  analogPins: [['PIN1/PB5', 'PB5'], ['PIN2/PB3', 'PB3'], ['PIN3/PB4', 'PB4'], ['PIN7/PB2', 'PB2']],
+  analogPins: [['PIN2/PB3/A3', 'A3'], ['PIN3/PB4/A2', 'A2'], ['PIN7/PB2/A1', 'A1']],
   digitalPins: [['PIN1/PB5', 'PB5'], ['PIN2/PB3', 'PB3'], ['PIN3/PB4', 'PB4'],  ['PIN5/PB0', 'PB0'],['PIN6/PB1', 'PB1'], ['PIN7/PB2', 'PB2']],
 
   pwmPins: [['PIN6/PB1', 'PB1'], ['PIN5/PB0', 'PB0']],
