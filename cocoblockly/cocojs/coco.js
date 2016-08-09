@@ -55,7 +55,7 @@ window.addEventListener('load', function load(event) {
     window.removeEventListener('load', load, false);
     // var toolBox =  Blockly.Xml.textToDom(Ardublockly.TOOLBOX_XML);
     CocoBlockly.toolBox = document.getElementById('ArduBlocklyToolbox');
-    // var defaultBlocks = document.getElementById('blocklyDefault');
+    
 
     CocoBlockly.workspace = Blockly.inject('blocklyDiv',
     {
@@ -79,6 +79,9 @@ window.addEventListener('load', function load(event) {
             trashcan: true
     });
 
+    // var xml = Blockly.Xml.textToDom(xml_text);
+    var defaultBlocks = document.getElementById('CocoBlockInitial');
+    Blockly.Xml.domToWorkspace(CocoBlockly.workspace, defaultBlocks);
 
     CocoBlockly.CodeMirror = CodeMirror.fromTextArea(document.getElementById("codeDiv"), 
     {
