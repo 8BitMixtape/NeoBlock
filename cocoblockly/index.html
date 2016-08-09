@@ -472,6 +472,15 @@
             </block>
           </value>
         </block>
+
+          <block type="cocokey_sendkeystroke">
+    <value name="COCOKEY_STROKE">
+      <block type="cocomake_singlechar">
+        <field name="TEXT">C</field>
+      </block>
+    </value>
+  </block>
+
         <block type="cocokey_delay">
           <value name="COCOKEY_DELAY">
             <block type="math_number">
@@ -485,6 +494,10 @@
           </value>
         </block>
         <block type="cocokey_update"></block>
+
+
+
+
       </category>
       <sep></sep>
       <category id="catCocoMidi" name="CocoMidi">
