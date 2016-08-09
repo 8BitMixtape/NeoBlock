@@ -49,6 +49,41 @@ Blockly.Arduino.Boards.generateAnalogIo = function(pinStart, pinEnd) {
 /** Object to contain all Arduino board profiles. */
 Blockly.Arduino.Boards.profiles = new Object();
 
+
+
+/** Arduino Uno board profile. */
+Blockly.Arduino.Boards.profiles.cocomake7 = {
+  name: 'CocoMake7',
+  description: 'CocoMake7 ATtiny85 board',
+  analogPins: [['PIN1/PB5', 'PB5'], ['PIN2/PB3', 'PB3'], ['PIN3/PB4', 'PB4'], ['PIN7/PB2', 'PB2']],
+  digitalPins: [['PIN1/PB5', 'PB5'], ['PIN2/PB3', 'PB3'], ['PIN3/PB4', 'PB4'],  ['PIN5/PB0', 'PB0'],['PIN6/PB1', 'PB1'], ['PIN7/PB2', 'PB2']],
+
+  pwmPins: [['PIN6/PB1', 'PB1'], ['PIN5/PB0', 'PB0']],
+  serial: [['serial', 'Serial']],
+  serialPins: { Serial: [['RX', '0'], ['TX', '1']] },
+  serialSpeed: [['300', '300'], ['600', '600'], ['1200', '1200'],
+                ['2400', '2400'], ['4800', '4800'], ['9600', '9600'],
+                ['14400', '14400'], ['19200', '19200'], ['28800', '28800'],
+                ['31250', '31250'], ['38400', '38400'], ['57600', '57600'],
+                ['115200', '115200']],
+  spi: [['SPI', 'SPI']],
+  spiPins: { SPI: [['MOSI', '11'], ['MISO', '12'], ['SCK', '13']] },
+  spiClockDivide: [['2 (8MHz)', 'SPI_CLOCK_DIV2'],
+                   ['4 (4MHz)', 'SPI_CLOCK_DIV4'],
+                   ['8 (2MHz)', 'SPI_CLOCK_DIV8'],
+                   ['16 (1MHz)', 'SPI_CLOCK_DIV16'],
+                   ['32 (500KHz)', 'SPI_CLOCK_DIV32'],
+                   ['64 (250KHz)', 'SPI_CLOCK_DIV64'],
+                   ['128 (125KHz)', 'SPI_CLOCK_DIV128']],
+  i2c: [['I2C', 'Wire']],
+  i2cPins: { Wire: [['SDA', 'A4'], ['SCL', 'A5']] },
+  i2cSpeed: [['100kHz', '100000L'], ['400kHz', '400000L']],
+  builtinLed: [['BUILTIN_1', '13']],
+  interrupt: [['interrupt0', '2'], ['interrupt1', '3']]
+};
+
+
+
 /** Arduino Uno board profile. */
 Blockly.Arduino.Boards.profiles.uno = {
   name: 'Arduino Uno',
@@ -167,7 +202,7 @@ Blockly.Arduino.Boards.profiles.leonardo = {
 Blockly.Arduino.Boards.profiles.yun = Blockly.Arduino.Boards.profiles.leonardo;
 
 /** Set default profile to Arduino standard-compatible board */
-Blockly.Arduino.Boards.selected = Blockly.Arduino.Boards.profiles.uno;
+Blockly.Arduino.Boards.selected = Blockly.Arduino.Boards.profiles.cocomake7;
 
 /**
  * Changes the Arduino board profile selected, which trigger a refresh of the
