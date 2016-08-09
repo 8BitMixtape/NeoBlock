@@ -8,8 +8,17 @@ CocoBlockly.executeBlockCode = function() {
         
 CocoBlockly.myUpdateFunction = function(event) {
   var doc = CocoBlockly.CodeMirror.getDoc();
-  CocoBlockly.CodeMirror.getDoc().setValue(Blockly.Arduino.workspaceToCode(CocoBlockly.workspace))
-  CocoBlockly.CodeMirrorPreview.getDoc().setValue(Blockly.Arduino.workspaceToCode(CocoBlockly.workspace))
+  var code = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace)
+  CocoBlockly.CodeMirror.getDoc().setValue(code)
+  CocoBlockly.CodeMirrorPreview.getDoc().setValue(code)
+  
+
+  var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
+  var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+
+
+  CocoBlockly.CodeMirrorXML.getDoc().setValue(xmlText)
+
 
 }
 
@@ -18,14 +27,25 @@ CocoBlockly.tabClick = function(clickedName) {
   if (clickedName == 'blocks') {
     CocoBlockly.workspace.setVisible(true);
     document.getElementById("pane-blocks").className = "tab-pane active";
+    document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane";
+
     document.body.className = "simulator";
   }
 
   if (clickedName == 'code') {
     CocoBlockly.workspace.setVisible(false);
     document.getElementById("pane-blocks").className = "tab-pane";
+    document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane active";
+    document.body.className = "";
+  }
+
+  if (clickedName == 'xml') {
+    CocoBlockly.workspace.setVisible(false);
+    document.getElementById("pane-blocks").className = "tab-pane";
+    document.getElementById("pane-code").className = "tab-pane";
+    document.getElementById("pane-xml").className = "tab-pane active";
     document.body.className = "";
   }
 };
@@ -75,6 +95,15 @@ window.addEventListener('load', function load(event) {
       lineWrapping: true,
       readOnly: true,
       mode: "text/x-c++src"
+    });
+
+
+    CocoBlockly.CodeMirrorXML = CodeMirror.fromTextArea(document.getElementById("xmlCodeDiv"), 
+    {
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: true,
+      mode: "application/xml"
     });
                               
     CocoBlockly.workspace.addChangeListener(CocoBlockly.myUpdateFunction);
