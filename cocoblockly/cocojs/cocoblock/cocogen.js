@@ -415,3 +415,31 @@ Blockly.Arduino['cocosynth_interval_function'] = function(block) {
   var code = '_delay_ms(' + keyStroke + ');\n';
   return code;
 };
+
+
+ Blockly.Arduino['coco_delayus'] = function(block) {
+
+  // Blockly.Arduino.addInclude('avrutil', '#include <util/delay.h>');
+  Blockly.Arduino.addInclude("cocoavrutil", "#include <util/delay.h>");
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOMIDI_DELAY', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = '_delay_us(' + keyStroke + ');\n';
+  return code;
+};
+
+
+ Blockly.Arduino['coco_readpullup'] = function(block) {
+
+  var pin = block.getFieldValue('PIN');
+  Blockly.Arduino.reservePin(
+      block, pin, Blockly.Arduino.PinTypes.INPUT, 'Digital Read');
+
+  var pinSetupCode = 'pinMode(' + pin + ', INPUT);\n  digitalWrite(' + pin + ', HIGH);';
+
+  Blockly.Arduino.addSetup('io_' + pin, pinSetupCode, false);
+
+  var code = 'digitalRead(' + pin + ')';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+
+
+};

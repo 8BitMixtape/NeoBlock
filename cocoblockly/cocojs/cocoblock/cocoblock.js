@@ -616,3 +616,55 @@ Blockly.Blocks['coco_delayms'] = {
     return Blockly.Types.LARGE_NUMBER;
   }
 };
+
+Blockly.Blocks['coco_delayus'] = {
+  /**
+   * Elapsed time in milliseconds block definition
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl('http://arduino.cc/en/Reference/Millis');
+    this.setColour(Blockly.Blocks.coco.HUE);
+        this.appendDummyInput()
+        .appendField("delay");
+    this.appendValueInput('COCOMIDI_DELAY')
+        .appendField("microseconds");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.ARD_TIME_DELAY_TIP);
+
+  },
+  /** @return {string} The type of return value for the block, an integer. */
+  getBlockType: function() {
+    return Blockly.Types.LARGE_NUMBER;
+  }
+};
+
+
+Blockly.Blocks['coco_readpullup'] = {
+  /**
+   * Elapsed time in milliseconds block definition
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl('http://arduino.cc/en/Reference/Millis');
+    this.setColour(Blockly.Blocks.coco.HUE);
+        this.appendDummyInput()
+        .appendField("read pullup");
+    this.appendDummyInput()
+        .appendField("digital pin")
+        .appendField(new Blockly.FieldDropdown(
+            Blockly.Arduino.Boards.selected.digitalPins), 'PIN');        
+    this.setInputsInline(true);
+    // this.setPreviousStatement(true, null);
+    // this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.ARD_TIME_DELAY_TIP);
+    this.setOutput(true, Blockly.Types.BOOLEAN.output);
+
+  },
+  /** @return {string} The type of return value for the block, an integer. */
+  getBlockType: function() {
+    return Blockly.Types.BOOLEAN;
+  }
+};
