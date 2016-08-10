@@ -258,3 +258,153 @@ Blockly.Arduino['coco_interval_function'] = function(block) {
   return code;
 };
 
+
+
+Blockly.Arduino['coco_synth_setupvoice'] = function(block) {
+  var text_timer_name = block.getFieldValue('TIMER_NAME');
+  var number_timer_interval = Blockly.Arduino.valueToCode(block, 'TIMER_INTERVAL', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
+  // TODO: Assemble JavaScript into code variable.
+
+  Blockly.Arduino.addDeclaration(text_timer_name, 'unsigned long ' +  text_timer_name + '_lastTime;\n');
+  var code = 'if (millis()- '+text_timer_name+'_lastTime >= ' + number_timer_interval + ')  {\n' + statements_do_blocks + ' ' + text_timer_name+'_lastTime = millis();\n' + '}\n';
+
+  return code;
+};
+
+
+Blockly.Arduino['coco_synth_setupvoice'] = function(block) {
+  var dropdown_coco_voice = block.getFieldValue('COCO_VOICE');
+  var dropdown_coco_waveform = block.getFieldValue('COCO_WAVEFORM');
+  var dropdown_coco_envelope = block.getFieldValue('COCO_ENVELOPE');
+  var number_coco_pitch = block.getFieldValue('COCO_PITCH');
+  var number_coco_length = block.getFieldValue('COCO_LENGTH');
+  var number_coco_mod = block.getFieldValue('COCO_MOD');
+  // TODO: Assemble Arduino into code variable.
+
+var declare = 'CocoSynth synth;\n'
++'\n//disable millis'
++'\n//make timer available for CocoSynth'
++'\nint main(void)'
++'\n{'
++'\n    //init();'
++'\n    setup();'
++'\n    for (;;)'
++'\n        loop();'
++'\n    return 0;'
++'\n}'
+
+
+  Blockly.Arduino.addInclude('cocosynth', "#include <CocoSynth.h>\n");
+  Blockly.Arduino.addDeclaration('cocosynth', declare);
+
+
+
+  Blockly.Arduino.addSetup('cocosynth', 'synth.begin();\n', true);
+
+  var code = 'synth.setupVoice(' + dropdown_coco_voice + ',' + dropdown_coco_waveform + ',' + number_coco_pitch + ',' + dropdown_coco_envelope + ',' + number_coco_length + ',' + number_coco_mod + ');\n';
+  return code;
+};
+
+
+Blockly.Arduino['coco_synth_setmod'] = function(block) {
+  var dropdown_coco_voice = block.getFieldValue('COCO_VOICE');
+  // var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC || '0');
+
+  var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.setMod(' + dropdown_coco_voice + ',' + value_coco_mod + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_setmod_field'] = function(block) {
+  var name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  // var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC || '0');
+
+  var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.setMod(' + name + ',' + value_coco_mod + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_setpitch'] = function(block) {
+  var name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  // var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC || '0');
+
+  var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.setPitch(' + name + ',' + value_coco_mod + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_setlength'] = function(block) {
+  var name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  // var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC || '0');
+
+  var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.setLength(' + name + ',' + value_coco_mod + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_setwave_field'] = function(block) {
+  var name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  // var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC || '0');
+
+  var dropdown_coco_waveform = block.getFieldValue('COCO_WAVEFORM');
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.setWave(' + name + ',' + dropdown_coco_waveform + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_setenvelope_field'] = function(block) {
+  var name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  // var value_coco_mod = Blockly.Arduino.valueToCode(block, 'COCO_MOD', Blockly.Arduino.ORDER_ATOMIC || '0');
+
+  var dropdown_coco_waveform = block.getFieldValue('COCO_ENVELOPE');
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.setEnvelope(' + name + ',' + dropdown_coco_waveform + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_trigger'] = function(block) {
+  var value_name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.trigger(' + value_name + ');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_miditrigger'] = function(block) {
+  var value_name = Blockly.Arduino.valueToCode(block, 'NAME', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var value_note = Blockly.Arduino.valueToCode(block, 'NOTE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  // TODO: Assemble Arduino into code variable.
+  var code = 'synth.mTrigger(' + value_name + ', ' + value_note +');\n';
+  return code;
+};
+
+Blockly.Arduino['coco_synth_voice'] = function(block) {
+  var dropdown_coco_voice = block.getFieldValue('COCO_VOICE');
+  // TODO: Assemble JavaScript into code variable.
+  var code = dropdown_coco_voice;
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.Arduino.ORDER_NONE];
+};
+
+
+ Blockly.Arduino['coco_delayms'] = function(block) {
+
+  // Blockly.Arduino.addInclude('avrutil', '#include <util/delay.h>');
+  Blockly.Arduino.addInclude("cocoavrutil", "#include <util/delay.h>");
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOMIDI_DELAY', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = '_delay_ms(' + keyStroke + ');\n';
+  return code;
+};

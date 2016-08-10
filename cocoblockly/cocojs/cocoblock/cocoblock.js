@@ -365,3 +365,205 @@ Blockly.Blocks['coco_interval_function'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+
+Blockly.Blocks['coco_synth_setupvoice'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("CocoSynth Setup voice");
+    this.appendDummyInput()
+        .appendField("setup for voice channel")
+        .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]]), "COCO_VOICE");
+    this.appendDummyInput()
+        .appendField("set waveform to")
+        .appendField(new Blockly.FieldDropdown([["Sine", "SINE"], ["Triangle", "TRIANGLE"], ["Square", "SQUARE"], ["Sawtooth", "SAW"], ["Ramp", "RAMP"], ["Noise", "NOISE"]]), "COCO_WAVEFORM")
+    this.appendDummyInput()
+        .appendField("set envelope to")
+        .appendField(new Blockly.FieldDropdown([["ENV0", "ENVELOPE0"], ["ENV1", "ENVELOPE1"], ["ENV2", "ENVELOPE2"], ["ENV3", "ENVELOPE3"]]), "COCO_ENVELOPE");
+    this.appendDummyInput()
+        .appendField("set pitch to ")
+        .appendField(new Blockly.FieldTextInput("0"), "COCO_PITCH");
+    this.appendDummyInput()
+        .appendField("set length to ")
+        .appendField(new Blockly.FieldTextInput("0"), "COCO_LENGTH");
+    this.appendDummyInput()
+        .appendField("set mod to ")
+        .appendField(new Blockly.FieldTextInput("64"), "COCO_MOD")
+        .appendField("( set to 64 for no modulation)");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('');
+    this.setColour(290);
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
+Blockly.Blocks['coco_synth_setmod'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("CocoSynth set voice")
+        .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]]), "COCO_VOICE");
+    this.appendValueInput("COCO_MOD")
+        .setCheck(null)
+        .appendField("modulation to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_setmod_field'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .appendField("CocoSynth set voice")
+    this.appendValueInput("COCO_MOD")
+        .setCheck(null)
+        .appendField("modulation to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
+Blockly.Blocks['coco_synth_setpitch'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .appendField("CocoSynth set voice")
+    this.appendValueInput("COCO_MOD")
+        .setCheck(null)
+        .appendField("pitch to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_setlength'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .appendField("CocoSynth set voice")
+    this.appendValueInput("COCO_MOD")
+        .setCheck(null)
+        .appendField("length to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_setwave_field'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .appendField("CocoSynth set voice")
+    this.appendDummyInput("COCO_MOD")
+        .appendField("wave to")
+        .appendField(new Blockly.FieldDropdown([["Sine", "SINE"], ["Triangle", "TRIANGLE"], ["Square", "SQUARE"], ["Sawtooth", "SAW"], ["Ramp", "RAMP"], ["Noise", "NOISE"]]), "COCO_WAVEFORM")
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_setenvelope_field'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .appendField("CocoSynth set voice")
+    this.appendDummyInput("COCO_MOD")
+        .appendField("envelope to")
+        .appendField(new Blockly.FieldDropdown([["ENV0", "ENVELOPE0"], ["ENV1", "ENVELOPE1"], ["ENV2", "ENVELOPE2"], ["ENV3", "ENVELOPE3"]]), "COCO_ENVELOPE");
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_trigger'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("CocoSynth trigger voice");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('');
+    this.setColour(65);
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_miditrigger'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("CocoSynth trigger voice");
+    this.appendValueInput("NOTE")
+        .setCheck(null)
+        .appendField("midi note");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('');
+    this.setColour(65);
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['coco_synth_voice'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Cocosynth Voice")
+        .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]]), "COCO_VOICE");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+
+Blockly.Blocks['coco_delayms'] = {
+  /**
+   * Elapsed time in milliseconds block definition
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl('http://arduino.cc/en/Reference/Millis');
+    this.setColour(Blockly.Blocks.coco.HUE);
+        this.appendDummyInput()
+        .appendField("delay");
+    this.appendValueInput('COCOMIDI_DELAY')
+        .appendField("milliseconds");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.ARD_TIME_DELAY_TIP);
+
+  },
+  /** @return {string} The type of return value for the block, an integer. */
+  getBlockType: function() {
+    return Blockly.Types.LARGE_NUMBER;
+  }
+};

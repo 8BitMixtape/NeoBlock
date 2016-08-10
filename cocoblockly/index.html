@@ -404,6 +404,14 @@
         </block>
         <block type="time_millis"></block>
         <block type="time_micros"></block>
+        <block type="coco_delayms"></block>
+          <block type="coco_delayms" id="n8!w)48dfFK;8MobuzE:" x="112" y="362">
+    <value name="COCOMIDI_DELAY">
+      <block type="math_number" id="8Xx.],i5o:Iaqx+tc@!W">
+        <field name="NUM">100</field>
+      </block>
+    </value>
+  </block>
         <block type="infinite_loop"></block>
       </category>
       <sep></sep>
@@ -565,6 +573,25 @@
           <field name="VAR">filtered_value</field>
         </block>
       </category>
+            <sep></sep>
+
+            <category id="catCocoSynth" name="CocoSynth">
+        <block type="coco_synth_setupvoice"></block>
+
+                <block type="coco_synth_setmod"></block>
+        <block type="coco_synth_setmod_field"></block>
+
+        <block type="coco_synth_trigger"></block>
+<block type="coco_synth_miditrigger"></block>
+        
+        <block type="coco_synth_voice"></block>
+        <block type="coco_synth_setwave_field"></block>
+                <block type="coco_synth_setenvelope_field"></block>
+
+                <block type="coco_synth_setpitch"></block>
+                <block type="coco_synth_setlength"></block>
+
+</category>
     </xml>
   
 
