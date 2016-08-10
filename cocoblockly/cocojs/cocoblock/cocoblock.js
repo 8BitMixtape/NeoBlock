@@ -544,6 +544,55 @@ Blockly.Blocks['coco_synth_voice'] = {
 };
 
 
+Blockly.Blocks['coco_synth_delay'] = {
+  /**
+   * Elapsed time in milliseconds block definition
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl('http://arduino.cc/en/Reference/Millis');
+    this.setColour(Blockly.Blocks.coco.HUE);
+        this.appendDummyInput()
+        .appendField("CocoSynth delay");
+    this.appendValueInput('COCOKEY_DELAY')
+        .appendField("milliseconds");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip(Blockly.Msg.ARD_TIME_DELAY_TIP);
+
+  },
+  /** @return {string} The type of return value for the block, an integer. */
+  getBlockType: function() {
+    return Blockly.Types.LARGE_NUMBER;
+  }
+};
+
+Blockly.Blocks['cocosynth_interval_function'] = {
+
+  init: function() {
+
+    this.appendDummyInput()
+        .appendField("CocoSynth Interval timer name")
+        .appendField(new Blockly.FieldTextInput("default"), "TIMER_NAME");
+    this.appendDummyInput()
+        .appendField("every")
+
+    this.appendValueInput('TIMER_INTERVAL')
+            this.setInputsInline(true);
+    this.appendDummyInput()
+        .appendField("milliseconds do")
+
+    this.appendStatementInput("DO_BLOCKS")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(20);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
 Blockly.Blocks['coco_delayms'] = {
   /**
    * Elapsed time in milliseconds block definition

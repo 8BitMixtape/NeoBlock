@@ -259,21 +259,6 @@ Blockly.Arduino['coco_interval_function'] = function(block) {
 };
 
 
-
-Blockly.Arduino['coco_synth_setupvoice'] = function(block) {
-  var text_timer_name = block.getFieldValue('TIMER_NAME');
-  var number_timer_interval = Blockly.Arduino.valueToCode(block, 'TIMER_INTERVAL', Blockly.Arduino.ORDER_ATOMIC) || '0';
-
-  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
-  // TODO: Assemble JavaScript into code variable.
-
-  Blockly.Arduino.addDeclaration(text_timer_name, 'unsigned long ' +  text_timer_name + '_lastTime;\n');
-  var code = 'if (millis()- '+text_timer_name+'_lastTime >= ' + number_timer_interval + ')  {\n' + statements_do_blocks + ' ' + text_timer_name+'_lastTime = millis();\n' + '}\n';
-
-  return code;
-};
-
-
 Blockly.Arduino['coco_synth_setupvoice'] = function(block) {
   var dropdown_coco_voice = block.getFieldValue('COCO_VOICE');
   var dropdown_coco_waveform = block.getFieldValue('COCO_WAVEFORM');
@@ -296,12 +281,12 @@ var declare = 'CocoSynth synth;\n'
 +'\n}'
 
 
-  Blockly.Arduino.addInclude('cocosynth', "#include <CocoSynth.h>\n");
+  Blockly.Arduino.addInclude('cocosynth', "#include <CocoSynth.h>");
   Blockly.Arduino.addDeclaration('cocosynth', declare);
 
 
 
-  Blockly.Arduino.addSetup('cocosynth', 'synth.begin();\n', true);
+  Blockly.Arduino.addSetup('cocosynth', 'synth.begin();', true);
 
   var code = 'synth.setupVoice(' + dropdown_coco_voice + ',' + dropdown_coco_waveform + ',' + number_coco_pitch + ',' + dropdown_coco_envelope + ',' + number_coco_length + ',' + number_coco_mod + ');\n';
   return code;
@@ -396,6 +381,28 @@ Blockly.Arduino['coco_synth_voice'] = function(block) {
   var code = dropdown_coco_voice;
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.Arduino.ORDER_NONE];
+};
+
+ Blockly.Arduino['coco_synth_delay'] = function(block) {
+
+  Blockly.Arduino.addInclude('cocokey', '#include <CocoKeyboard.h>');
+
+  var keyStroke = Blockly.Arduino.valueToCode(block, 'COCOKEY_DELAY', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var code = 'synth.delay(' + keyStroke + ');\n';
+  return code;
+};
+
+Blockly.Arduino['cocosynth_interval_function'] = function(block) {
+  var text_timer_name = block.getFieldValue('TIMER_NAME');
+  var number_timer_interval = Blockly.Arduino.valueToCode(block, 'TIMER_INTERVAL', Blockly.Arduino.ORDER_ATOMIC) || '0';
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
+  // TODO: Assemble JavaScript into code variable.
+
+  Blockly.Arduino.addDeclaration(text_timer_name, 'unsigned long ' +  text_timer_name + '_lastTime;\n');
+  var code = 'if (synth.millis()- '+text_timer_name+'_lastTime >= ' + number_timer_interval + ')  {\n' + statements_do_blocks + ' ' + text_timer_name+'_lastTime = synth.millis();\n' + '}\n';
+
+  return code;
 };
 
 
