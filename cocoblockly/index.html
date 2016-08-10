@@ -212,21 +212,79 @@
 
 
 <xml id="CocoBlockInitial">
-  <block type="arduino_functions" id="jGvSo#,:^f_1q!cAp!^_" x="88" y="88">
+    <block type="arduino_functions" id="jGvSo#,:^f_1q!cAp!^_" x="13" y="38">
+    <statement name="SETUP_FUNC">
+      <block type="coco_synth_setupvoice" id="9fjDuW0**LeWlN:Hx3-4">
+        <field name="COCO_VOICE">0</field>
+        <field name="COCO_WAVEFORM">SINE</field>
+        <field name="COCO_ENVELOPE">ENVELOPE0</field>
+        <field name="COCO_PITCH">77</field>
+        <field name="COCO_LENGTH">60</field>
+        <field name="COCO_MOD">64</field>
+        <comment pinned="false" h="80" w="160">Sine wave instrument</comment>
+        <next>
+          <block type="coco_synth_setupvoice" id="v@H2JdI[^yF`F7I_AU(6">
+            <field name="COCO_VOICE">1</field>
+            <field name="COCO_WAVEFORM">NOISE</field>
+            <field name="COCO_ENVELOPE">ENVELOPE0</field>
+            <field name="COCO_PITCH">50</field>
+            <field name="COCO_LENGTH">100</field>
+            <field name="COCO_MOD">32</field>
+            <comment pinned="false" h="80" w="160">Noise Instrument setup</comment>
+          </block>
+        </next>
+      </block>
+    </statement>
     <statement name="LOOP_FUNC">
-      <block type="cocokey_print" id="T;Ce4d.)[K5En3^c#-p2">
-        <value name="COCOKEY_PRINT">
-          <block type="text" id="bG)fQsv?^)K`D9.jTZYx">
-            <field name="TEXT">HELLO COCOMAKE7</field>
+      <block type="cocosynth_interval_function" id="5bbjoNE.}*k/~Bl|wdL6">
+        <field name="TIMER_NAME">synth_timer_1</field>
+        <comment pinned="false" h="80" w="160">every 1 sec trigger metronome</comment>
+        <value name="TIMER_INTERVAL">
+          <block type="math_number" id="PEuHc4nE_rOge%o7~yU~">
+            <field name="NUM">1000</field>
           </block>
         </value>
-        <next>
-          <block type="cocokey_delay" id="loK6lz8.dOQ|nZs`7TI6">
-            <value name="COCOKEY_DELAY">
-              <block type="math_number" id="K5thlSB?ALf`jdhU8#wz">
-                <field name="NUM">500</field>
+        <statement name="DO_BLOCKS">
+          <block type="coco_synth_trigger" id="g{+HCVfJXK#mpWCOqAi8">
+            <value name="NAME">
+              <block type="math_number" id="gW~mw;,`#Yq-^#Yu#Tp]">
+                <field name="NUM">0</field>
               </block>
             </value>
+          </block>
+        </statement>
+        <next>
+          <block type="cocosynth_interval_function" id="^lkEl~w|)Upp1Bzy2oj6">
+            <field name="TIMER_NAME">synth_timer_2</field>
+            <comment pinned="false" h="80" w="160">every 2 sec trigger noise instrument</comment>
+            <value name="TIMER_INTERVAL">
+              <block type="math_number" id="v?TH:FKe]z#G)1t-rVmg">
+                <field name="NUM">2000</field>
+              </block>
+            </value>
+            <statement name="DO_BLOCKS">
+              <block type="coco_synth_miditrigger" id=";+%]k7}=1qL.T1yyIn.K">
+                <value name="NAME">
+                  <block type="math_number" id="rR_lx}yMki4s?w{/M:Ti">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <value name="NOTE">
+                  <block type="math_random_int" id="|ua!nJ84(f.kklm,qVtK">
+                    <value name="FROM">
+                      <block type="math_number" id="~JrqvMk`R[7Z4|U,J;R`">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                    <value name="TO">
+                      <block type="math_number" id="(::r8?B{/^,M:eevq;H)">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </statement>
           </block>
         </next>
       </block>
@@ -577,6 +635,17 @@
 
             <category id="catCocoSynth" name="CocoSynth">
         <block type="coco_synth_setupvoice"></block>
+        <block type="coco_synth_delay"></block>
+
+
+  <block type="cocosynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
+    <field name="TIMER_NAME">synth_timer_1</field>
+    <value name="TIMER_INTERVAL">
+      <block type="math_number" id=";=T})9b-GmWh.s+xKPpt">
+        <field name="NUM">1000</field>
+      </block>
+    </value>
+  </block>
 
                 <block type="coco_synth_setmod"></block>
         <block type="coco_synth_setmod_field"></block>
