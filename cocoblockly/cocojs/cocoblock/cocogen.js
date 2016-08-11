@@ -184,16 +184,10 @@ var varDeclaration =
  '\nint velocityValue = 0;  '  + 
  '\nint prevVelocity =  0;  '  + 
  '\n  '  + 
- '\nuint8_t note_off = 0;  '  + 
  '\nuint16_t offset_adc = 0;  '  + 
- '\n  '  + 
- '\nchar key[] = {\' \'};  '  + 
- '\nint keyTotal = 1;  '  + 
  '\n  '  + 
  '\nunsigned long previousMillis = 0; // will store last time LED was updated  '  + 
  '\n  '  + 
- '\nint keyCount = -1;  '  + 
- '\nint ledPin = PB0;  '  + 
  '\nint velocityThreshold = 80;  '  + 
  '\n  '  + 
  '\nint filtered_value = 0;  '  + 
@@ -442,4 +436,85 @@ Blockly.Arduino['cocosynth_interval_function'] = function(block) {
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 
 
+};
+
+
+Blockly.Arduino['cocoutil_peakdetect'] = function(block) {
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'COCO_DO');
+  var number_value_input = Blockly.Arduino.valueToCode(block, 'COCO_VALUE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var peak_name = block.getFieldValue('COCO_NAME');
+
+  Blockly.Arduino.addInclude('cocoutil_peak', '');
+  Blockly.Arduino.addSetup('cocoutil_peak', '', true);
+
+  var declare = '#define state_down 0'+
+'\n#define state_up 1'+
+'\n#define state_flat 2'
+
+  var declare_var = '\n\nfloat '+peak_name+'_currValue = 0;'+
+'\nfloat '+peak_name+'_prevValue = 0;'+
+'\nint '+peak_name+'_currState = 0;'+
+'\nint '+peak_name+'_prevState = state_flat;'
+
+    Blockly.Arduino.addDeclaration("cocoutil_peakdetect", declare);
+    Blockly.Arduino.addDeclaration("cocoutil_peakdetect" + peak_name, declare_var);
+
+  // TODO: Assemble JavaScript into code variable.
+  var code = '\n//peak detector code for ' + peak_name +
+              '\ncurrValue = ' + number_value_input + ';' +
+             '\n if (currValue > 0) {      '+
+             '\n   if (currValue > prevValue) {'+
+             '\n     currState = state_up;'+
+             '\n   }else if (currValue < prevValue) {'+
+             '\n     currState = state_down;'+
+             '\n   }else{'+
+             '\n     currState = state_flat;'+
+             '\n   }     '+
+             '\n   if ( currState == state_down && prevState == state_up)'+
+             '\n   {'+
+             '\n     '+ statements_do_blocks +
+             '\n   }     '+
+             '\n   prevState = currState;'+
+             '\n   prevValue = currValue;'+
+             '\n }'
+
+  code = code.replace(/currValue/g, peak_name + '_currValue')           
+  code = code.replace(/prevValue/g, peak_name + '_prevValue')           
+  code = code.replace(/currState/g, peak_name + '_currState')           
+  code = code.replace(/prevState/g, peak_name + '_prevState')           
+
+  return code;
+};
+
+
+
+
+Blockly.Arduino['cocoutil_getvelocity'] = function(block) {
+
+  var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'COCO_DO');
+  var number_value_input = Blockly.Arduino.valueToCode(block, 'COCO_VALUE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var peak_name = block.getFieldValue('COCO_NAME');
+
+  Blockly.Arduino.addInclude('cocoutil_peak', '');
+  Blockly.Arduino.addSetup('cocoutil_peak', '', true);
+
+  var declare_func =
+'\int getvelocity(int value, int * prevValue)'+
+'\n{'+
+'\n  int velo = value - *prevValue;'+
+'\n  *prevValue = value;'+
+'\n  return velo;'+
+'\n}'
+
+
+
+    Blockly.Arduino.addDeclaration("cocoutil_velocity_" + peak_name, "int " + peak_name + "_prevValue;");
+
+    Blockly.Arduino.addDeclaration("cocoutil_velocity", declare_func);
+
+
+var code = "getvelocity(" + number_value_input + ", &" + peak_name + "_prevValue)";
+
+  return [code, Blockly.Arduino.ORDER_NONE];
 };

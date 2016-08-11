@@ -668,3 +668,52 @@ Blockly.Blocks['coco_readpullup'] = {
     return Blockly.Types.BOOLEAN;
   }
 };
+
+
+Blockly.Blocks['cocoutil_peakdetect'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("if peak detector")
+        .appendField(new Blockly.FieldTextInput("default"), "COCO_NAME");
+    this.appendDummyInput()
+        .appendField("detected peak from")        
+    this.appendValueInput('COCO_VALUE')
+
+    this.appendDummyInput()
+        .appendField("do");        
+    this.appendStatementInput("COCO_DO")
+        .setCheck(null);        
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+        this.setColour(20);
+            this.setInputsInline(true);
+
+   this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+  }
+};
+
+
+Blockly.Blocks['cocoutil_getvelocity'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("get velocity")
+        .appendField(new Blockly.FieldTextInput("default"), "COCO_NAME");
+    this.appendDummyInput()
+        .appendField("from")        
+    this.appendValueInput('COCO_VALUE')
+    this.setOutput(true, Blockly.Types.NUMBER.output);
+
+      
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+        this.setColour(20);
+            this.setInputsInline(true);
+
+   // this.setPreviousStatement(true, null);
+    // this.setNextStatement(true, null);
+  },
+    getBlockType: function() {
+    return Blockly.Types.NUMBER;
+  },
+};
