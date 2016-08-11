@@ -717,3 +717,32 @@ Blockly.Blocks['cocoutil_getvelocity'] = {
     return Blockly.Types.NUMBER;
   },
 };
+
+
+Blockly.Blocks['cocoutil_getmova'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("get moving average ")
+        .appendField(new Blockly.FieldTextInput("coco_mova_1"), "COCO_NAME");
+    this.appendDummyInput()
+        .appendField("constant")        
+    this.appendValueInput('COCO_MA')
+    this.appendDummyInput()
+        .appendField("from")     
+    this.appendValueInput('COCO_VALUE')
+
+    this.setOutput(true, Blockly.Types.NUMBER.output);
+
+      
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+        this.setColour(20);
+            this.setInputsInline(true);
+
+   // this.setPreviousStatement(true, null);
+    // this.setNextStatement(true, null);
+  },
+    getBlockType: function() {
+    return Blockly.Types.NUMBER;
+  },
+};

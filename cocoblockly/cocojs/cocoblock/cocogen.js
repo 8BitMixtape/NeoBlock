@@ -518,3 +518,28 @@ var code = "getvelocity(" + number_value_input + ", &" + peak_name + "_prevValue
 
   return [code, Blockly.Arduino.ORDER_NONE];
 };
+
+
+Blockly.Arduino['cocoutil_getmova'] = function(block) {
+
+  var statements_do_blocks = Blockly.Arduino.valueToCode(block, 'COCO_VALUE', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var coco_ma_constant = Blockly.Arduino.valueToCode(block, 'COCO_MA', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var peak_name = block.getFieldValue('COCO_NAME');
+
+
+
+  var declare_func = '\int get_moving_average(int value, float constant, int * accumulator)'+
+'\n{'+
+'\n*accumulator = (constant*value) + ((1-constant)* (*accumulator) );'+
+'\n  return *accumulator;'+
+'\n}'
+
+  Blockly.Arduino.addDeclaration("cocoutil_mova", declare_func);
+
+  Blockly.Arduino.addDeclaration("cocoutil_mova_" + peak_name, "int " + peak_name + "_accumulator;");
+
+
+
+var code = "get_moving_average(" + statements_do_blocks + "," + coco_ma_constant + "," + " &" + peak_name + "_accumulator" + ")"
+  return [code, Blockly.Arduino.ORDER_NONE];
+};
