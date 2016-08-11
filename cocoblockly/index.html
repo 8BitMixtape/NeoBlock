@@ -219,7 +219,7 @@
 
        <category id="catCocoExamples" name="Examples">
 
-         <category id="catCocoTouch" name="Blink led">
+        <category id="catCocoTouch" name="Blink led">
   <block type="arduino_functions" id="jGvSo#,:^f_1q!cAp!^_" x="38" y="63">
     <statement name="SETUP_FUNC">
       <block type="variables_set" id="Y!~cJU3a=?G=,Es)*Ijn">
@@ -267,6 +267,108 @@
     </statement>
   </block>
          </category>
+         
+         <category id="catCocoTouch" name="CocoTouch to Led">
+           <block type="arduino_functions" id="rPo^`(@DV6rSUp%#6eYs" x="38" y="38">
+    <statement name="LOOP_FUNC">
+      <block type="cocotouch_touched" id="g}~M-6KLuJB`,W9qt?KQ">
+        <statement name="COCOTOUCH_DOTOUCHED">
+          <block type="cocoutil_peakdetect" id="rp|H2=5u6vB,#sVGr40G">
+            <field name="COCO_NAME">peak_detector_1</field>
+            <value name="COCO_VALUE">
+              <block type="variables_get" id="TWSfFo`[i7u:-Q~M%{7v">
+                <field name="VAR">velocityValue</field>
+              </block>
+            </value>
+            <statement name="COCO_DO">
+              <block type="controls_if" id="bHGSMJYcj{1t,T5yMwcs">
+                <mutation else="1"></mutation>
+                <value name="IF0">
+                  <block type="logic_compare" id="X0L9Kfzm_!#a8^bWXyB@">
+                    <field name="OP">GT</field>
+                    <value name="A">
+                      <block type="variables_get" id="t!`@Bc;(NsP)]2Lb^ATI">
+                        <field name="VAR">prevVelocity</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="NKGWYlE*^NoWWI5C01fH">
+                        <field name="NUM">520</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="io_digitalwrite" id="CHTen!b1?|No3lvZvsG]">
+                    <field name="PIN">PB1</field>
+                    <value name="STATE">
+                      <block type="io_highlow" id="rIWPXr0]a(Xd`u,Kpctz">
+                        <field name="STATE">HIGH</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="cocomidi_sendcchires" id="u:sr*?6Q_3_;_%kKsV`7" disabled="true">
+                        <value name="COCOMIDI_VALUE">
+                          <block type="variables_get" id="bnnbbf^4cgHVV9JT#j+5">
+                            <field name="VAR">prevVelocity</field>
+                          </block>
+                        </value>
+                        <value name="COCOMIDI_CHAN">
+                          <block type="math_number" id="xCxn@SzM+C!SA~VV,XVw">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <statement name="ELSE">
+                  <block type="cocomidi_sendcchires" id=",NK5e8npiD!{]Hh.Gy|," disabled="true">
+                    <value name="COCOMIDI_VALUE">
+                      <block type="math_number" id="y8a5_g{C~bc##WK!.)j1">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                    <value name="COCOMIDI_CHAN">
+                      <block type="math_number" id="5/o//)a^KW=SwIVGxhJ1">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+          </block>
+        </statement>
+        <next>
+          <block type="coco_interval_function" id="RU)C%,4]UWYoZ.I5WQ0_">
+            <field name="TIMER_NAME">default</field>
+            <value name="TIMER_INTERVAL">
+              <block type="math_number" id="Ao]7q9mW~,@7TI3^[y5r">
+                <field name="NUM">1000</field>
+              </block>
+            </value>
+            <statement name="DO_BLOCKS">
+              <block type="io_digitalwrite" id="l5`wt~Vp?t.0]cMnxCTS">
+                <field name="PIN">PB1</field>
+                <value name="STATE">
+                  <block type="io_highlow" id="e|Rk6-(b6f2_tz`q:l^?">
+                    <field name="STATE">LOW</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <next>
+              <block type="cocomidi_update" id=":w?.oZcQNUU3+Q%C%f=^" disabled="true"></block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+
+</category>
+        
                            <category id="catCocoTouch" name="CocoTouch to Midi">
   <block type="arduino_functions" id="jt2UYe/a:4opih^:VQ`^" x="37" y="38">
     <statement name="LOOP_FUNC">
