@@ -454,6 +454,36 @@
     </statement>
   </block>
 </category>
+
+              <category id="catCocoMidi" name="Potentio to CocoMidi">
+
+  <block type="arduino_functions" id="5Z;sl%)oCHl3Cn=6q%,," x="9" y="3">
+    <statement name="LOOP_FUNC">
+      <block type="cocomidi_sendcchires" id="I6,Pt_hsL)D@Zu46p_^[">
+        <value name="COCOMIDI_VALUE">
+          <block type="io_analogread" id="[a7Rtx/3pW)ceu%?7lK~">
+            <field name="PIN">A1</field>
+          </block>
+        </value>
+        <value name="COCOMIDI_CHAN">
+          <block type="math_number" id="7xxz3iUe8;BDZvI/5H]2">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <next>
+          <block type="cocomidi_delay" id="O8M`2V:a5-L81PVvhW@/">
+            <value name="COCOMIDI_DELAY">
+              <block type="math_number" id="pK9nwuf/Sz_8YQ3FlP*p">
+                <field name="NUM">5</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  </category>
+
               <category id="catCocoSynth" name="CocoSynth">
                <block type="arduino_functions" id="^}@SOl,N#YB49.qgQN]M" x="38" y="38">
     <statement name="SETUP_FUNC">
