@@ -127,6 +127,11 @@
                     <input type="radio" name="edit-mode" value="XML" autocomplete="off">
                     <span>XML</span>
                   </label>
+                  <label id="btn-mode-midi" class="btn btn-default navbar-btn">
+                    <input type="radio" name="edit-mode" value="MIDI" autocomplete="off">
+                    <span>Midi Plot</span>
+                  </label>
+
                 </div>
               </li>
             </ul>
@@ -185,6 +190,9 @@
               <div class="tab-pane" id="pane-xml">
                 <textarea id="xmlCodeDiv"></textarea>
               </div>
+              <div class="tab-pane" id="pane-midi">
+<div class="scope chart"><canvas width="200" height="100"></canvas></div>
+              </div>              
             </div>
           </div>
         </div>

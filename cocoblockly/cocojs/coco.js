@@ -29,6 +29,7 @@ CocoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-blocks").className = "tab-pane active";
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane";
+    document.getElementById("pane-midi").className = "tab-pane";
 
     document.body.className = "simulator";
   }
@@ -38,7 +39,10 @@ CocoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-blocks").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane active";
+    document.getElementById("pane-midi").className = "tab-pane";
+
     document.body.className = "";
+
   }
 
   if (clickedName == 'xml') {
@@ -46,8 +50,22 @@ CocoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-blocks").className = "tab-pane";
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane active";
+    document.getElementById("pane-midi").className = "tab-pane";
+
     document.body.className = "";
   }
+
+
+  if (clickedName == 'midi') {
+    CocoBlockly.workspace.setVisible(false);
+    document.getElementById("pane-blocks").className = "tab-pane";
+    document.getElementById("pane-code").className = "tab-pane";
+    document.getElementById("pane-xml").className = "tab-pane";
+    document.getElementById("pane-midi").className = "tab-pane active";
+
+    document.body.className = "";
+  }
+
 };
 
 
@@ -114,6 +132,7 @@ window.addEventListener('load', function load(event) {
     document.getElementById("btn-mode-blocks").onclick = function(){CocoBlockly.tabClick('blocks')};
     document.getElementById("btn-mode-code").onclick = function(){CocoBlockly.tabClick('code')};
     document.getElementById("btn-mode-xml").onclick = function(){CocoBlockly.tabClick('xml')};
+    document.getElementById("btn-mode-midi").onclick = function(){CocoBlockly.tabClick('midi')};
 
     var svgresize = function() {
         Blockly.svgResize(CocoBlockly.workspace);
