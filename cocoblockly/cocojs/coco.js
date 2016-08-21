@@ -95,8 +95,8 @@ switch (command) {
     break;
   case 'progress':
     if (params === '100'  ) {
-      CocoBlockly.setProgressBar(100);
-      setTimeout(function(){CocoBlockly.setProgressBar(0); }, 1000);
+      CocoBlockly.setProgressBar(0);
+      //setTimeout(function(){CocoBlockly.setProgressBar(0); }, 250);
     }else {
       CocoBlockly.setProgressBar(params);              
     }
@@ -139,8 +139,11 @@ CocoBlockly.rpcCompileCode = function(code, fun)
 CocoBlockly.upload = function()
 {
   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-  CocoBlockly.rpc.sendRpcParam('upload', '', function(){
-    console.log('upload done..');
+  CocoBlockly.rpcCompileCode(CocoBlockly.code, function(){
+    CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+    CocoBlockly.rpc.sendRpcParam('upload', '', function(){
+      console.log('upload done..');
+    });
   });
 }
 
