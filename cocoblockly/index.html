@@ -61,6 +61,7 @@
     <script type="text/javascript" src="vendor/codemirror.js"></script>
     <script type="text/javascript" src="vendor/clike.min.js"></script>
     <script type="text/javascript" src="vendor/split.min.js"></script>
+    <script type="text/javascript" src="vendor/socket.io-1.4.5.js"></script>
 
 
     <script type="text/javascript" src="cocojs/coco.js"></script>
@@ -113,7 +114,7 @@
                 </ul>
               </li>
               <li id="mode-group">
-                <p class="navbar-text">Mode:</p>
+                <p class="navbar-text">View:</p>
                 <div class="btn-group" data-toggle="buttons" role="group">
                   <label id="btn-mode-blocks" class="btn btn-default navbar-btn active">
                     <input type="radio" name="edit-mode" value="Blocks" autocomplete="off" checked="">
@@ -127,14 +128,31 @@
                     <input type="radio" name="edit-mode" value="XML" autocomplete="off">
                     <span>XML</span>
                   </label>
-                  <label id="btn-mode-midi" class="btn btn-default navbar-btn">
-                    <input type="radio" name="edit-mode" value="MIDI" autocomplete="off">
-                    <span>Midi Plot</span>
+                  <label id="btn-mode-console" class="btn btn-default navbar-btn">
+                    <input type="radio" name="edit-mode" value="Console" autocomplete="off">
+                    <span>Console</span>
                   </label>
 
                 </div>
               </li>
+              <li>                <p class="navbar-text">Action:</p>
+
+                                  <label id="btn-mode-compile" class="btn btn-default navbar-btn">
+                    <span>Compile</span>
+                  </label>
+
+
+                                  <label id="btn-mode-upload" class="btn btn-default navbar-btn">
+                    <span>Upload</span>
+                  </label>
+           <div id="progressBar" class="nav navbar-text progress pull-right" style="width: 150px;">
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+          </div>
+        </div>
+
+              </li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help&nbsp;<span class="caret"></span></a>
@@ -190,8 +208,8 @@
               <div class="tab-pane" id="pane-xml">
                 <textarea id="xmlCodeDiv"></textarea>
               </div>
-              <div class="tab-pane" id="pane-midi">
-<div class="scope chart"><canvas width="200" height="100"></canvas></div>
+              <div class="tab-pane" id="pane-console">
+                <textarea id="consoleDiv"></textarea>
               </div>              
             </div>
           </div>
