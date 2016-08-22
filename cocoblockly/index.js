@@ -41,23 +41,30 @@ var cocoUploadCode = function(fun) {
     var tmpCompileDir = "/tmp/CocoTmpCompile";
 
     var uploadCmd = "/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude -C/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude.conf -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
+
+	sendToProgress({process: 'upload', progress:0});
+
+
     var child = exec(uploadCmd);
 
 	child.stderr.on('data', function(data) {
         cocoServer.compilerBusy = 1;
 
         if (data.includes('Detecting CocoMidi')) {
-			sendToProgress('25');
+			// sendToProgress('25');
+			sendToProgress({process: 'upload', progress:25});
 			// console.log("25");
 		}   
 
         if (data.includes('Waiting for 10 seconds')) {
-			sendToProgress('75');
+			sendToProgress({process: 'upload', progress:75});        	
+			sendToProgress({process: 'upload_replug', progress:75});
 			// console.log("75");
 		}        
 
         if (data.includes('avrdude done.')) {
-			sendToProgress('100');
+			sendToProgress({process: 'upload', progress:100});        	
+			sendToProgress({process: 'upload_replug_done', progress:100});
 			// console.log("100");
 		}
 
@@ -98,6 +105,8 @@ var cocoCompileCode = function(code, fun) {
 
     fs.writeFileSync(tmpScript, code);
 
+	sendToProgress({process: 'compile', progress:0});
+
     var child = exec(compileCmd);
 
     // console.log(compileCmd);
@@ -110,7 +119,7 @@ var cocoCompileCode = function(code, fun) {
 		    if (m.index === cocoServer.compileProgressRe.lastIndex) {
 		        cocoServer.compileProgressRe.lastIndex++;
 		    }
-			sendToProgress(m[1]);
+			sendToProgress({process: 'compile', progress:m[1]});
 		}else{
 			sendToConsole(data);
 		}
@@ -119,7 +128,7 @@ var cocoCompileCode = function(code, fun) {
 
 	child.on('close', function(code) {
 	    console.log("compile done..");
-		sendToProgress('100');
+		sendToProgress({process: 'compile', progress:100});
         cocoServer.compilerBusy = 0;
 	    fun(code);
 	});
@@ -193,7 +202,7 @@ app.on('ready', () => {
 	  width: 1024
 	});
 
-    mainWindow.openDevTools();  
+    // mainWindow.openDevTools();  
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
 });

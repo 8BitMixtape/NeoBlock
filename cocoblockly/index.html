@@ -1,8 +1,11 @@
 <html><head>
-    <link rel="stylesheet" href="assets/theme.min.css">
+    <title>CocoBlocks for CocoMake7</title>
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="vendor/codemirror.min.css">
     <link rel="stylesheet" href="assets/blockly_style.css">
     <link rel="stylesheet" href="assets/cocoblockly.css">
+
+
     <!-- Ardublockly - These three files contain the compress version -->
     <script src="blockly/blockly_compressed.js"></script>
     <script src="blockly/blocks_compressed.js"></script>
@@ -58,6 +61,8 @@
     <!-- <script src="ardublockly_toolbox.js"></script> -->
     <script type="text/javascript" src="vendor/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap-notify.min.js"></script>
+    
     <script type="text/javascript" src="vendor/codemirror.js"></script>
     <script type="text/javascript" src="vendor/clike.min.js"></script>
     <script type="text/javascript" src="vendor/split.min.js"></script>
@@ -95,26 +100,30 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-<!--               <li class="dropdown">
+              <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#">Action</a>
+                    <a onClick="CocoBlockly.openFile()" href="#">Open</a>
                   </li>
                   <li>
-                    <a href="#">Another action</a>
+                    <a onClick="CocoBlockly.saveAsFile()" href="#">Save As</a>
                   </li>
                   <li>
-                    <a href="#">Something else here</a>
+                    <a onClick="CocoBlockly.saveFile()" href="#">Save</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a href="#">Separated link</a>
+                    <a onClick="CocoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a href="#">About</a>
                   </li>
                 </ul>
-              </li> -->
+              </li>
               <li id="mode-group">
-                <p class="navbar-text">View:</p>
+                <p class="navbar-text">Mode:</p>
                 <div class="btn-group" data-toggle="buttons" role="group">
                   <label id="btn-mode-blocks" class="btn btn-default navbar-btn active">
                     <input type="radio" name="edit-mode" value="Blocks" autocomplete="off" checked="">
@@ -145,10 +154,10 @@
                                   <label id="btn-mode-upload" class="btn btn-default navbar-btn">
                     <span>Upload</span>
                   </label>
-           <div id="progressBar" class="nav navbar-text progress pull-right" style="width: 150px;">
+           <!-- <div id="progressBar" class="nav navbar-text progress pull-right" style="width: 150px;">
           <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
           </div>
-        </div>
+        </div> -->
 
               </li>
             </ul>
@@ -173,6 +182,7 @@
                 </ul>
               </li>
             </ul> -->
+
             <div class="dropdown navbar-btn">
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li>

@@ -1,7 +1,65 @@
 
 var CocoBlockly = CocoBlockly || {};
 
+const {dialog} = require('electron').remote
+var remote = require('electron').remote;
+var fs = remote.require('fs')
+
 CocoBlockly.code = "";
+
+CocoBlockly.config = {
+  showSidebar : 1,
+  currentMode : 'block',
+  currentFile : ''
+}
+
+CocoBlockly.openFile = function() {
+  
+  var file = dialog.showOpenDialog({
+    title: "Open CocoBlock file",
+    defaultPath: "",
+    filters: [
+      {name: 'CocoBlock', extensions: ['cblock']},
+    ]
+  });
+  
+  var filename = file[0];
+  
+  fs.readFile(filename, 'utf8', function (err,xml_data) {
+  
+    if (err) {
+      return console.log(err);
+    }
+  
+  CocoBlockly.workspace.clear();
+  var xml = Blockly.Xml.textToDom(xml_data);
+  Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
+  $.notify("File loaded..")
+
+  });
+
+}
+
+
+CocoBlockly.saveAsFile = function() {
+  var file = dialog.showSaveDialog({
+    title: "Save as CocoBlock file",
+    defaultPath: "",
+    filters: [
+      {name: 'CocoBlock', extensions: ['cblock']},
+    ]
+  });
+
+
+  var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
+  var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+
+  
+  fs.writeFileSync(file, xmlText);
+
+  $.notify("File saved..")
+
+}
 
 CocoBlockly.executeBlockCode = function() {
   var code = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace);
@@ -27,16 +85,50 @@ CocoBlockly.myUpdateFunction = function(event) {
 
 }
 
+CocoBlockly.hideSidebar = function()
+{
+  document.getElementById("simulator").style.display = "none";
+  Blockly.svgResize(CocoBlockly.workspace);
+}
+
+CocoBlockly.showSidebar = function()
+{
+  document.getElementById("simulator").style.display = "block";
+  Blockly.svgResize(CocoBlockly.workspace);
+}
+
+CocoBlockly.toggleSidebar = function()
+{
+  if (CocoBlockly.config.currentMode === 'block')
+  {    
+    if (CocoBlockly.config.showSidebar)
+    {
+      CocoBlockly.config.showSidebar = 0;
+      document.body.className = "";
+    }else{
+      CocoBlockly.config.showSidebar = 1;
+      document.body.className = "simulator";
+    }
+    Blockly.svgResize(CocoBlockly.workspace);    
+  }
+}
+
 CocoBlockly.tabClick = function(clickedName) {
+  
+  CocoBlockly.config.currentMode = 'nonblock';
 
   if (clickedName == 'blocks') {
+    CocoBlockly.config.currentMode = 'block';
     CocoBlockly.workspace.setVisible(true);
     document.getElementById("pane-blocks").className = "tab-pane active";
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-console").className = "tab-pane";
 
-    document.body.className = "simulator";
+    if (CocoBlockly.config.showSidebar)
+    {
+      document.body.className = "simulator";
+    }
   }
 
   if (clickedName == 'code') {
@@ -94,12 +186,55 @@ switch (command) {
     CocoBlockly.CodeMirrorConsole.setCursor(CocoBlockly.CodeMirrorConsole.lastLine());
     break;
   case 'progress':
-    if (params === '100'  ) {
-      CocoBlockly.setProgressBar(0);
-      //setTimeout(function(){CocoBlockly.setProgressBar(0); }, 250);
-    }else {
-      CocoBlockly.setProgressBar(params);              
+
+    if (params.process === 'compile')
+    {
+      if (typeof(CocoBlockly.notify) === 'undefined' || params.progress === 0)
+      {
+        CocoBlockly.notify = $.notify('<strong>Compiling</strong> please wait...', {
+          allow_dismiss: false,
+          showProgressbar: true,
+          delay: 0
+        });
+      }else{
+        CocoBlockly.notify.update({'type': 'success', 'progress': params.progress});
+        CocoBlockly.notify.close();
+      }
     }
+
+    // if (params.process === 'upload')
+    // {
+    //   if (typeof(CocoBlockly.notifyupload) === 'undefined' || params.progress === 0)
+    //   {
+    //     CocoBlockly.notifyupload = $.notify('<strong>Uploading</strong> Do not unplug CocoMake7', {
+    //       allow_dismiss: false,
+    //       showProgressbar: true,
+    //       delay:0
+    //     });
+    //   }else{
+    //     if (params.progress === 100) setTimeout(function(){CocoBlockly.notifyupload.close()}, 500)
+    //     CocoBlockly.notifyupload.update({'type': 'success', 'progress': params.progress});
+    //   }
+    // }
+
+
+    if (params.process === 'upload_replug')
+    {
+        CocoBlockly.upload_replug = $.notify({
+          message: "Please replug CocoMake7",
+        },{
+          delay: 10000,
+          showProgressbar: true,
+          allow_dismiss: false
+        });
+    }
+
+    if (params.process === 'upload_replug_done')
+    {
+        // CocoBlockly.upload_replug.close();
+        CocoBlockly.notifyupload = $.notify({message: "Upload done.."}, {delay : 500});
+    }
+
     break;
   default:
     break;
