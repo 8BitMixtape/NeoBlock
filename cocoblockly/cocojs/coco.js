@@ -111,6 +111,8 @@ CocoBlockly.toggleSidebar = function()
     }
     Blockly.svgResize(CocoBlockly.workspace);    
   }
+  
+  CocoBlockly.CodeMirrorPreview.refresh()
 }
 
 CocoBlockly.tabClick = function(clickedName) {
