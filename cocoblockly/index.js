@@ -62,9 +62,14 @@ var cocoUploadCode = function(fun) {
 			// console.log("75");
 		}        
 
+        if (data.includes('AVR device initialized')) {
+			sendToProgress({process: 'upload_replug_done', progress:100});
+			// console.log("75");
+		}    
+
+
         if (data.includes('avrdude done.')) {
 			sendToProgress({process: 'upload', progress:100});        	
-			sendToProgress({process: 'upload_replug_done', progress:100});
 			// console.log("100");
 		}
 

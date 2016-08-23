@@ -74,7 +74,6 @@ CocoBlockly.myUpdateFunction = function(event) {
 
   CocoBlockly.CodeMirror.getDoc().setValue(code)
   CocoBlockly.CodeMirrorPreview.getDoc().setValue(code)
-  
 
   var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
   var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
@@ -196,10 +195,11 @@ switch (command) {
         CocoBlockly.notify = $.notify('<strong>Compiling</strong> please wait...', {
           allow_dismiss: false,
           showProgressbar: true,
-          delay: 0
+          delay: 0,
+          type: 'warning'
         });
       }else{
-        CocoBlockly.notify.update({'type': 'success', 'progress': params.progress});
+        CocoBlockly.notify.update({'type': 'warning', 'progress': params.progress});
         CocoBlockly.notify.close();
       }
     }
@@ -233,7 +233,7 @@ switch (command) {
 
     if (params.process === 'upload_replug_done')
     {
-        // CocoBlockly.upload_replug.close();
+        CocoBlockly.upload_replug.close();
         CocoBlockly.notifyupload = $.notify({message: "Upload done.."}, {delay : 500});
     }
 
