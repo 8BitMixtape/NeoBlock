@@ -40,6 +40,9 @@ CocoBlockly.openFile = function() {
 
 }
 
+CocoBlockly.saveFile = function() {
+
+}
 
 CocoBlockly.saveAsFile = function() {
   var file = dialog.showSaveDialog({
@@ -83,6 +86,29 @@ CocoBlockly.myUpdateFunction = function(event) {
 
 
 }
+
+// window.prompt = alertify.prompt;
+//alertify.alert('Ready!');
+var prompt = function(message, opt_defaultInput, opt_callback)
+{
+ var prompt_alert = alertify.prompt( 
+    'CocoBlock', message, opt_defaultInput, 
+    function(evt, val){
+      opt_callback(val)
+    },
+    function(){}
+  )
+
+ prompt_alert.set({
+    'pinnable': false,
+    'modal': false,
+    'transition' : 'fade',
+    'oncancel' : function(){}
+  });
+
+}
+// Original signature: function(message, opt_defaultInput, opt_callback)
+Blockly.prompt = prompt;
 
 CocoBlockly.hideSidebar = function()
 {
@@ -378,6 +404,5 @@ window.addEventListener('load', function load(event) {
         minSize: 200,
         onDragEnd: svgresize
     });
-
 
 });
