@@ -196,16 +196,6 @@ var sendProgress = function(data)
   mainWindow.webContents.send('statusipc', param)
 }
 
-
-
-// require('electron').ipcRenderer.on('ping', (event, message) => {
-//   console.log(message)  // Prints 'whoooooooh!'
-// })
-
-
-//io.origins('*:*'); //allow cors
-//io.listen(3000);
-
 app.on('ready', () => {
 
 	mainWindow = new BrowserWindow({
