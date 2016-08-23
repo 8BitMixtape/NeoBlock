@@ -3,6 +3,130 @@ var CocoBlockly = CocoBlockly || {};
 
 const {dialog} = require('electron').remote
 var remote = require('electron').remote;
+
+
+CocoBlockly.ipc = {};
+CocoBlockly.ipc.ipcRenderer = require('electron').ipcRenderer
+CocoBlockly.ipc.globalCounter = 0
+CocoBlockly.ipc.ipcRenderer.on('statusipc', (event, message) => {
+  CocoBlockly.ipc.processIpcBroadcast(message)
+})
+
+CocoBlockly.ipc.processIpcBroadcast = function(data)
+{ 
+var command = data['command'];
+var params = data['params'];
+
+switch (command) {
+  case 'console':
+    CocoBlockly.CodeMirrorConsole.replaceRange(params, {line: Infinity});
+    CocoBlockly.CodeMirrorConsole.setCursor(CocoBlockly.CodeMirrorConsole.lastLine());
+    break;
+  case 'progress':
+
+    if (params.process === 'compile')
+    {
+      if (typeof(CocoBlockly.notify) === 'undefined' || params.progress === 0)
+      {
+        CocoBlockly.notify = $.notify('<strong>Compiling</strong> please wait...', {
+          allow_dismiss: false,
+          showProgressbar: true,
+          delay: 0,
+          type: 'warning'
+        });
+      }else{
+        CocoBlockly.notify.update({'type': 'warning', 'progress': params.progress});
+        CocoBlockly.notify.close();
+      }
+    }
+
+    // if (params.process === 'upload')
+    // {
+    //   if (typeof(CocoBlockly.notifyupload) === 'undefined' || params.progress === 0)
+    //   {
+    //     CocoBlockly.notifyupload = $.notify('<strong>Uploading</strong> Do not unplug CocoMake7', {
+    //       allow_dismiss: false,
+    //       showProgressbar: true,
+    //       delay:0
+    //     });
+    //   }else{
+    //     if (params.progress === 100) setTimeout(function(){CocoBlockly.notifyupload.close()}, 500)
+    //     CocoBlockly.notifyupload.update({'type': 'success', 'progress': params.progress});
+    //   }
+    // }
+
+
+    if (params.process === 'upload_replug')
+    {
+        CocoBlockly.upload_replug = $.notify({
+          message: "Please replug CocoMake7",
+        },{
+          delay: 10000,
+          showProgressbar: true,
+          allow_dismiss: false
+        });
+    }
+
+    if (params.process === 'upload_replug_done')
+    {
+        CocoBlockly.upload_replug.close();
+        CocoBlockly.notifyupload = $.notify({message: "Upload done.."}, {delay : 500});
+    }
+
+    break;
+  default:
+    break;
+}
+}
+
+CocoBlockly.ipc.sendBasicIpc = function(cmd, fun)
+{
+ var localCallCounter = ++CocoBlockly.ipc.globalCounter;
+ CocoBlockly.ipc.ipcRenderer.once('done-ipc' + localCallCounter, function (event, data) {
+     fun ( data );
+ });
+ CocoBlockly.ipc.ipcRenderer.send('do-ipc', {count: localCallCounter, command: cmd});
+}
+
+
+CocoBlockly.ipc.sendParam = function (cmd, param, fun)
+{
+  var command = {command: cmd};
+  command.params = param;
+  CocoBlockly.ipc.sendBasicIpc(command, fun);
+}
+
+CocoBlockly.ipcUploadCode = function(code, fun)
+{
+  CocoBlockly.ipc.sendParam('upload', '', fun);
+}
+
+CocoBlockly.ipcCompileCode = function(code, fun)
+{
+  CocoBlockly.ipc.sendParam('compile', code, fun);
+}
+
+CocoBlockly.upload = function()
+{
+  CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(){
+    CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+    CocoBlockly.ipc.sendParam('upload', '', function(){
+      console.log('upload done..');
+    });
+  });
+}
+
+CocoBlockly.compile = function()
+{
+  CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+  CocoBlockly.rpcCompileCode(CocoBlockly.code, function(){
+    console.log('compile done..');
+  });
+}
+
+
+
 var fs = remote.require('fs')
 
 CocoBlockly.code = "";
@@ -306,16 +430,16 @@ CocoBlockly.rpcCompileCode = function(code, fun)
   CocoBlockly.rpc.sendRpcParam('compile', code, fun);
 }
 
-CocoBlockly.upload = function()
-{
-  CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-  CocoBlockly.rpcCompileCode(CocoBlockly.code, function(){
-    CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-    CocoBlockly.rpc.sendRpcParam('upload', '', function(){
-      console.log('upload done..');
-    });
-  });
-}
+// CocoBlockly.upload = function()
+// {
+//   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+//   CocoBlockly.rpcCompileCode(CocoBlockly.code, function(){
+//     CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+//     CocoBlockly.rpc.sendRpcParam('upload', '', function(){
+//       console.log('upload done..');
+//     });
+//   });
+// }
 
 CocoBlockly.compile = function()
 {

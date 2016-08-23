@@ -1,10 +1,9 @@
-const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu, ipcMain} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
 let mainWindow;
 
-var io = require('socket.io')();
 var exec = require('child_process').exec;
 
 // const menu = Menu.buildFromTemplate(template)
@@ -41,7 +40,7 @@ var cocoUploadCode = function(fun) {
 
     var uploadCmd = "/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude -C/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude.conf -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
 
-	sendToProgress({process: 'upload', progress:0});
+	sendIPCProgress({process: 'upload', progress:0});
 
 
     var child = exec(uploadCmd);
@@ -50,29 +49,29 @@ var cocoUploadCode = function(fun) {
         cocoServer.compilerBusy = 1;
 
         if (data.includes('Detecting CocoMidi')) {
-			// sendToProgress('25');
-			sendToProgress({process: 'upload', progress:25});
+			// sendIPCProgress('25');
+			sendIPCProgress({process: 'upload', progress:25});
 			// console.log("25");
 		}   
 
         if (data.includes('Waiting for 10 seconds')) {
-			sendToProgress({process: 'upload', progress:75});        	
-			sendToProgress({process: 'upload_replug', progress:75});
+			sendIPCProgress({process: 'upload', progress:75});        	
+			sendIPCProgress({process: 'upload_replug', progress:75});
 			// console.log("75");
 		}        
 
         if (data.includes('AVR device initialized')) {
-			sendToProgress({process: 'upload_replug_done', progress:100});
+			sendIPCProgress({process: 'upload_replug_done', progress:100});
 			// console.log("75");
 		}    
 
 
         if (data.includes('avrdude done.')) {
-			sendToProgress({process: 'upload', progress:100});        	
+			sendIPCProgress({process: 'upload', progress:100});        	
 			// console.log("100");
 		}
 
-		sendToConsole(data);
+		sendIPCConsole(data);
 	});
 
 	child.on('close', function() {
@@ -110,7 +109,7 @@ var cocoCompileCode = function(code, fun) {
 
     fs.writeFileSync(tmpScript, code);
 
-	sendToProgress({process: 'compile', progress:0});
+	sendIPCProgress({process: 'compile', progress:0});
 
     var child = exec(compileCmd);
     
@@ -121,48 +120,25 @@ var cocoCompileCode = function(code, fun) {
 		    if (m.index === cocoServer.compileProgressRe.lastIndex) {
 		        cocoServer.compileProgressRe.lastIndex++;
 		    }
-			sendToProgress({process: 'compile', progress:m[1]});
+			sendIPCProgress({process: 'compile', progress:m[1]});
 		}else{
-			sendToConsole(data);
+			sendIPCConsole(data);
 		}
 
 	});
 
 	child.on('close', function(code) {
-	    // console.log("compile done..");
-		sendToProgress({process: 'compile', progress:100});
+		sendIPCProgress({process: 'compile', progress:100});
         cocoServer.compilerBusy = 0;
 	    fun(code);
 	});
 
 }
 
-var sendRpcResp = function(socket, callCounter, data) {
-	socket.emit('doneRPC'+callCounter, data);
-}
 
 
-var sendBroadcast = function(data) {
-	io.emit('statusRPC', data);
-}
+var processIPCMsg = function(event, count, data) {	
 
-var sendToConsole = function(stdout) {
-	var param = {};
-	param['command'] = 'console';
-	param['params'] = stdout;
-	io.emit('statusRPC', param);
-}
-
-var sendToProgress = function(stdout) {
-	var param = {};
-	param['command'] = 'progress';
-	param['params'] = stdout;
-	io.emit('statusRPC', param);
-}
-
-
-
-var processRpcMsg = function(socket, callCounter, data) {	
 	var command = data['command'];
 	var params = data['params'];
 	var response = {};
@@ -172,14 +148,13 @@ var processRpcMsg = function(socket, callCounter, data) {
 			if (cocoServer.compilerBusy) break;			
 			cocoCompileCode(params, function(){
 				response['compile'] = 'done';
-				sendRpcResp(socket, callCounter, response);
+				sendIPCresp(event, count, response);
 			});
 			break;
 		case 'upload':
 			if (cocoServer.compilerBusy) break;
-			// console.log("upload..");		
 			cocoUploadCode(function(){
-				sendToConsole("upload done..");
+				sendIPCConsole("upload done..");
 			})
 			break;			
 		default:
@@ -187,15 +162,49 @@ var processRpcMsg = function(socket, callCounter, data) {
 	}
 }
 
-io.on('connection', function(socket){
-    socket.on('doRPC', function (callCounter, data) {
-    		processRpcMsg(socket, callCounter, data);  
-    });
-});
 
 
-io.origins('*:*'); //allow cors
-io.listen(3000);
+ipcMain.on('do-ipc', (event, arg) => {
+  processIPCMsg(event, arg.count, arg.command);  	
+})
+
+
+var sendIPCresp = function(event, count, data)
+{
+  event.sender.send('done-ipc'+count, data)
+}
+
+
+var sendIPCBroadcast = function(data) {
+  mainWindow.webContents.send('statusipc', param)
+}
+
+var sendIPCConsole = function(data)
+{
+  var param = {};
+  param['command'] = 'console';
+  param['params'] = data;
+  mainWindow.webContents.send('statusipc', param)
+}
+
+
+var sendIPCProgress = function(data)
+{
+  var param = {};
+  param['command'] = 'progress';
+  param['params'] = data;
+  mainWindow.webContents.send('statusipc', param)
+}
+
+
+
+// require('electron').ipcRenderer.on('ping', (event, message) => {
+//   console.log(message)  // Prints 'whoooooooh!'
+// })
+
+
+//io.origins('*:*'); //allow cors
+//io.listen(3000);
 
 app.on('ready', () => {
 
@@ -219,7 +228,9 @@ app.on('ready', () => {
   // })
 
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-
+  setTimeout(function(){
+	  // sendIPCConsole('dada');  	
+  }, 2000)
 });
 
 
