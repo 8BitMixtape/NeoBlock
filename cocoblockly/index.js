@@ -1,15 +1,14 @@
-const {app, BrowserWindow, globalShortcut} = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
 let mainWindow;
 
-// var server = require('http').createServer();
-// var io = require('socket.io')(server);
 var io = require('socket.io')();
-
 var exec = require('child_process').exec;
 
+// const menu = Menu.buildFromTemplate(template)
+// Menu.setApplicationMenu(menu)
 
 
 var cocoServer = {};
@@ -85,14 +84,15 @@ var cocoUploadCode = function(fun) {
 
 var cocoCompileCode = function(code, fun) {
 
+	var arduinoAppPath = "/Users/xcorex/Downloads/Arduino-2.app";
+
 	var scriptName = "CocoTmp.ino";
     
     var tmpScriptDir = "/tmp/CocoTmp";
     var tmpScript = tmpScriptDir+path.sep+scriptName;
 
     var tmpCompileDir = "/tmp/CocoTmpCompile";
-    var compileCmd = "/Users/xcorex/Downloads/Arduino-2.app/Contents/Java/arduino-builder -compile -logger=machine -hardware \"/Users/xcorex/Downloads/Arduino-2.app/Contents/Java/hardware\" -hardware \"/Users/xcorex/Library/Arduino15/packages\" -hardware \"/Users/xcorex/Documents/Arduino/hardware\" -tools \"/Users/xcorex/Downloads/Arduino-2.app/Contents/Java/tools-builder\" -tools \"/Users/xcorex/Downloads/Arduino-2.app/Contents/Java/hardware/tools/avr\" -tools \"/Users/xcorex/Library/Arduino15/packages\" -built-in-libraries \"/Users/xcorex/Downloads/Arduino-2.app/Contents/Java/libraries\" -libraries \"/Users/xcorex/Documents/Arduino/libraries\" -fqbn=CocoMake7:avr:cocomake -ide-version=10609 -build-path \"" + tmpCompileDir + "\" -warnings=none -prefs=build.warn_data_percentage=75 -verbose \"" + tmpScript + "\"";
-    var uploadCmd = "/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude -C/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude.conf -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + scriptName +  ".hex:i";
+    var compileCmd = arduinoAppPath + "/Contents/Java/arduino-builder -compile -logger=machine -hardware \"" + arduinoAppPath + "/Contents/Java/hardware\" -hardware \"/Users/xcorex/Library/Arduino15/packages\" -hardware \"/Users/xcorex/Documents/Arduino/hardware\" -tools \"" + arduinoAppPath +  "/Contents/Java/tools-builder\" -tools \"" + arduinoAppPath + "/Contents/Java/hardware/tools/avr\" -tools \"/Users/xcorex/Library/Arduino15/packages\" -built-in-libraries \"" + arduinoAppPath + "/Contents/Java/libraries\" -libraries \"/Users/xcorex/Documents/Arduino/libraries\" -fqbn=CocoMake7:avr:cocomake -ide-version=10609 -build-path \"" + tmpCompileDir + "\" -warnings=none -prefs=build.warn_data_percentage=75 -verbose \"" + tmpScript + "\"";
 
     cocoServer.compilerBusy = 1;
 
@@ -113,9 +113,6 @@ var cocoCompileCode = function(code, fun) {
 	sendToProgress({process: 'compile', progress:0});
 
     var child = exec(compileCmd);
-
-    // console.log(compileCmd);
-
     
 	child.stdout.on('data', function(data) {
 		var m;	 
@@ -209,23 +206,19 @@ app.on('ready', () => {
   	  minWidth: 816
 	});
 
+  // globalShortcut.register('CommandOrControl+T', () => {
+  //   mainWindow.webContents.executeJavaScript("CocoBlockly.toggleSidebar()")
+  // })
 
+  // globalShortcut.register('CommandOrControl+U', () => {
+  //   mainWindow.webContents.executeJavaScript("CocoBlockly.upload()")
+  // })
 
+  // globalShortcut.register('CommandOrControl+O', () => {
+  //   mainWindow.webContents.executeJavaScript("CocoBlockly.openFile()")
+  // })
 
-  globalShortcut.register('CommandOrControl+T', () => {
-    mainWindow.webContents.executeJavaScript("CocoBlockly.toggleSidebar()")
-  })
-
-  globalShortcut.register('CommandOrControl+U', () => {
-    mainWindow.webContents.executeJavaScript("CocoBlockly.upload()")
-  })
-
-  globalShortcut.register('CommandOrControl+O', () => {
-    mainWindow.webContents.executeJavaScript("CocoBlockly.openFile()")
-  })
-
-    // mainWindow.openDevTools();  
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
 
 });
 
