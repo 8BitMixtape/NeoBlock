@@ -3,7 +3,17 @@ var CocoBlockly = CocoBlockly || {};
 
 const {dialog} = require('electron').remote
 var remote = require('electron').remote;
+var fs = remote.require('fs')
 
+CocoBlockly.code = "";
+
+CocoBlockly.config = {
+  showSidebar : 1,
+  currentMode : 'block',
+  currentFile : ''
+}
+
+CocoBlockly.PREV_ARDUINO_CODE_ = ""
 
 CocoBlockly.ipc = {};
 CocoBlockly.ipc.ipcRenderer = require('electron').ipcRenderer
@@ -126,19 +136,6 @@ CocoBlockly.compile = function()
 }
 
 
-
-var fs = remote.require('fs')
-
-CocoBlockly.code = "";
-
-CocoBlockly.config = {
-  showSidebar : 1,
-  currentMode : 'block',
-  currentFile : ''
-}
-
-CocoBlockly.PREV_ARDUINO_CODE_ = ""
-
 CocoBlockly.openFile = function() {
   
   var file = dialog.showOpenDialog({
@@ -156,11 +153,10 @@ CocoBlockly.openFile = function() {
     if (err) {
       return console.log(err);
     }
-  
-  CocoBlockly.workspace.clear();
-  var xml = Blockly.Xml.textToDom(xml_data);
-  Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
-  $.notify("File loaded..")
+    CocoBlockly.workspace.clear();
+    var xml = Blockly.Xml.textToDom(xml_data);
+    Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
+    $.notify("File loaded..")
 
   });
 
@@ -179,21 +175,16 @@ CocoBlockly.saveAsFile = function() {
     ]
   });
 
-
-
-
   var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
   var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-
   
   fs.writeFileSync(file, xmlText);
-
   $.notify("File saved..")
 
 }
 
 CocoBlockly.isRunningElectron = function() {
-  return navigator.userAgent.toLowerCase().indexOf('ardublockly') > -1;
+  return navigator.userAgent.toLowerCase().indexOf('cocoblock') > -1;
 };
 
 CocoBlockly.clearWorkspace = function() {
