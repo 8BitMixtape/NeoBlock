@@ -87,11 +87,64 @@ var cocoCompileCode = function(code, fun) {
 
 	var scriptName = "CocoTmp.ino";
     
-    var tmpScriptDir = "/tmp/CocoTmp";
-    var tmpScript = tmpScriptDir+path.sep+scriptName;
+	var tmpSys = '/tmp/';
+    var tmpScriptDir = tmpSys + path.sep + "CocoTmp";
+    var tmpScript = tmpScriptDir + path.sep + scriptName;
+    var tmpCompileDir = tmpSys + path.sep + "CocoTmpCompile";
 
-    var tmpCompileDir = "/tmp/CocoTmpCompile";
-    var compileCmd = arduinoAppPath + "/Contents/Java/arduino-builder -compile -logger=machine -hardware \"" + arduinoAppPath + "/Contents/Java/hardware\" -hardware \"/Users/xcorex/Library/Arduino15/packages\" -hardware \"/Users/xcorex/Documents/Arduino/hardware\" -tools \"" + arduinoAppPath +  "/Contents/Java/tools-builder\" -tools \"" + arduinoAppPath + "/Contents/Java/hardware/tools/avr\" -tools \"/Users/xcorex/Library/Arduino15/packages\" -built-in-libraries \"" + arduinoAppPath + "/Contents/Java/libraries\" -libraries \"/Users/xcorex/Documents/Arduino/libraries\" -fqbn=CocoMake7:avr:cocomake -ide-version=10609 -build-path \"" + tmpCompileDir + "\" -warnings=none -prefs=build.warn_data_percentage=75 -verbose \"" + tmpScript + "\"";
+
+    var arduinoBuilderPath = arduinoAppPath + "/Contents/Java/arduino-builder";
+
+	var arduinoHwManager = '/Users/xcorex/Library/Arduino15/packages';
+    var arduinoToolHwManager = '/Users/xcorex/Library/Arduino15/packages';
+
+    var arduinoHwUserPath = '/Users/xcorex/Documents/Arduino/hardware';
+    var arduinoUserLib = '/Users/xcorex/Documents/Arduino/libraries';
+
+    var arduinoHwPath = arduinoAppPath + '/Contents/Java/hardware';
+    var arduinoBuiltinLib = arduinoAppPath + '/Contents/Java/libraries';
+    var arduinoToolbuilder = arduinoAppPath +  '/Contents/Java/tools-builder';
+    var arduinoToolAvr = arduinoAppPath + '/Contents/Java/hardware/tools/avr';
+
+    var arduinoBuiltPath = tmpCompileDir;
+	var arduinoScriptPath = tmpScript;
+
+
+	var quote = function(str)
+	{
+		return '"' + str + '"';
+	}
+
+    var build_opt = [
+    	['-compile'],
+    	['-logger=machine'],
+    	['-hardware', quote(arduinoHwPath)],
+    	['-hardware',quote(arduinoHwManager)],
+    	['-hardware',quote(arduinoHwUserPath)],
+    	['-tools',quote(arduinoToolbuilder)],
+    	['-tools',quote(arduinoToolAvr)],
+    	['-tools',quote(arduinoToolHwManager)],
+    	['-built-in-libraries',quote(arduinoBuiltinLib)],
+    	['-libraries',quote(arduinoUserLib)],    	
+    	['-fqbn=CocoMake7:avr:cocomake'],
+    	['-ide-version=10609'],
+    	['-build-path',quote(arduinoBuiltPath)],
+    	['-warnings=none'],
+    	['-prefs=build.warn_data_percentage=75'],
+    	['-verbose'],
+    	[quote(arduinoScriptPath)]
+    ]
+
+
+	var arrayLength = build_opt.length;
+	var command = "";
+
+	for (var i = 0; i < arrayLength; i++) {
+	    build_opt[i] = build_opt[i].join(' ');
+	}
+
+    var build_command = arduinoBuilderPath + ' ' + build_opt.join(' ');
+
 
     cocoServer.compilerBusy = 1;
 
@@ -111,7 +164,7 @@ var cocoCompileCode = function(code, fun) {
 
 	sendProgress({process: 'compile', progress:0});
 
-    var child = exec(compileCmd);
+    var child = exec(build_command);
     
 	child.stdout.on('data', function(data) {
 		var m;	 
