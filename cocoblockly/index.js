@@ -32,7 +32,7 @@ function fileExists(filePath) {
 
 process.on('uncaughtException', function (exception) {
   // handle or ignore error
-  console.log(exception);
+  // console.log(exception);
 });
 
 var cocoUploadCode = function(fun) {
@@ -132,7 +132,7 @@ var cocoCompileCode = function(code, fun) {
 	});
 
 	child.on('close', function(code) {
-	    console.log("compile done..");
+	    // console.log("compile done..");
 		sendToProgress({process: 'compile', progress:100});
         cocoServer.compilerBusy = 0;
 	    fun(code);
@@ -180,7 +180,7 @@ var processRpcMsg = function(socket, callCounter, data) {
 			break;
 		case 'upload':
 			if (cocoServer.compilerBusy) break;
-			console.log("upload..");		
+			// console.log("upload..");		
 			cocoUploadCode(function(){
 				sendToConsole("upload done..");
 			})
