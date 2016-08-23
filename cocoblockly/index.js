@@ -40,7 +40,7 @@ var cocoUploadCode = function(fun) {
 
     var uploadCmd = "/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude -C/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude.conf -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
 
-	sendIPCProgress({process: 'upload', progress:0});
+	sendProgress({process: 'upload', progress:0});
 
 
     var child = exec(uploadCmd);
@@ -49,29 +49,29 @@ var cocoUploadCode = function(fun) {
         cocoServer.compilerBusy = 1;
 
         if (data.includes('Detecting CocoMidi')) {
-			// sendIPCProgress('25');
-			sendIPCProgress({process: 'upload', progress:25});
+			// sendProgress('25');
+			sendProgress({process: 'upload', progress:25});
 			// console.log("25");
 		}   
 
         if (data.includes('Waiting for 10 seconds')) {
-			sendIPCProgress({process: 'upload', progress:75});        	
-			sendIPCProgress({process: 'upload_replug', progress:75});
+			sendProgress({process: 'upload', progress:75});        	
+			sendProgress({process: 'upload_replug', progress:75});
 			// console.log("75");
 		}        
 
         if (data.includes('AVR device initialized')) {
-			sendIPCProgress({process: 'upload_replug_done', progress:100});
+			sendProgress({process: 'upload_replug_done', progress:100});
 			// console.log("75");
 		}    
 
 
         if (data.includes('avrdude done.')) {
-			sendIPCProgress({process: 'upload', progress:100});        	
+			sendProgress({process: 'upload', progress:100});        	
 			// console.log("100");
 		}
 
-		sendIPCConsole(data);
+		sendConsole(data);
 	});
 
 	child.on('close', function() {
@@ -109,7 +109,7 @@ var cocoCompileCode = function(code, fun) {
 
     fs.writeFileSync(tmpScript, code);
 
-	sendIPCProgress({process: 'compile', progress:0});
+	sendProgress({process: 'compile', progress:0});
 
     var child = exec(compileCmd);
     
@@ -120,15 +120,15 @@ var cocoCompileCode = function(code, fun) {
 		    if (m.index === cocoServer.compileProgressRe.lastIndex) {
 		        cocoServer.compileProgressRe.lastIndex++;
 		    }
-			sendIPCProgress({process: 'compile', progress:m[1]});
+			sendProgress({process: 'compile', progress:m[1]});
 		}else{
-			sendIPCConsole(data);
+			sendConsole(data);
 		}
 
 	});
 
 	child.on('close', function(code) {
-		sendIPCProgress({process: 'compile', progress:100});
+		sendProgress({process: 'compile', progress:100});
         cocoServer.compilerBusy = 0;
 	    fun(code);
 	});
@@ -154,7 +154,7 @@ var processIPCMsg = function(event, count, data) {
 		case 'upload':
 			if (cocoServer.compilerBusy) break;
 			cocoUploadCode(function(){
-				sendIPCConsole("upload done..");
+				sendConsole("upload done..");
 			})
 			break;			
 		default:
@@ -179,7 +179,7 @@ var sendIPCBroadcast = function(data) {
   mainWindow.webContents.send('statusipc', param)
 }
 
-var sendIPCConsole = function(data)
+var sendConsole = function(data)
 {
   var param = {};
   param['command'] = 'console';
@@ -188,7 +188,7 @@ var sendIPCConsole = function(data)
 }
 
 
-var sendIPCProgress = function(data)
+var sendProgress = function(data)
 {
   var param = {};
   param['command'] = 'progress';
@@ -229,7 +229,7 @@ app.on('ready', () => {
 
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   setTimeout(function(){
-	  // sendIPCConsole('dada');  	
+	  // sendConsole('dada');  	
   }, 2000)
 });
 
