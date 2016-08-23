@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, globalShortcut} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
@@ -199,11 +199,33 @@ app.on('ready', () => {
 
 	mainWindow = new BrowserWindow({
 	  height: 768,
-	  width: 1024
+	  width: 1024,
+      minHeight: 637,
+  	  minWidth: 816
 	});
+
+
+
+
+  globalShortcut.register('CommandOrControl+T', () => {
+    mainWindow.webContents.executeJavaScript("CocoBlockly.toggleSidebar()")
+  })
+
+  globalShortcut.register('CommandOrControl+U', () => {
+    mainWindow.webContents.executeJavaScript("CocoBlockly.upload()")
+  })
+
+  globalShortcut.register('CommandOrControl+O', () => {
+    mainWindow.webContents.executeJavaScript("CocoBlockly.openFile()")
+  })
 
     // mainWindow.openDevTools();  
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
 });
 
+
+app.on('will-quit', () => {
+  // Unregister all shortcuts.
+  globalShortcut.unregisterAll()
+})
