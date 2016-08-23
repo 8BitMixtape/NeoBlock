@@ -13,6 +13,8 @@ CocoBlockly.config = {
   currentFile : ''
 }
 
+CocoBlockly.PREV_ARDUINO_CODE_ = ""
+
 CocoBlockly.openFile = function() {
   
   var file = dialog.showOpenDialog({
@@ -54,6 +56,8 @@ CocoBlockly.saveAsFile = function() {
   });
 
 
+
+
   var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
   var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
 
@@ -64,32 +68,37 @@ CocoBlockly.saveAsFile = function() {
 
 }
 
+CocoBlockly.isRunningElectron = function() {
+  return navigator.userAgent.toLowerCase().indexOf('ardublockly') > -1;
+};
+
+CocoBlockly.clearWorkspace = function() {
+    CocoBlockly.workspace.clear();
+}
+
 CocoBlockly.executeBlockCode = function() {
   var code = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace);
   console.log('play');
 }
         
-CocoBlockly.myUpdateFunction = function(event) {
-  var doc = CocoBlockly.CodeMirror.getDoc();
-  var code = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace)
+CocoBlockly.generateCode = function(event) {
+  var arduinoCode = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace)
 
-  CocoBlockly.code = code;
+  CocoBlockly.code = arduinoCode;
 
-  CocoBlockly.CodeMirror.getDoc().setValue(code)
-  CocoBlockly.CodeMirrorPreview.getDoc().setValue(code)
-
-  var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
-  var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-
-
-  CocoBlockly.CodeMirrorXML.getDoc().setValue(xmlText)
-
-
+  if (arduinoCode !== CocoBlockly.PREV_ARDUINO_CODE_)
+  {
+    CocoBlockly.CodeMirror.getDoc().setValue(CocoBlockly.code)
+    CocoBlockly.CodeMirrorPreview.getDoc().setValue(CocoBlockly.code)
+    var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace)
+    var xmlText = Blockly.Xml.domToPrettyText(xmlDom)
+    CocoBlockly.CodeMirrorXML.getDoc().setValue(xmlText)
+    CocoBlockly.PREV_ARDUINO_CODE_ = CocoBlockly.code
+  }
 }
 
-// window.prompt = alertify.prompt;
-//alertify.alert('Ready!');
-var prompt = function(message, opt_defaultInput, opt_callback)
+
+CocoBlockly.prompt = function(message, opt_defaultInput, opt_callback)
 {
  var prompt_alert = alertify.prompt( 
     'CocoBlock', message, opt_defaultInput, 
@@ -107,8 +116,7 @@ var prompt = function(message, opt_defaultInput, opt_callback)
   });
 
 }
-// Original signature: function(message, opt_defaultInput, opt_callback)
-Blockly.prompt = prompt;
+
 
 CocoBlockly.hideSidebar = function()
 {
@@ -208,7 +216,6 @@ var params = data['params'];
 
 switch (command) {
   case 'console':
-    // console.log(params);
     CocoBlockly.CodeMirrorConsole.replaceRange(params, {line: Infinity});
     CocoBlockly.CodeMirrorConsole.setCursor(CocoBlockly.CodeMirrorConsole.lastLine());
     break;
@@ -321,10 +328,9 @@ CocoBlockly.compile = function()
 
 window.addEventListener('load', function load(event) {
     window.removeEventListener('load', load, false);
-    // var toolBox =  Blockly.Xml.textToDom(Ardublockly.TOOLBOX_XML);
+
     CocoBlockly.toolBox = document.getElementById('ArduBlocklyToolbox');
     
-
     CocoBlockly.workspace = Blockly.inject('blocklyDiv',
     {
         css: false,
@@ -385,7 +391,7 @@ window.addEventListener('load', function load(event) {
       mode: "application/xml"
     });
                               
-    CocoBlockly.workspace.addChangeListener(CocoBlockly.myUpdateFunction);
+    CocoBlockly.workspace.addChangeListener(CocoBlockly.generateCode);
 
     document.getElementById("btn-mode-blocks").onclick = function(){CocoBlockly.tabClick('blocks')};
     document.getElementById("btn-mode-code").onclick = function(){CocoBlockly.tabClick('code')};
@@ -404,5 +410,9 @@ window.addEventListener('load', function load(event) {
         minSize: 200,
         onDragEnd: svgresize
     });
+
+
+    // Original signature: function(message, opt_defaultInput, opt_callback)
+    Blockly.prompt = CocoBlockly.prompt;
 
 });
