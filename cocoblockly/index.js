@@ -1,6 +1,12 @@
 const {app, BrowserWindow, globalShortcut, Menu, ipcMain} = require('electron');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
+
+if (os.platform() == "win32") {
+    app.setPath("appData", process.env.LOCALAPPDATA);
+    app.setPath("userData", path.join(process.env.LOCALAPPDATA, app.getName()));
+}
 
 let mainWindow;
 
@@ -30,18 +36,140 @@ function fileExists(filePath) {
 
 process.on('uncaughtException', function (exception) {
   // handle or ignore error
-  // console.log(exception);
+  console.log(exception);
 });
+
+
+var setArduinoFolder = function(arduino_path, script_name)
+{
+	var scriptName = script_name;
+    var arduinoAppPath = arduino_path;
+
+	var tmpSys = app.getPath('temp');
+
+    var docDir = app.getPath('documents');
+    var appDataDir = app.getPath('appData');
+    var tmpScriptDir = tmpSys + scriptName;
+    var tmpScript = tmpScriptDir + path.sep + scriptName + ".ino";
+	var scriptNameCompile = scriptName + "Compile";    
+    var tmpCompileDir = tmpSys + scriptNameCompile;
+    
+
+    var getLatestVer = function(board_dir)
+    {
+    	var ver_dir = (fs.readdirSync(board_dir))
+
+    	var max_time = 0;
+    	var latest_ver = "";
+
+    	var arrayLength = ver_dir.length;
+		for (var i = 0; i < arrayLength; i++) {
+		    var cur_ver = ver_dir[i];
+		    var fullpath = path.join(cocomakepath, path.sep, cur_ver);
+		    var cur_time = fs.statSync(fullpath).ctime;
+		    if (cur_ver === '.DS_Store') continue;
+		    if (cur_time > max_time) latest_ver = ver_dir[i];
+		}
+
+		return latest_ver;
+    }
+
+    if (os.platform() === 'darwin')
+    {
+    	
+    	var cocomakepath = appDataDir + '/../Arduino15/packages/CocoMake7/hardware/avr'
+
+    	var latest_ver = getLatestVer(cocomakepath)
+
+		console.log(latest_ver)
+
+	    cocoServer.arduinoPath = {
+			tmpScriptDir : tmpScriptDir,
+			tmpScript  	 : tmpScript,
+			tmpCompileDir: tmpCompileDir,
+			appPath 	 : arduinoAppPath,
+			hwManager 	 : appDataDir + '/../Arduino15/packages',
+		    toolHwManager: appDataDir + '/../Arduino15/packages',
+		    hwUserPath 	 : docDir + '/Arduino/hardware',
+		    userLib 	 : docDir + '/Arduino/libraries',
+		    builderPath  : arduinoAppPath + '/Contents/Java/arduino-builder',
+		    hwPath 		 : arduinoAppPath + '/Contents/Java/hardware',
+		    builtinLib 	 : arduinoAppPath + '/Contents/Java/libraries',
+		    toolbuilder  : arduinoAppPath + '/Contents/Java/tools-builder',
+		    toolAvr 	 : arduinoAppPath + '/Contents/Java/hardware/tools/avr',
+		    builtPath 	 : tmpCompileDir,
+			scriptPath 	 : tmpScript,
+			cocoMakePath : cocomakepath + path.sep + latest_ver,
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/avrdude/macosx',
+
+		}
+
+		console.log(cocoServer.arduinoPath)
+    }else if (os.platform() === 'win32')
+    {
+
+    	var cocomakepath = appDataDir + '\\Arduino15\\packages\\CocoMake7\\hardware\\avr\\'
+
+    	var latest_ver = getLatestVer(cocomakepath)
+
+	    cocoServer.arduinoPath = {
+			tmpScriptDir : tmpScriptDir,
+			tmpScript  	 : tmpScript,
+			tmpCompileDir: tmpCompileDir,			
+			appPath 	 : arduinoAppPath,
+			hwManager 	 : appDataDir + '\\Arduino15\\packages',
+		    toolHwManager: appDataDir + '\\Arduino15\\packages',
+		    hwUserPath 	 : docDir + "\\Arduino\\hardware\\",
+		    userLib 	 : docDir + "\\Arduino\\libraries",
+		    builderPath  : arduinoAppPath + '\\arduino-builder',
+		    hwPath 		 : arduinoAppPath + '\\hardware',
+		    builtinLib 	 : arduinoAppPath + '\\libraries',
+		    toolbuilder  : arduinoAppPath + '\\tools-builder',
+		    toolAvr 	 : arduinoAppPath + '\\hardware\\tools\\avr',
+		    builtPath 	 : tmpCompileDir,
+			scriptPath 	 : tmpScript,
+			cocoMakePath : cocomakepath + path.sep + latest_ver,
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\avrdude\\windows',
+		}    
+	}
+}
+
+var initArduinoPath = function() {
+    if (os.platform() === 'darwin')
+    {
+    	
+    	var testArduino = "/Users/xcorex/Downloads/Arduino-2.app"    	
+    	var defaultArduino = "/Applications/Arduino.app"
+
+    	if(fileExists(testArduino)) {
+	    	setArduinoFolder(testArduino, "CocoTmp");
+    	}else if (fileExists(defaultArduino)) {
+	    	setArduinoFolder(defaultArduino, "CocoTmp");
+    	}
+    }else if (os.platform() === 'win32') {
+
+    	var arduino86 = "c:\\Program Files (x86)\\Arduino"
+    	var arduino64 = "c:\\Program Files\\Arduino"
+
+		if (fileExists(arduino64)) {
+			setArduinoFolder(arduino64, "CocoTmp")
+		} 
+		else if (fileExists(arduino86)) {
+			setArduinoFolder(arduino86, "CocoTmp")
+		}
+    }
+}
 
 var cocoUploadCode = function(fun) {
 
 	var scriptName = "CocoTmp.ino";
     var tmpCompileDir = "/tmp/CocoTmpCompile";
 
-    var uploadCmd = "/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude -C/Users/xcorex/Documents/Arduino/hardware/CocoMake7/avr/tools/avrdude/macosx/avrdude.conf -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
+    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude.conf\" -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
 
 	sendProgress({process: 'upload', progress:0});
 
+	console.log(uploadCmd)
 
     var child = exec(uploadCmd);
 
@@ -81,33 +209,8 @@ var cocoUploadCode = function(fun) {
 
 }
 
+
 var cocoCompileCode = function(code, fun) {
-
-	var arduinoAppPath = "/Users/xcorex/Downloads/Arduino-2.app";
-
-	var scriptName = "CocoTmp.ino";
-    
-	var tmpSys = '/tmp/';
-    var tmpScriptDir = tmpSys + path.sep + "CocoTmp";
-    var tmpScript = tmpScriptDir + path.sep + scriptName;
-    var tmpCompileDir = tmpSys + path.sep + "CocoTmpCompile";
-
-
-    var arduinoBuilderPath = arduinoAppPath + "/Contents/Java/arduino-builder";
-
-	var arduinoHwManager = '/Users/xcorex/Library/Arduino15/packages';
-    var arduinoToolHwManager = '/Users/xcorex/Library/Arduino15/packages';
-
-    var arduinoHwUserPath = '/Users/xcorex/Documents/Arduino/hardware';
-    var arduinoUserLib = '/Users/xcorex/Documents/Arduino/libraries';
-
-    var arduinoHwPath = arduinoAppPath + '/Contents/Java/hardware';
-    var arduinoBuiltinLib = arduinoAppPath + '/Contents/Java/libraries';
-    var arduinoToolbuilder = arduinoAppPath +  '/Contents/Java/tools-builder';
-    var arduinoToolAvr = arduinoAppPath + '/Contents/Java/hardware/tools/avr';
-
-    var arduinoBuiltPath = tmpCompileDir;
-	var arduinoScriptPath = tmpScript;
 
 
 	var quote = function(str)
@@ -118,21 +221,20 @@ var cocoCompileCode = function(code, fun) {
     var build_opt = [
     	['-compile'],
     	['-logger=machine'],
-    	['-hardware', quote(arduinoHwPath)],
-    	['-hardware',quote(arduinoHwManager)],
-    	['-hardware',quote(arduinoHwUserPath)],
-    	['-tools',quote(arduinoToolbuilder)],
-    	['-tools',quote(arduinoToolAvr)],
-    	['-tools',quote(arduinoToolHwManager)],
-    	['-built-in-libraries',quote(arduinoBuiltinLib)],
-    	['-libraries',quote(arduinoUserLib)],    	
+    	['-hardware', quote(cocoServer.arduinoPath.hwPath)],
+    	['-hardware',quote(cocoServer.arduinoPath.hwManager)],
+		['-tools',quote(cocoServer.arduinoPath.toolbuilder)],		
+    	['-tools',quote(cocoServer.arduinoPath.toolAvr)],
+		['-tools',quote(cocoServer.arduinoPath.toolHwManager)],
+    	['-built-in-libraries',quote(cocoServer.arduinoPath.builtinLib)],
+    	['-libraries',quote(cocoServer.arduinoPath.userLib)],    	
     	['-fqbn=CocoMake7:avr:cocomake'],
-    	['-ide-version=10609'],
-    	['-build-path',quote(arduinoBuiltPath)],
+    	['-ide-version=10606'],
+    	['-build-path',quote(cocoServer.arduinoPath.builtPath)],
     	['-warnings=none'],
     	['-prefs=build.warn_data_percentage=75'],
     	['-verbose'],
-    	[quote(arduinoScriptPath)]
+    	[quote(cocoServer.arduinoPath.scriptPath)]
     ]
 
 
@@ -143,24 +245,22 @@ var cocoCompileCode = function(code, fun) {
 	    build_opt[i] = build_opt[i].join(' ');
 	}
 
-    var build_command = arduinoBuilderPath + ' ' + build_opt.join(' ');
-
+    var build_command = quote(cocoServer.arduinoPath.builderPath) + ' ' + build_opt.join(' ');
 
     cocoServer.compilerBusy = 1;
 
-    if (!fileExists(tmpScriptDir))
+    if (!fileExists(cocoServer.arduinoPath.tmpScriptDir))
     {
-		fs.mkdirSync(tmpScriptDir);
+		fs.mkdirSync(cocoServer.arduinoPath.tmpScriptDir);
     }
 
 
-    if(!fileExists(tmpCompileDir))
+    if(!fileExists(cocoServer.arduinoPath.tmpCompileDir))
     {
-		fs.mkdirSync(tmpCompileDir);
+		fs.mkdirSync(cocoServer.arduinoPath.tmpCompileDir);
     }
 
-
-    fs.writeFileSync(tmpScript, code);
+    fs.writeFileSync(cocoServer.arduinoPath.tmpScript, code);
 
 	sendProgress({process: 'compile', progress:0});
 
@@ -250,6 +350,8 @@ var sendProgress = function(data)
 }
 
 app.on('ready', () => {
+
+	initArduinoPath();
 
 	mainWindow = new BrowserWindow({
 	  height: 768,
