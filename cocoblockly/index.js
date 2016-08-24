@@ -3,17 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+let mainWindow;
+var exec = require('child_process').exec;
+
 if (os.platform() == "win32") {
     app.setPath("appData", process.env.LOCALAPPDATA);
     app.setPath("userData", path.join(process.env.LOCALAPPDATA, app.getName()));
 }
-
-let mainWindow;
-
-var exec = require('child_process').exec;
-
-// const menu = Menu.buildFromTemplate(template)
-// Menu.setApplicationMenu(menu)
 
 
 var cocoServer = {};
@@ -21,6 +17,19 @@ var cocoServer = {};
 cocoServer.compilerBusy = 0;
 cocoServer.progress = 0;
 cocoServer.compileProgressRe = /===info \|\|\| Progress \{0\} \|\|\| \[(.*)\]/;
+
+cocoServer.arduino_paths_osx = [
+						"/Users/xcorex/Downloads/Arduino-2.app",
+						"/Applications/Arduino.app",
+						app.getAppPath() + '/' + 'Arduino.app'
+					]
+					
+cocoServer.arduino_paths_win = [
+						"c:\\Program Files (x86)\\Arduino",
+						"c:\\Program Files\\Arduino",
+						app.getAppPath() + '/' + 'Arduino'
+					]
+
 
 function fileExists(filePath) {
     try
@@ -74,14 +83,11 @@ var setArduinoFolder = function(arduino_path, script_name)
 		return latest_ver;
     }
 
-    if (os.platform() === 'darwin')
-    {
+    if (os.platform() === 'darwin') {
     	
     	var cocomakepath = appDataDir + '/../Arduino15/packages/CocoMake7/hardware/avr'
 
     	var latest_ver = getLatestVer(cocomakepath)
-
-		console.log(latest_ver)
 
 	    cocoServer.arduinoPath = {
 			tmpScriptDir : tmpScriptDir,
@@ -104,9 +110,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 
 		}
 
-		console.log(cocoServer.arduinoPath)
-    }else if (os.platform() === 'win32')
-    {
+    }else if (os.platform() === 'win32') {
 
     	var cocomakepath = appDataDir + '\\Arduino15\\packages\\CocoMake7\\hardware\\avr\\'
 
@@ -134,29 +138,24 @@ var setArduinoFolder = function(arduino_path, script_name)
 	}
 }
 
+var setArduinoFolderFromList = function (path_array) {
+	var arrayLength = path_array.length;
+	for (var i = 0; i < arrayLength; i++) {
+		var path = path_array[i];
+		    if (fileExists(path)) 
+	    	{
+	    		setArduinoFolder(path, "CocoTmp");
+	    		break;
+	    	}
+	}
+}
+
 var initArduinoPath = function() {
     if (os.platform() === 'darwin')
-    {
-    	
-    	var testArduino = "/Users/xcorex/Downloads/Arduino-2.app"    	
-    	var defaultArduino = "/Applications/Arduino.app"
-
-    	if(fileExists(testArduino)) {
-	    	setArduinoFolder(testArduino, "CocoTmp");
-    	}else if (fileExists(defaultArduino)) {
-	    	setArduinoFolder(defaultArduino, "CocoTmp");
-    	}
+    {    	
+    	setArduinoFolderFromList(cocoServer.arduino_paths_osx)
     }else if (os.platform() === 'win32') {
-
-    	var arduino86 = "c:\\Program Files (x86)\\Arduino"
-    	var arduino64 = "c:\\Program Files\\Arduino"
-
-		if (fileExists(arduino64)) {
-			setArduinoFolder(arduino64, "CocoTmp")
-		} 
-		else if (fileExists(arduino86)) {
-			setArduinoFolder(arduino86, "CocoTmp")
-		}
+    	setArduinoFolderFromList(cocoServer.arduino_paths_win)
     }
 }
 
@@ -165,41 +164,36 @@ var cocoUploadCode = function(fun) {
 	var scriptName = "CocoTmp.ino";
     var tmpCompileDir = "/tmp/CocoTmpCompile";
 
-    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude.conf\" -pattiny85 -cusbasp -P/dev/cu.usbmodem1411 -b19200 -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
+    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude.conf\" -pattiny85 -cusbasp -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
 
 	sendProgress({process: 'upload', progress:0});
-
-	console.log(uploadCmd)
 
     var child = exec(uploadCmd);
 
 	child.stderr.on('data', function(data) {
+
         cocoServer.compilerBusy = 1;
 
         if (data.includes('Detecting CocoMidi')) {
-			// sendProgress('25');
 			sendProgress({process: 'upload', progress:25});
-			// console.log("25");
 		}   
 
         if (data.includes('Waiting for 10 seconds')) {
 			sendProgress({process: 'upload', progress:75});        	
 			sendProgress({process: 'upload_replug', progress:75});
-			// console.log("75");
 		}        
 
         if (data.includes('AVR device initialized')) {
 			sendProgress({process: 'upload_replug_done', progress:100});
-			// console.log("75");
 		}    
 
 
         if (data.includes('avrdude done.')) {
 			sendProgress({process: 'upload', progress:100});        	
-			// console.log("100");
 		}
 
 		sendConsole(data);
+
 	});
 
 	child.on('close', function() {
@@ -277,7 +271,6 @@ var cocoCompileCode = function(code, fun) {
 		}else{
 			sendConsole(data);
 		}
-
 	});
 
 	child.on('close', function(code) {
@@ -327,9 +320,8 @@ var sendIPCresp = function(event, count, data)
   event.sender.send('done-ipc'+count, data)
 }
 
-
 var sendIPCBroadcast = function(data) {
-  mainWindow.webContents.send('statusipc', param)
+  mainWindow.webContents.send('statusipc', data)
 }
 
 var sendConsole = function(data)
@@ -337,7 +329,7 @@ var sendConsole = function(data)
   var param = {};
   param['command'] = 'console';
   param['params'] = data;
-  mainWindow.webContents.send('statusipc', param)
+  sendIPCBroadcast(param)
 }
 
 
@@ -346,7 +338,7 @@ var sendProgress = function(data)
   var param = {};
   param['command'] = 'progress';
   param['params'] = data;
-  mainWindow.webContents.send('statusipc', param)
+  sendIPCBroadcast(param)
 }
 
 app.on('ready', () => {
@@ -360,26 +352,11 @@ app.on('ready', () => {
   	  minWidth: 816
 	});
 
-  // globalShortcut.register('CommandOrControl+T', () => {
-  //   mainWindow.webContents.executeJavaScript("CocoBlockly.toggleSidebar()")
-  // })
-
-  // globalShortcut.register('CommandOrControl+U', () => {
-  //   mainWindow.webContents.executeJavaScript("CocoBlockly.upload()")
-  // })
-
-  // globalShortcut.register('CommandOrControl+O', () => {
-  //   mainWindow.webContents.executeJavaScript("CocoBlockly.openFile()")
-  // })
-
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-  setTimeout(function(){
-	  // sendConsole('dada');  	
-  }, 2000)
+
 });
 
 
 app.on('will-quit', () => {
-  // Unregister all shortcuts.
   globalShortcut.unregisterAll()
 })
