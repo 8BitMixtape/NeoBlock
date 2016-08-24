@@ -290,6 +290,9 @@ var processIPCMsg = function(event, count, data) {
 	var response = {};
 
 	switch (command) {
+		case 'settitle':
+			mainWindow.setTitle(params)
+			break
 		case 'compile':
 			if (cocoServer.compilerBusy) break;			
 			cocoCompileCode(params, function(){

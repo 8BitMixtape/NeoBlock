@@ -1,7 +1,7 @@
 
 var CocoBlockly = CocoBlockly || {};
 
-const {dialog} = require('electron').remote
+const {app, dialog} = require('electron').remote
 var remote = require('electron').remote;
 var fs = remote.require('fs')
 
@@ -10,14 +10,19 @@ CocoBlockly.code = "";
 CocoBlockly.config = {
   showSidebar : 1,
   currentMode : 'block',
-  currentFile : ''
+  currentFile : '_blank',
+  defaultTitle: 'CocoBlock for CocoMake7',
+  modified: 0,
+  newFile: 0
 }
 
 CocoBlockly.PREV_ARDUINO_CODE_ = ""
+CocoBlockly.PREV_XML_CODE_ = ""
 
 CocoBlockly.ipc = {};
 CocoBlockly.ipc.ipcRenderer = require('electron').ipcRenderer
 CocoBlockly.ipc.globalCounter = 0
+
 CocoBlockly.ipc.ipcRenderer.on('statusipc', (event, message) => {
   CocoBlockly.ipc.processIpcBroadcast(message)
 })
@@ -49,22 +54,6 @@ switch (command) {
         CocoBlockly.notify.close();
       }
     }
-
-    // if (params.process === 'upload')
-    // {
-    //   if (typeof(CocoBlockly.notifyupload) === 'undefined' || params.progress === 0)
-    //   {
-    //     CocoBlockly.notifyupload = $.notify('<strong>Uploading</strong> Do not unplug CocoMake7', {
-    //       allow_dismiss: false,
-    //       showProgressbar: true,
-    //       delay:0
-    //     });
-    //   }else{
-    //     if (params.progress === 100) setTimeout(function(){CocoBlockly.notifyupload.close()}, 500)
-    //     CocoBlockly.notifyupload.update({'type': 'success', 'progress': params.progress});
-    //   }
-    // }
-
 
     if (params.process === 'upload_replug')
     {
@@ -116,6 +105,12 @@ CocoBlockly.ipcCompileCode = function(code, fun)
   CocoBlockly.ipc.sendParam('compile', code, fun);
 }
 
+CocoBlockly.ipcSetTitle = function(title)
+{
+  CocoBlockly.ipc.sendParam('settitle', title, function(){});
+}
+
+
 CocoBlockly.upload = function()
 {
   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
@@ -135,6 +130,15 @@ CocoBlockly.compile = function()
   });
 }
 
+CocoBlockly.setDocTitle = function(docname)
+{
+      CocoBlockly.ipcSetTitle(docname + ' - ' + CocoBlockly.config.defaultTitle)
+}
+
+CocoBlockly.setDefTitle = function(docname)
+{
+      CocoBlockly.ipcSetTitle('Untitled.cblock - ' + CocoBlockly.config.defaultTitle)
+}
 
 CocoBlockly.openFile = function() {
   
@@ -153,21 +157,43 @@ CocoBlockly.openFile = function() {
     if (err) {
       return console.log(err);
     }
+    CocoBlockly.config.newFile = 1
+
     CocoBlockly.workspace.clear();
     var xml = Blockly.Xml.textToDom(xml_data);
     Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
     $.notify("File loaded..")
 
+    CocoBlockly.config.currentFile = filename;
+    CocoBlockly.setDocTitle(filename)
   });
 
 }
 
+CocoBlockly.newFile = function() {
+    CocoBlockly.config.currentFile = '_blank'
+    CocoBlockly.config.newFile = 1
+    CocoBlockly.config.modified = 0
+    CocoBlockly.workspace.clear();
+    CocoBlockly.setDefTitle();
+}
+
+
 CocoBlockly.saveFile = function() {
+  if (CocoBlockly.config.currentFile !== '_blank')
+  {
+      fs.writeFileSync(CocoBlockly.config.currentFile, CocoBlockly.xml);
+      $.notify("File updated..")
+      CocoBlockly.setDocTitle(CocoBlockly.config.currentFile)
+      CocoBlockly.config.modified = 0
+  }else{
+    CocoBlockly.saveAsFile();
+  }
 
 }
 
 CocoBlockly.saveAsFile = function() {
-  var file = dialog.showSaveDialog({
+  var filename = dialog.showSaveDialog({
     title: "Save as CocoBlock file",
     defaultPath: "",
     filters: [
@@ -175,12 +201,13 @@ CocoBlockly.saveAsFile = function() {
     ]
   });
 
-  var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace);
-  var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-  
-  fs.writeFileSync(file, xmlText);
+  fs.writeFileSync(filename, CocoBlockly.xml);
   $.notify("File saved..")
 
+  CocoBlockly.config.currentFile = filename
+  CocoBlockly.config.modified = 0
+
+  CocoBlockly.setDocTitle(filename)
 }
 
 CocoBlockly.isRunningElectron = function() {
@@ -198,18 +225,37 @@ CocoBlockly.executeBlockCode = function() {
         
 CocoBlockly.generateCode = function(event) {
   var arduinoCode = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace)
+  var xmlCode = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(CocoBlockly.workspace))
 
   CocoBlockly.code = arduinoCode;
+  CocoBlockly.xml  = xmlCode;
+
+  CocoBlockly.CodeMirrorXML.getDoc().setValue(xmlCode)
+
+  if (xmlCode !== CocoBlockly.PREV_XML_CODE_)
+  {
+    if (CocoBlockly.config.currentFile !== '_blank')
+    {
+      if(CocoBlockly.config.newFile === 1)
+      {
+        CocoBlockly.config.newFile = 0;
+      }else{
+        CocoBlockly.setDocTitle('* ' + CocoBlockly.config.currentFile)
+        CocoBlockly.config.modified = 1;
+      }
+
+    }
+    CocoBlockly.PREV_XML_CODE_ = CocoBlockly.xml
+  }
 
   if (arduinoCode !== CocoBlockly.PREV_ARDUINO_CODE_)
   {
     CocoBlockly.CodeMirror.getDoc().setValue(CocoBlockly.code)
     CocoBlockly.CodeMirrorPreview.getDoc().setValue(CocoBlockly.code)
-    var xmlDom = Blockly.Xml.workspaceToDom(CocoBlockly.workspace)
-    var xmlText = Blockly.Xml.domToPrettyText(xmlDom)
-    CocoBlockly.CodeMirrorXML.getDoc().setValue(xmlText)
     CocoBlockly.PREV_ARDUINO_CODE_ = CocoBlockly.code
   }
+
+  return arduinoCode;
 }
 
 
@@ -408,5 +454,7 @@ window.addEventListener('load', function load(event) {
 
     // Original signature: function(message, opt_defaultInput, opt_callback)
     Blockly.prompt = CocoBlockly.prompt;
+
+    CocoBlockly.newFile();
 
 });
