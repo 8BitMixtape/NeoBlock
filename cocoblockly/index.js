@@ -90,6 +90,7 @@ var setArduinoFolder = function(arduino_path, script_name)
     	var latest_ver = getLatestVer(cocomakepath)
 
 	    cocoServer.arduinoPath = {
+	    	scriptName   : scriptName,
 			tmpScriptDir : tmpScriptDir,
 			tmpScript  	 : tmpScript,
 			tmpCompileDir: tmpCompileDir,
@@ -117,6 +118,7 @@ var setArduinoFolder = function(arduino_path, script_name)
     	var latest_ver = getLatestVer(cocomakepath)
 
 	    cocoServer.arduinoPath = {
+	    	scriptName   : scriptName,	    	
 			tmpScriptDir : tmpScriptDir,
 			tmpScript  	 : tmpScript,
 			tmpCompileDir: tmpCompileDir,			
@@ -136,6 +138,8 @@ var setArduinoFolder = function(arduino_path, script_name)
 			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\avrdude\\windows',
 		}    
 	}
+
+	console.log(cocoServer.arduinoPath);
 }
 
 var setArduinoFolderFromList = function (path_array) {
@@ -145,6 +149,7 @@ var setArduinoFolderFromList = function (path_array) {
 		    if (fileExists(path)) 
 	    	{
 	    		setArduinoFolder(path, "CocoTmp");
+    			console.log("found arduino in " , path);
 	    		break;
 	    	}
 	}
@@ -161,10 +166,7 @@ var initArduinoPath = function() {
 
 var cocoUploadCode = function(fun) {
 
-	var scriptName = "CocoTmp.ino";
-    var tmpCompileDir = "/tmp/CocoTmpCompile";
-
-    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath + "/avrdude.conf\" -pattiny85 -cusbasp -D -Uflash:w:" + tmpCompileDir + "/" + scriptName +  ".hex:i";
+    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + "avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath  + path.sep + "avrdude.conf\" -pattiny85 -cusbasp -D -Uflash:w:" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName +  ".ino.hex:i";
 
 	sendProgress({process: 'upload', progress:0});
 
