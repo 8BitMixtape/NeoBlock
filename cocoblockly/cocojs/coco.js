@@ -458,7 +458,7 @@ CocoBlockly.setProgressBar = function(value) {
 CocoBlockly.initAll = function() {
 
 
-    CocoBlockly.toolBox = document.getElementById('ArduBlocklyToolbox');
+    CocoBlockly.toolBox = document.getElementById('xmltoolbox');
     
     CocoBlockly.workspace = Blockly.inject('blocklyDiv',
     {

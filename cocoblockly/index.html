@@ -330,16 +330,28 @@
       var updated = conf.get(file.name)
 
       if (typeof(updated) === 'undefined') {
-        if (file.type === 'js')
-        {
-          addJsScriptURLTag(file.local)
+        //if use stock file
+        switch (file.type) {
+          case 'js':
+            addJsScriptURLTag(file.local)
+            break;
+          case 'xmltoolbox':
+            addXMLScriptTag(file.name, CocoBlockly.toolboxStr)
+            break;                        
+          default:
+            break;
         }
       }else{
-        if (file.type === 'js')
-        {
-          addJsScriptTag(updated.content)
-        }else{
-          addXMLScriptTag(updated.content)
+        //if found updated file
+        switch (file.type) {
+          case 'js':
+            addJsScriptTag(updated.content)
+            break;
+          case 'xmltoolbox':
+            addXMLScriptTag(file.name, updated.content)
+            break;                        
+          default:
+            break;
         }
       }
     }
