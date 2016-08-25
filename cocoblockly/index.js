@@ -365,11 +365,15 @@ var processIPCMsg = function(event, count, data) {
 	var command = data['command'];
 	var params = data['params'];
 	var response = {};
+			console.log(data)
 
 	switch (command) {
+		case 'setpath':
+			setArduinoFolder(params.arduinopath, "CocoTmp")
+			break;
 		case 'settitle':
 			mainWindow.setTitle(params)
-			break
+			break;			
 		case 'compile':
 			if (cocoServer.compilerBusy) break;			
 			cocoCompileCode(params, function(){

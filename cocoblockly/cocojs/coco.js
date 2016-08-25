@@ -24,8 +24,11 @@ CocoBlockly.PREV_XML_CODE_ = ""
 
 CocoBlockly.saveSettings = function()
 {
-    storage.set('coco_settings', { arduinopath: document.getElementById("txt-arduino-path").value }, function(error) {
+  var newpath = document.getElementById("txt-arduino-path").value;
+
+    storage.set('coco_settings', { arduinopath:  newpath}, function(error) {
       if (error) throw error;
+      CocoBlockly.ipcSetPath(newpath);
     });
 }
 
@@ -146,6 +149,11 @@ CocoBlockly.ipcCompileCode = function(code, fun)
 CocoBlockly.ipcSetTitle = function(title)
 {
   CocoBlockly.ipc.sendParam('settitle', title, function(){});
+}
+
+CocoBlockly.ipcSetPath = function(path)
+{
+  CocoBlockly.ipc.sendParam('setpath', {arduinopath: path}, function(){});
 }
 
 
