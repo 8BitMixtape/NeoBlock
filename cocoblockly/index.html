@@ -124,6 +124,9 @@
                   <li>
                     <a onClick="CocoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
                   </li>
+               <li>
+                    <a  data-toggle="modal" data-backdrop="false"  href="#cocoblock-setting">Settings</a>
+                  </li>                  
                   <li role="separator" class="divider"></li>
                   <li>
                     <a href="#">About</a>
@@ -1009,5 +1012,25 @@ Sine wave instrument
 
     </xml>
   
+  <div class="modal" id="cocoblock-setting">
+      <div class="modal-dialog">
+        <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel">CocoBlock Settings</h4></div>
+          
+          <div class="modal-body">
+            <form class="form-horizontal text-left" role="form">
+              <div class="form-group">
+                <div class="col-sm-2">
+                  <label class="control-label">Arduino Path</label>
+                </div>
+                <div class="col-sm-10">
+                  <input id="txt-arduino-path" type="text" class="form-control">
+                </div>
+              </div>
+            </form>
+          </div>
+          
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" data-dismiss="modal" onClick="CocoBlockly.saveSettings()" class="btn btn-primary">Save changes</button></div></div>
+      </div>
+    </div>
 
 </body></html>

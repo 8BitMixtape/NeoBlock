@@ -3,6 +3,7 @@ var CocoBlockly = CocoBlockly || {};
 
 const {app, dialog} = require('electron').remote
 var remote = require('electron').remote;
+const storage = remote.require('electron-json-storage');
 var fs = remote.require('fs')
 
 CocoBlockly.code = "";
@@ -19,6 +20,14 @@ CocoBlockly.config = {
 
 CocoBlockly.PREV_ARDUINO_CODE_ = ""
 CocoBlockly.PREV_XML_CODE_ = ""
+
+
+CocoBlockly.saveSettings = function()
+{
+    storage.set('coco_settings', { arduinopath: document.getElementById("txt-arduino-path").value }, function(error) {
+      if (error) throw error;
+    });
+}
 
 CocoBlockly.ipc = {};
 CocoBlockly.ipc.ipcRenderer = require('electron').ipcRenderer
@@ -491,5 +500,12 @@ window.addEventListener('load', function load(event) {
     Blockly.prompt = CocoBlockly.prompt;
 
     CocoBlockly.newFile();
+
+    storage.get('coco_settings', function(error, data) {
+      if (typeof(data.arduinopath) !== 'undefined')
+      {
+        document.getElementById("txt-arduino-path").value = data.arduinopath        
+      } 
+    });
 
 });
