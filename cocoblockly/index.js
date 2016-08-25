@@ -1,4 +1,4 @@
-const {app, BrowserWindow, globalShortcut, Menu, ipcMain} = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -489,6 +489,11 @@ app.on('ready', () => {
       minHeight: 637,
   	  minWidth: 816
 	});
+
+    mainWindow.on('close', function(e){
+        app.quit();
+    });
+
 
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
