@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xml id="ArduBlocklyToolbox">
    <category id="catCocoExamples" name="Examples">
-      <category id="catCocoTouch" name="Blink led">
+      <category id="catCocoTouch" name="Blink led without delay">
          <block type="arduino_functions" id="jGvSo#,:^f_1q!cAp!^_" x="38" y="63">
             <statement name="SETUP_FUNC">
                <block type="variables_set" id="Y!~cJU3a=?G=,Es)*Ijn">
