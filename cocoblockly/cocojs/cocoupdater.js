@@ -4,7 +4,7 @@ CocoBlockly.updater = {};
 CocoBlockly.updater.files = [
   {name: "cocoblock", local: "cocojs/cocoblock/cocoblock.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocoblock.js", type: "js"},
   {name: "cocogen", local: "cocojs/cocoblock/cocogen.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocogen.js", type: "js"},
-  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/toolbox.xml", type: "xml"}
+  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/toolbox.xml", type: "xmltoolbox"}
 ]
 
 
