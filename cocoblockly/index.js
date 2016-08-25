@@ -2,6 +2,7 @@ const {app, BrowserWindow, globalShortcut, Menu, ipcMain} = require('electron');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const storage = require('electron-json-storage');
 
 let mainWindow;
 var exec = require('child_process').exec;
@@ -156,18 +157,35 @@ var setArduinoFolderFromList = function (path_array) {
 	    	{
 	    		setArduinoFolder(path, "CocoTmp");
     			console.log("found arduino in " , path);
+    			
+    			storage.set('coco_settings', { arduinopath: path }, function(error) {
+			      if (error) throw error;
+			    });
+
 	    		break;
 	    	}
 	}
 }
 
 var initArduinoPath = function() {
-    if (os.platform() === 'darwin')
-    {    	
-    	setArduinoFolderFromList(cocoServer.arduino_paths_osx)
-    }else if (os.platform() === 'win32') {
-    	setArduinoFolderFromList(cocoServer.arduino_paths_win)
-    }
+
+    storage.get('coco_settings', function(error, data) {
+      if (typeof(data.arduinopath) !== 'undefined' && data.arduinopath !== '')
+      {
+      	console.log('set path', data.arduinopath)
+		setArduinoFolder(data.arduinopath, "CocoTmp");
+
+      }else {
+	    if (os.platform() === 'darwin')
+	    {    	
+	    	setArduinoFolderFromList(cocoServer.arduino_paths_osx)
+	    }else if (os.platform() === 'win32') {
+	    	setArduinoFolderFromList(cocoServer.arduino_paths_win)
+	    }
+      }
+    });
+
+
 }
 
 var cocoUploadCode = function(fun) {
