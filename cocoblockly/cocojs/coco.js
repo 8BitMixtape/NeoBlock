@@ -46,6 +46,18 @@ var command = data['command'];
 var params = data['params'];
 
 switch (command) {
+  case 'openfile':
+  CocoBlockly.openFile();
+  break;    
+  case 'saveasfile':
+  CocoBlockly.saveAsFile();  
+  break;  
+  case 'savefile':
+  CocoBlockly.saveFile();  
+  break;  
+  case 'upload':
+  CocoBlockly.upload();  
+  break;      
   case 'linter':
 
     CocoBlockly.CodeMirror.operation(function(){

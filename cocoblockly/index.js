@@ -481,6 +481,7 @@ var sendProgress = function(data)
 app.on('ready', () => {
 
 	initArduinoPath();
+    Menu.setApplicationMenu(menu);
 
 	mainWindow = new BrowserWindow({
 	  height: 768,
@@ -497,3 +498,21 @@ app.on('ready', () => {
 app.on('will-quit', () => {
   globalShortcut.unregisterAll()
 })
+
+
+app.on('window-all-closed', () => {
+	app.quit();
+})
+
+var menu = Menu.buildFromTemplate([
+  {
+    label: 'CocoBlock',
+    submenu: [
+      {label: 'About App', selector: 'orderFrontStandardAboutPanel:'},
+      {label: 'Open', accelerator: 'CmdOrCtrl+O', click: function() {sendIPCBroadcast({command: 'openfile'})}},  
+      {label: 'Save', accelerator: 'CmdOrCtrl+S', click: function() {sendIPCBroadcast({command: 'savefile'})}},    
+      {label: 'Save As',click: function() {sendIPCBroadcast({command: 'saveasfile'})}}, 
+      {label: 'Upload', accelerator: 'CmdOrCtrl+U', click: function() {sendIPCBroadcast({command: 'upload'})}},      
+      {label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: function() {force_quit=true; app.quit();}}
+    ]
+  }]);
