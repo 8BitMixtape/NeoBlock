@@ -2,9 +2,9 @@ var CocoBlockly = CocoBlockly || {};
 
 CocoBlockly.updater = {};
 CocoBlockly.updater.files = [
-  {name: "cocoblock", local: "cocojs/cocoblock/cocoblock.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocoblock.js", type: "js"},
+  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/toolbox.xml", type: "xmltoolbox"},
   {name: "cocogen", local: "cocojs/cocoblock/cocogen.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocogen.js", type: "js"},
-  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/toolbox.xml", type: "xmltoolbox"}
+  {name: "cocoblock", local: "cocojs/cocoblock/cocoblock.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocoblock.js", type: "js"}
 ]
 
 
@@ -37,13 +37,13 @@ CocoBlockly.updater.blockNeedUpdate = function(name, url, fun)
 {
   if (typeof(conf.get(name)) === 'undefined')
   {
-    fun()
+    fun(name, url)
   }else{
     CocoBlockly.updater.checkUpdateBlock(name, url, function(file){
     if(file.needupdate)
     {
-      console.log(name, ' need update')
-      fun()
+      console.log(name, url, ' need update')
+      fun(name, url)
     }
     })
   }
@@ -62,11 +62,7 @@ CocoBlockly.updater.updateNow = function()
 {
     for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
     {
-      var name = CocoBlockly.updater.files[i].name;
-      var url = CocoBlockly.updater.files[i].url;      
-      CocoBlockly.updater.blockNeedUpdate(name, url, function(){
-        CocoBlockly.updater.updateBlock(name, url);
-      })
+      CocoBlockly.updater.blockNeedUpdate(CocoBlockly.updater.files[i].name, CocoBlockly.updater.files[i].url, CocoBlockly.updater.updateBlock)
     }
 }
 
@@ -75,7 +71,6 @@ CocoBlockly.updater.checkUpdateBlock = function(file_name, file_url, fun)
 {
   var dateReq = new XMLHttpRequest();
   dateReq.onreadystatechange = function() {
-
   if (dateReq.readyState === 4) {
       if (dateReq.status === 200) {
               // // we already have the cache
@@ -83,7 +78,9 @@ CocoBlockly.updater.checkUpdateBlock = function(file_name, file_url, fun)
                   try {
                     fun({needupdate: false})
                   } catch(e) { // if something goes wrong
+
                     fun({needupdate: true})
+
                   }
               } else{
                 // we have not
@@ -93,19 +90,17 @@ CocoBlockly.updater.checkUpdateBlock = function(file_name, file_url, fun)
             fun({needupdate: true})
       }
   }
-
   dateReq.open("HEAD", file_url  + "?" + new Date().getTime()  , true);
   dateReq.send(null);
 }
-
 CocoBlockly.updater.getUpdatedBlock = function(file_name, file_url, fun)
 {
   var builtReq = new XMLHttpRequest();
 
   builtReq.addEventListener('progress', function(e) {
+
         var complete = Math.round((e.loaded / 2500000) * 150);      
       }, false);
-
   builtReq.onreadystatechange = function() {
       if (builtReq.readyState === 4) {
           if (builtReq.status === 200) {
