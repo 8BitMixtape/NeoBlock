@@ -143,11 +143,17 @@ CocoBlockly.ipcSetTitle = function(title)
 CocoBlockly.upload = function()
 {
   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(){
-    CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-    CocoBlockly.ipc.sendParam('upload', '', function(){
-      console.log('upload done..');
-    });
+  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(status){
+    if(status.compile === 'done')
+    {
+       $.notify("Compile succeed..",{type: 'success'})
+      CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
+      CocoBlockly.ipc.sendParam('upload', '', function(){
+        console.log('upload done..');
+      });      
+    }else{
+       $.notify("Upload aborted..")
+    }
   });
 }
 

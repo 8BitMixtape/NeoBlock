@@ -211,7 +211,7 @@ var cocoUploadCode = function(fun) {
 }
 
 
-var cocoCompileCode = function(code, fun) {
+var cocoCompileCode = function(code, fun, funerr) {
 
 
 	var quote = function(str)
@@ -314,7 +314,14 @@ var cocoCompileCode = function(code, fun) {
 
 		sendProgress({process: 'compile', error: isErr, progress:100});
         cocoServer.compilerBusy = 0;
-	    fun(code);
+
+        if(isErr !== 'true')
+	    {
+	    	fun(code);
+	    }else{
+		    funerr();
+	    }
+
 	});
 
 }
@@ -336,6 +343,9 @@ var processIPCMsg = function(event, count, data) {
 			cocoCompileCode(params, function(){
 				response['compile'] = 'done';
 				sendIPCresp(event, count, response);
+			},function(){
+				response['compile'] = 'error';
+				sendIPCresp(event, count, response);				
 			});
 			break;
 		case 'upload':
