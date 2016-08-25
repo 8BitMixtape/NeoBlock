@@ -21,6 +21,10 @@ CocoBlockly.config = {
 CocoBlockly.PREV_ARDUINO_CODE_ = ""
 CocoBlockly.PREV_XML_CODE_ = ""
 
+CocoBlockly.quit = function()
+{
+  app.quit();
+}
 
 CocoBlockly.saveSettings = function()
 {
