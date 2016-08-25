@@ -3,7 +3,8 @@ var CocoBlockly = CocoBlockly || {};
 CocoBlockly.updater = {};
 CocoBlockly.updater.files = [
   {name: "cocoblock", local: "cocojs/cocoblock/cocoblock.js", url: "https://cocomake7.github.io/cocoblockly/cocojs/cocoblock/cocoblock.js", type: "js"},
-  {name: "cocogen", local: "cocojs/cocoblock/cocogen.js", url: "https://cocomake7.github.io/cocoblockly/cocojs/cocoblock/cocogen.js", type: "js"}
+  {name: "cocogen", local: "cocojs/cocoblock/cocogen.js", url: "https://cocomake7.github.io/cocoblockly/cocojs/cocoblock/cocogen.js", type: "js"},
+  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/cocoblockly/toolbox.xml", type: "xml"}
 ]
 
 
