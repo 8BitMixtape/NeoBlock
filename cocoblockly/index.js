@@ -183,6 +183,18 @@ var initArduinoPath = function() {
 	    	setArduinoFolderFromList(cocoServer.arduino_paths_win)
 	    }
       }
+
+      // if (typeof(data.arduinopath) !== 'undefined' && data.cocomakepath !== '')
+      // {
+
+      // 	var avrdude_path = "tools/avrdude/macosx";
+      // 	if (os.platform() === 'win32') avrdude_path = 'tools\\avrdude\\windows'
+
+      // 	cocoServer.arduinoPath.cocoMakePath = data.cocomakepath
+      // 	cocoServer.arduinoPath.cocoMakeAvrdudePath = data.cocomakepath + path.sep + avrdude_path,
+      // }
+
+
     });
 
 
