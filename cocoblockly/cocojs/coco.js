@@ -3,8 +3,10 @@ var CocoBlockly = CocoBlockly || {};
 
 const {app, dialog} = require('electron').remote
 var remote = require('electron').remote;
-const storage = remote.require('electron-json-storage');
 var fs = remote.require('fs')
+
+const Configstore = remote.require('configstore');
+const conf = new Configstore("cocoblock");
 
 CocoBlockly.code = "";
 
@@ -28,12 +30,9 @@ CocoBlockly.quit = function()
 
 CocoBlockly.saveSettings = function()
 {
-  var newpath = document.getElementById("txt-arduino-path").value;
-
-    storage.set('coco_settings', { arduinopath:  newpath}, function(error) {
-      if (error) throw error;
-      CocoBlockly.ipcSetPath(newpath);
-    });
+    var newpath = document.getElementById("txt-arduino-path").value;
+    conf.set('arduinopath', newpath)
+    CocoBlockly.ipcSetPath(newpath);
 }
 
 CocoBlockly.ipc = {};

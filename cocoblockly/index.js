@@ -2,7 +2,8 @@ const {app, BrowserWindow, globalShortcut, Menu, ipcMain, dialog} = require('ele
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const storage = require('electron-json-storage');
+const Configstore = require('configstore');
+const conf = new Configstore("cocoblock");
 
 let mainWindow;
 var exec = require('child_process').exec;
@@ -186,12 +187,8 @@ var setArduinoFolderFromList = function (path_array) {
 		    if (fileExists(path)) 
 	    	{
 	    		setArduinoFolder(path, "CocoTmp");
-    			console.log("found arduino in " , path);
-    			
-    			storage.set('coco_settings', { arduinopath: path }, function(error) {
-			      if (error) throw error;
-			    });
-
+    			console.log("found arduino in " , path);    			
+    			conf.set('arduinopath', path);
 	    		break;
 	    	}
 	}
@@ -199,11 +196,10 @@ var setArduinoFolderFromList = function (path_array) {
 
 var initArduinoPath = function() {
 
-    storage.get('coco_settings', function(error, data) {
-      if (typeof(data.arduinopath) !== 'undefined' && data.arduinopath !== '')
+      if ( typeof(conf.get('arduinopath')) !== 'undefined' && conf.get('arduinopath') !== '')
       {
-      	console.log('set path', data.arduinopath)
-		setArduinoFolder(data.arduinopath, "CocoTmp");
+      	console.log('set path', conf.get('arduinopath'))
+		setArduinoFolder(conf.get('arduinopath'), "CocoTmp");
 
       }else {
 	    if (os.platform() === 'darwin')
@@ -213,21 +209,6 @@ var initArduinoPath = function() {
 	    	setArduinoFolderFromList(cocoServer.arduino_paths_win)
 	    }
       }
-
-      // if (typeof(data.arduinopath) !== 'undefined' && data.cocomakepath !== '')
-      // {
-
-      // 	var avrdude_path = "tools/avrdude/macosx";
-      // 	if (os.platform() === 'win32') avrdude_path = 'tools\\avrdude\\windows'
-
-      // 	cocoServer.arduinoPath.cocoMakePath = data.cocomakepath
-      // 	cocoServer.arduinoPath.cocoMakeAvrdudePath = data.cocomakepath + path.sep + avrdude_path,
-      // }
-
-
-    });
-
-
 }
 
 var cocoUploadCode = function(fun) {
