@@ -160,8 +160,8 @@ CocoBlockly.upload = function()
 CocoBlockly.compile = function()
 {
   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(){
-    console.log('compile done..');
+  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(status){
+    if(status.compile === 'done') $.notify("Compile succeed..",{type: 'success'})
   });
 }
 
