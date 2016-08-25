@@ -13,7 +13,8 @@ CocoBlockly.config = {
   currentFile : '_blank',
   defaultTitle: 'CocoBlock for CocoMake7',
   modified: 0,
-  newFile: 0
+  newFile: 0,
+  linter: []
 }
 
 CocoBlockly.PREV_ARDUINO_CODE_ = ""
@@ -33,6 +34,28 @@ var command = data['command'];
 var params = data['params'];
 
 switch (command) {
+  case 'linter':
+
+    CocoBlockly.CodeMirror.operation(function(){
+      for (var i = 0; i < CocoBlockly.config.linter.length; ++i)
+        CocoBlockly.CodeMirror.removeLineWidget(CocoBlockly.config.linter[i]);
+      CocoBlockly.config.linter.length = 0;
+    })
+
+    for (var i = 0; i < params.length; ++i) {
+      var err = params[i];
+      var msg = document.createElement("div");
+      // var icon = msg.appendChild(document.createElement("span"));
+      // icon.innerHTML = "!!";
+      // icon.className = "lint-error-icon";
+      msg.appendChild(document.createTextNode(err.desc));
+      msg.className = "lint-error";
+      CocoBlockly.config.linter.push(CocoBlockly.CodeMirror.addLineWidget(err.line - 1, msg, {coverGutter: false, noHScroll: true}));
+    }
+
+
+
+    break;
   case 'console':
     CocoBlockly.CodeMirrorConsole.replaceRange(params, {line: Infinity});
     CocoBlockly.CodeMirrorConsole.setCursor(CocoBlockly.CodeMirrorConsole.lastLine());
@@ -53,6 +76,12 @@ switch (command) {
         CocoBlockly.notify.update({'type': 'warning', 'progress': params.progress});
         CocoBlockly.notify.close();
       }
+
+      if(params.error === 'true')
+      {
+        $.notify('<strong>Error</strong> compile, check code view',{type: 'danger'})
+      }
+
     }
 
     if (params.process === 'upload_replug')
@@ -162,7 +191,7 @@ CocoBlockly.openFile = function() {
     CocoBlockly.workspace.clear();
     var xml = Blockly.Xml.textToDom(xml_data);
     Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
-    $.notify("File loaded..")
+    // $.notify("File loaded..")
 
     CocoBlockly.config.currentFile = filename;
     CocoBlockly.setDocTitle(filename)

@@ -16,7 +16,7 @@ var cocoServer = {};
 
 cocoServer.compilerBusy = 0;
 cocoServer.progress = 0;
-cocoServer.compileProgressRe = /===info \|\|\| Progress \{0\} \|\|\| \[(.*)\]/;
+cocoServer.compileProgressRe = /.*Progress \{0\} \|\|\| \[(.*)\]/;
 
 cocoServer.arduino_paths_osx = [
 						"/Users/xcorex/Downloads/Arduino-2.app",
@@ -30,6 +30,11 @@ cocoServer.arduino_paths_win = [
 						app.getAppPath() + '/' + 'Arduino'
 					]
 
+cocoServer.errorLint = []
+cocoServer.compile = {
+	errorLint: [],
+	errorRe: /In file included from (.*)\/(.*).ino:(.*):(.*):\n(.*)/g
+}
 
 function fileExists(filePath) {
     try
@@ -262,21 +267,52 @@ var cocoCompileCode = function(code, fun) {
 
     var child = exec(build_command);
     
+    child.stderr.on('data', function(data) {
+			sendConsole("--------- error --------\n\n\n");	
+			if (data.includes(cocoServer.arduinoPath.scriptPath))
+			{			
+
+
+				while ((m = cocoServer.compile.errorRe.exec(data)) !== null) {
+				    if (m.index === cocoServer.compile.errorRe.lastIndex) {
+				        cocoServer.compile.errorRe.lastIndex++;
+				    }
+				    var new_err = {
+						line: m[3],
+						space: m[4],
+						desc: m[5]
+					}
+					cocoServer.compile.errorLint.push(new_err)
+				}
+
+			}
+
+			sendConsole(data);	
+	})
+
 	child.stdout.on('data', function(data) {
 		var m;	 
-
 		if ((m = cocoServer.compileProgressRe.exec(data)) !== null) {
 		    if (m.index === cocoServer.compileProgressRe.lastIndex) {
 		        cocoServer.compileProgressRe.lastIndex++;
 		    }
 			sendProgress({process: 'compile', progress:m[1]});
-		}else{
+		};
+		// }else{
 			sendConsole(data);
-		}
+		// }
 	});
 
 	child.on('close', function(code) {
-		sendProgress({process: 'compile', progress:100});
+		sendLinter(cocoServer.compile.errorLint);
+		
+		var isErr = 'false';
+
+		if (cocoServer.compile.errorLint.length > 0) isErr = 'true';
+
+		cocoServer.compile.errorLint.length = 0;
+
+		sendProgress({process: 'compile', error: isErr, progress:100});
         cocoServer.compilerBusy = 0;
 	    fun(code);
 	});
@@ -333,6 +369,14 @@ var sendConsole = function(data)
 {
   var param = {};
   param['command'] = 'console';
+  param['params'] = data;
+  sendIPCBroadcast(param)
+}
+
+var sendLinter = function(data)
+{
+  var param = {};
+  param['command'] = 'linter';
   param['params'] = data;
   sendIPCBroadcast(param)
 }
