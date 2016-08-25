@@ -33,7 +33,8 @@ cocoServer.arduino_paths_win = [
 cocoServer.errorLint = []
 cocoServer.compile = {
 	errorLint: [],
-	errorRe: /In file included from (.*)\/(.*).ino:(.*):(.*):\n(.*)/g
+	errorRe: /In file included from (.*)\/(.*).ino:(.*):(.*):\n(.*)/g,
+	errorRe2: /(.*):(.*):(.*): (.*): (.*)/g
 }
 
 function fileExists(filePath) {
@@ -268,10 +269,11 @@ var cocoCompileCode = function(code, fun, funerr) {
     var child = exec(build_command);
     
     child.stderr.on('data', function(data) {
-			sendConsole("--------- error --------\n\n\n");	
+			sendConsole("\n--------- error --------\n\n");	
 			if (data.includes(cocoServer.arduinoPath.scriptPath))
 			{			
 
+				var m;
 
 				while ((m = cocoServer.compile.errorRe.exec(data)) !== null) {
 				    if (m.index === cocoServer.compile.errorRe.lastIndex) {
@@ -280,6 +282,18 @@ var cocoCompileCode = function(code, fun, funerr) {
 				    var new_err = {
 						line: m[3],
 						space: m[4],
+						desc: m[5]
+					}
+					cocoServer.compile.errorLint.push(new_err)
+				}
+
+				while ((m = cocoServer.compile.errorRe2.exec(data)) !== null) {
+				    if (m.index === cocoServer.compile.errorRe2.lastIndex) {
+				        cocoServer.compile.errorRe2.lastIndex++;
+				    }
+				    var new_err = {
+						line: m[2],
+						space: m[3],
 						desc: m[5]
 					}
 					cocoServer.compile.errorLint.push(new_err)
