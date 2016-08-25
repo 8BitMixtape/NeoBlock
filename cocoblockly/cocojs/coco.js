@@ -57,7 +57,11 @@ switch (command) {
   break;  
   case 'upload':
   CocoBlockly.upload();  
-  break;      
+  break; 
+  case 'togsidebar':
+  CocoBlockly.toggleSidebar();  
+  break; 
+
   case 'linter':
 
     CocoBlockly.CodeMirror.operation(function(){
