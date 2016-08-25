@@ -230,6 +230,25 @@ CocoBlockly.newFile = function() {
     CocoBlockly.setDefTitle();
 }
 
+CocoBlockly.exportFile = function() {
+    var filename = dialog.showSaveDialog({
+    title: "Save as Arduino File",
+    defaultPath: "",
+    filters: [
+      {name: 'Arduino .ino', extensions: ['ino']},
+    ]
+  });
+
+  var export_info = ""
+  
+  if (CocoBlockly.config.currentFile !== '_blank')
+  {
+     export_info = "// CocoMake7 code exported from " + CocoBlockly.config.currentFile + "\n\n"
+  }
+
+  fs.writeFileSync(filename, export_info + CocoBlockly.code);
+  $.notify("Code export done..")
+}
 
 CocoBlockly.saveFile = function() {
   if (CocoBlockly.config.currentFile !== '_blank')
