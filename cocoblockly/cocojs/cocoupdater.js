@@ -60,6 +60,7 @@ CocoBlockly.updater.updateBlock = function(file_name, url)
 
 CocoBlockly.updater.updateNow = function()
 {
+  $.notify("checking for updates..")
     for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
     {
       CocoBlockly.updater.blockNeedUpdate(CocoBlockly.updater.files[i].name, CocoBlockly.updater.files[i].url, CocoBlockly.updater.updateBlock)
