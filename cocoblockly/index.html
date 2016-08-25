@@ -75,6 +75,8 @@
 
 
     <script type="text/javascript" src="cocojs/coco.js"></script>
+    <script type="text/javascript" src="cocojs/cocoupdater.js"></script>
+
   </head><body class="simulator">
     <div id="wrapper">
       <nav class="navbar navbar-default">
@@ -1069,32 +1071,31 @@ Sine wave instrument
 
     <script type="text/javascript">
       
-      window.addEventListener('load', function load(event){
-      window.removeEventListener('load', load, false);
-      // checkUpdate()  
-      CocoBlockly.initAll()
+    window.addEventListener('load', function load(event){
+    window.removeEventListener('load', load, false);
 
-      for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
-      {
-        var file = CocoBlockly.updater.files[i]; 
-        var updated = conf.get(file.name)
+    for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
+    {
+      var file = CocoBlockly.updater.files[i]; 
+      var updated = conf.get(file.name)
 
-        if (typeof(updated) === 'undefined') {
-          if (file.type === 'js')
-          {
-            addJsScriptURLTag(file.local)
-          }
+      if (typeof(updated) === 'undefined') {
+        if (file.type === 'js')
+        {
+          addJsScriptURLTag(file.local)
+        }
+      }else{
+        if (file.type === 'js')
+        {
+          addJsScriptTag(updated.content)
         }else{
-          if (file.type === 'js')
-          {
-            addJsScriptTag(updated.content)
-          }else{
-            addXMLScriptTag(updated.content)
-          }
+          addXMLScriptTag(updated.content)
         }
       }
+    }
 
-});
+    CocoBlockly.initAll()
+    });
 
     </script>
 
