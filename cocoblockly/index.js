@@ -144,7 +144,37 @@ var setArduinoFolder = function(arduino_path, script_name)
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
 			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\avrdude\\windows',
 		}    
-	}
+    }else if (os.platform() === 'linux') {
+
+    	appDataDir = app.getPath('home')
+
+    	var cocomakepath = appDataDir + '/.arduino15/packages/CocoMake7/hardware/avr'
+
+    	var latest_ver = getLatestVer(cocomakepath)
+
+	    cocoServer.arduinoPath = {
+	    	scriptName   : scriptName,
+			tmpScriptDir : tmpScriptDir,
+			tmpScript  	 : tmpScript,
+			tmpCompileDir: tmpCompileDir,
+			appPath 	 : arduinoAppPath,
+			hwManager 	 : appDataDir + '/.arduino15/packages',
+		    toolHwManager: appDataDir + '/.arduino15/packages',
+		    hwUserPath 	 : docDir + '/Arduino/hardware',
+		    userLib 	 : docDir + '/Arduino/libraries',
+		    builderPath  : arduinoAppPath + '/arduino-builder',
+		    hwPath 		 : arduinoAppPath + '/hardware',
+		    builtinLib 	 : arduinoAppPath + '/libraries',
+		    toolbuilder  : arduinoAppPath + '/tools-builder',
+		    toolAvr 	 : arduinoAppPath + '/hardware/tools/avr',
+		    builtPath 	 : tmpCompileDir,
+			scriptPath 	 : tmpScript,
+			cocoMakePath : cocomakepath + path.sep + latest_ver,
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/avrdude/macosx',
+
+		}
+
+    }
 
 	console.log(cocoServer.arduinoPath);
 }
