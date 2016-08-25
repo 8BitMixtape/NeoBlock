@@ -463,7 +463,7 @@ CocoBlockly.initAll = function() {
     CocoBlockly.workspace = Blockly.inject('blocklyDiv',
     {
         css: false,
-        toolbox: CocoBlockly.toolboxStr,
+        toolbox: CocoBlockly.toolBox,
         media: 'blockly/',
             grid: {
                 spacing: 25,
