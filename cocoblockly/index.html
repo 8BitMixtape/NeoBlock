@@ -48,9 +48,9 @@
     <script src="blockly/generators/arduino/tone.js"></script>
     <script src="blockly/generators/arduino/variables.js"></script>
 
-    <script src="cocojs/cocoblock/cocoblock.js"></script>
+<!--     <script src="cocojs/cocoblock/cocoblock.js"></script>
     <script src="cocojs/cocoblock/cocogen.js"></script>
-
+ -->
     <!-- Default language js files, user selection appended to head
     on load -->
     <script src="blockly/en.js"></script>
@@ -129,7 +129,11 @@
                   </li>
                <li>
                     <a  data-toggle="modal" data-backdrop="false"  href="#cocoblock-setting">Settings</a>
-                  </li>                  
+                  </li> 
+                <li>
+                    <a onClick="CocoBlockly.updater.updateNow();" href="#">Update Block</a>
+                  </li>
+
                   <li role="separator" class="divider"></li>
                   <li>
                     <a data-toggle="modal" data-backdrop="false" href="#cocoblock-about">About</a>
@@ -1062,5 +1066,36 @@ Sine wave instrument
         </div>
       </div>
     </div>
+
+    <script type="text/javascript">
+      
+      window.addEventListener('load', function load(event){
+      window.removeEventListener('load', load, false);
+      // checkUpdate()  
+      CocoBlockly.initAll()
+
+      for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
+      {
+        var file = CocoBlockly.updater.files[i]; 
+        var updated = conf.get(file.name)
+
+        if (typeof(updated) === 'undefined') {
+          if (file.type === 'js')
+          {
+            addJsScriptURLTag(file.local)
+          }
+        }else{
+          if (file.type === 'js')
+          {
+            addJsScriptTag(updated.content)
+          }else{
+            addXMLScriptTag(updated.content)
+          }
+        }
+      }
+
+});
+
+    </script>
 
 </body></html>
