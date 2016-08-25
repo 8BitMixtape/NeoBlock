@@ -196,19 +196,12 @@ var varDeclaration =
  '\n//cocoTouch pin  '  + 
  '\n#define ADC_REF_PIN PB2  '  + 
  '\n#define ADC_SENSE_PIN PB4  '  + 
- '\n  '  + 
- '\nvoid usb_poll()  '  + 
- '\n{  '  + 
- '\n  usbPoll();  '  + 
- '\n}  ' ; 
+ '\n  '; 
 
 
 var varSetup = 
  '\nCocoTouch.begin();  '  + 
  '\nCocoTouch.setAdcSpeed(4);  '  + 
- '\nCocoTouch.delay = 4;  '  + 
- '\n//TeenyTouchDusjagr.delay_cb = &delay;  '  + 
- '\nCocoTouch.usb_poll = &usb_poll;  '  + 
  '\noffset_adc = CocoTouch.sense(ADC_SENSE_PIN, ADC_REF_PIN, 8 );  '  + 
  '\n' ; 
 
