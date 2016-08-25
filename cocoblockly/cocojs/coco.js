@@ -490,7 +490,7 @@ CocoBlockly.initAll = function() {
     {
       lineNumbers: true,
       lineWrapping: true,
-      readOnly: true,
+      readOnly: false,
       mode: "text/x-c++src"
     });
 
@@ -499,7 +499,7 @@ CocoBlockly.initAll = function() {
     {
       lineNumbers: true,
       lineWrapping: true,
-      readOnly: true,
+      readOnly: false,
       mode: "text/x-c++src"
     });
 
@@ -508,7 +508,7 @@ CocoBlockly.initAll = function() {
     {
       lineNumbers: true,
       lineWrapping: true,
-      readOnly: true,
+      readOnly: false,
       mode: "application/xml"
     });
 
@@ -516,7 +516,7 @@ CocoBlockly.initAll = function() {
     {
       lineNumbers: true,
       lineWrapping: true,
-      readOnly: true,
+      readOnly: false,
       mode: "application/xml"
     });
                               
