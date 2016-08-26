@@ -220,11 +220,11 @@ CocoBlockly.openFile = function() {
       {name: 'CocoBlock', extensions: ['cblock']},
     ]
   });
-  
-  if (typeof(filename) !== 'undefined')
+
+  if (typeof(file) !== 'undefined')
   {
     var filename = file[0];
-    
+
     fs.readFile(filename, 'utf8', function (err,xml_data) {
     
       if (err) {
@@ -497,8 +497,15 @@ CocoBlockly.blocks.fileExists = function(filePath) {
   
 CocoBlockly.blocks.loadBlocksFromDir = function(board_dir)
 {
-  var toolBoxCustomCat = CocoBlockly.blocks.domCreateToolCat("Custom Blocks", "Custom Blocks")
   var block_dir = (app.getPath('userData') + path.sep + "Blocks" )
+
+  if (!CocoBlockly.blocks.fileExists(block_dir))
+  {
+    fs.mkdirSync(block_dir);
+  }
+
+  var toolBoxCustomCat = CocoBlockly.blocks.domCreateToolCat("Custom Blocks", "Custom Blocks")
+
   if(!CocoBlockly.blocks.fileExists(block_dir)) return toolBoxCustomCat
 
   var block_dir_array = fs.readdirSync(block_dir);
