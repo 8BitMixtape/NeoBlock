@@ -502,6 +502,7 @@ var menu = Menu.buildFromTemplate([
       {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
       {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
       {label: 'Upload', accelerator: 'CmdOrCtrl+U', click: function() {sendIPCBroadcast({command: 'upload'})}},      
+      {label: 'Debug',click: function() {mainWindow.openDevTools();}}, 
       {label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: function() {force_quit=true; app.quit();}}
     ]
   }]);
