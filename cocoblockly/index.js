@@ -499,7 +499,9 @@ var menu = Menu.buildFromTemplate([
       {label: 'Save', accelerator: 'CmdOrCtrl+S', click: function() {sendIPCBroadcast({command: 'savefile'})}},    
       {label: 'Save As',click: function() {sendIPCBroadcast({command: 'saveasfile'})}}, 
       {label: 'Toggle Sidebar', accelerator: 'CmdOrCtrl+T',click: function() {sendIPCBroadcast({command: 'togsidebar'})}}, 
-
+      {label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+      {label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+      {label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },
       {label: 'Upload', accelerator: 'CmdOrCtrl+U', click: function() {sendIPCBroadcast({command: 'upload'})}},      
       {label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: function() {force_quit=true; app.quit();}}
     ]
