@@ -23,13 +23,13 @@ cocoServer.compileProgressRe = /.*Progress \{0\} \|\|\| \[(.*)\]/;
 cocoServer.arduino_paths_osx = [
 						"/Users/xcorex/Downloads/Arduino-2.app",
 						"/Applications/Arduino.app",
-						app.getAppPath() + '/' + 'Arduino.app'
+						app.getAppPath() + path.sep + 'Arduino.app'
 					]
 					
 cocoServer.arduino_paths_win = [
 						"c:\\Program Files (x86)\\Arduino",
 						"c:\\Program Files\\Arduino",
-						app.getAppPath() + '/' + 'Arduino'
+						app.getAppPath() + path.sep + 'Arduino'
 					]
 
 cocoServer.errorLint = []
