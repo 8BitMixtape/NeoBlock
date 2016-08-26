@@ -388,8 +388,7 @@ var processIPCMsg = function(event, count, data) {
 	var command = data['command'];
 	var params = data['params'];
 	var response = {};
-			console.log(data)
-
+			
 	switch (command) {
 		case 'setpath':
 			setArduinoFolder(params.arduinopath, "CocoTmp")
