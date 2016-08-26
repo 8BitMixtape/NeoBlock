@@ -461,7 +461,10 @@ var sendProgress = function(data)
 app.on('ready', () => {
 
 	initArduinoPath();
-    Menu.setApplicationMenu(menu);
+
+    if (os.platform() === 'darwin') {
+    	Menu.setApplicationMenu(menu);
+	}
 
 	mainWindow = new BrowserWindow({
 	  height: 768,
