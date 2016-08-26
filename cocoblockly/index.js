@@ -16,6 +16,7 @@ if (os.platform() == "win32") {
 
 var cocoServer = {};
 
+cocoServer.compileError = 0;
 cocoServer.compilerBusy = 0;
 cocoServer.progress = 0;
 cocoServer.compileProgressRe = /.*Progress \{0\} \|\|\| \[(.*)\]/;
@@ -255,6 +256,7 @@ var cocoUploadCode = function(fun) {
 
 var cocoCompileCode = function(code, fun, funerr) {
 
+	cocoServer.compileError = 0;
 
 	var quote = function(str)
 	{
@@ -310,7 +312,11 @@ var cocoCompileCode = function(code, fun, funerr) {
     var child = exec(build_command);
     
     child.stderr.on('data', function(data) {
+			
+			cocoServer.compileError++;
+
 			sendConsole("\n--------- error --------\n\n");	
+
 			if (data.includes(cocoServer.arduinoPath.scriptPath))
 			{			
 
@@ -363,11 +369,13 @@ var cocoCompileCode = function(code, fun, funerr) {
 		
 		var isErr = 'false';
 
-		if (cocoServer.compile.errorLint.length > 0) isErr = 'true';
+		if (cocoServer.compile.errorLint.length > 0 || cocoServer.compileError > 0) isErr = 'true';
 
 		cocoServer.compile.errorLint.length = 0;
 
 		sendProgress({process: 'compile', error: isErr, progress:100});
+
+
         cocoServer.compilerBusy = 0;
 
         if(isErr !== 'true')
