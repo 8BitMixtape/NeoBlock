@@ -3,6 +3,7 @@ var CocoBlockly = CocoBlockly || {};
 const {app, dialog} = require('electron').remote
 var remote = require('electron').remote;
 var fs = remote.require('fs')
+var path = remote.require('path')
 
 const Configstore = remote.require('configstore');
 const conf = new Configstore("cocoblock");
@@ -457,15 +458,88 @@ CocoBlockly.setProgressBar = function(value) {
   $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
 }
 
+
+CocoBlockly.blocks = {}
+
+CocoBlockly.blocks.domCreateToolCat = function(id,name)
+{
+     var xml_cat = document.createElement('category')
+      xml_cat.setAttribute("id", id);
+      xml_cat.setAttribute("name", name); 
+      return xml_cat;
+}
+
+
+CocoBlockly.blocks.domCreateXMLBlock = function(block_name, block_file)
+{
+  // console.log(block_file)
+    var block_string = fs.readFileSync(block_file)
+    var new_block = Blockly.Xml.textToDom(block_string).firstElementChild;
+    // console.log(new_block)
+    var toolBoxCat = CocoBlockly.blocks.domCreateToolCat(block_name, block_name)
+    toolBoxCat.appendChild(new_block)
+    return toolBoxCat;
+}
+
+
+
+CocoBlockly.blocks.fileExists = function(filePath) {
+    try
+    {
+        var stats = fs.statSync(filePath);
+        return stats.isFile() || stats.isDirectory();
+    }
+    catch (err)
+    {
+        return false;
+    }
+}
+  
+CocoBlockly.blocks.loadBlocksFromDir = function(board_dir)
+{
+  var toolBoxCustomCat = CocoBlockly.blocks.domCreateToolCat("Custom Blocks", "Custom Blocks")
+  var block_dir = (app.getPath('userData') + path.sep + "Blocks" )
+  if(!CocoBlockly.blocks.fileExists(block_dir)) return toolBoxCustomCat
+
+  var block_dir_array = fs.readdirSync(block_dir);
+  var block_dir_array_length = block_dir_array.length
+  //iterate ./Blocks/*
+  for (var i = 0; i < block_dir_array_length; i++) {
+      var block_category_currentdir = block_dir_array[i];
+      if (block_category_currentdir === '.DS_Store') continue;
+      var toolBoxSubCat = CocoBlockly.blocks.domCreateToolCat(block_category_currentdir, block_category_currentdir)
+      // console.log(' ', block_category_currentdir)
+      // //iterate file inside ./Blocks/*/*
+      var block_file_array = fs.readdirSync( block_dir + path.sep + block_category_currentdir )
+      for (var j = 0; j < block_file_array.length; j++) {
+        var current_block_file = block_file_array[j]
+        // console.log('  ', current_block_file)
+        var new_block_dom = CocoBlockly.blocks.domCreateXMLBlock(current_block_file, block_dir + path.sep + block_category_currentdir + path.sep + current_block_file)
+        toolBoxSubCat.appendChild(new_block_dom)
+      }
+      toolBoxCustomCat.appendChild(toolBoxSubCat)
+  }
+
+  return toolBoxCustomCat
+
+}  
+
 CocoBlockly.initAll = function() {
 
 
-    CocoBlockly.toolBox = document.getElementById('xmltoolbox');
+    CocoBlockly.toolBox = Blockly.Xml.textToDom(CocoBlockly.toolboxStr);
+
+    var custom_block_dom = CocoBlockly.blocks.loadBlocksFromDir();
+    if(custom_block_dom.childElementCount > 0)
+    {
+      CocoBlockly.toolBox.insertBefore(custom_block_dom, CocoBlockly.toolBox.firstElementChild)
+    }
     
+
     CocoBlockly.workspace = Blockly.inject('blocklyDiv',
     {
         css: false,
-        toolbox: CocoBlockly.toolboxStr,
+        toolbox: CocoBlockly.toolBox,
         media: 'blockly/',
             grid: {
                 spacing: 25,
