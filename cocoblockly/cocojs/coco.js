@@ -16,6 +16,7 @@ CocoBlockly.config = {
   currentFile : '_blank',
   defaultTitle: 'CocoBlock for CocoMake7',
   modified: 0,
+  compiled: 0,
   newFile: 0,
   linter: []
 }
@@ -178,10 +179,19 @@ CocoBlockly.ipcSetPath = function(path)
 
 CocoBlockly.upload = function()
 {
+  if(CocoBlockly.config.compiled) {
+      CocoBlockly.ipc.sendParam('upload', '', function(){
+        console.log('upload done..');
+      }); 
+
+      return    
+  }
+
   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
   CocoBlockly.ipcCompileCode(CocoBlockly.code, function(status){
     if(status.compile === 'done')
     {
+      CocoBlockly.config.compiled = 1;
        $.notify("Compile succeed..",{type: 'success'})
       CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
       CocoBlockly.ipc.sendParam('upload', '', function(){
@@ -197,7 +207,10 @@ CocoBlockly.compile = function()
 {
   CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
   CocoBlockly.ipcCompileCode(CocoBlockly.code, function(status){
-    if(status.compile === 'done') $.notify("Compile succeed..",{type: 'success'})
+    if(status.compile === 'done') {
+      $.notify("Compile succeed..",{type: 'success'})
+      CocoBlockly.config.compiled = 1;
+    }
   });
 }
 
@@ -342,6 +355,7 @@ CocoBlockly.generateCode = function(event) {
 
   if (arduinoCode !== CocoBlockly.PREV_ARDUINO_CODE_)
   {
+    CocoBlockly.config.compiled = 0;
     CocoBlockly.CodeMirror.getDoc().setValue(CocoBlockly.code)
     CocoBlockly.CodeMirrorPreview.getDoc().setValue(CocoBlockly.code)
     CocoBlockly.PREV_ARDUINO_CODE_ = CocoBlockly.code
