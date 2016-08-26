@@ -383,7 +383,7 @@ var cocoCompileCode = function(code, fun, funerr) {
 
 
 
-var processIPCMsg = function(event, count, data) {	
+var receicveIPCMsg = function(event, count, data) {	
 
 	var command = data['command'];
 	var params = data['params'];
@@ -420,7 +420,7 @@ var processIPCMsg = function(event, count, data) {
 
 
 ipcMain.on('do-ipc', (event, arg) => {
-  processIPCMsg(event, arg.count, arg.command);  	
+  receicveIPCMsg(event, arg.count, arg.command);  	
 })
 
 
@@ -481,7 +481,7 @@ app.on('ready', () => {
 
 
 app.on('will-quit', () => {
-  globalShortcut.unregisterAll()
+  //globalShortcut.unregisterAll()
 })
 
 
