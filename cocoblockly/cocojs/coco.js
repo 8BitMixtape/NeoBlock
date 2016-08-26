@@ -291,14 +291,14 @@ CocoBlockly.saveAsFile = function() {
       {name: 'CocoBlock', extensions: ['cblock']},
     ]
   });
-
-  fs.writeFileSync(filename, CocoBlockly.xml);
-  $.notify("File saved..")
-
-  CocoBlockly.config.currentFile = filename
-  CocoBlockly.config.modified = 0
-
-  CocoBlockly.setDocTitle(filename)
+  if(typeof(filename) !== 'undefined')
+  {
+    fs.writeFileSync(filename, CocoBlockly.xml);
+    $.notify("File saved..")
+    CocoBlockly.config.currentFile = filename
+    CocoBlockly.config.modified = 0
+    CocoBlockly.setDocTitle(filename)
+  }
 }
 
 CocoBlockly.isRunningElectron = function() {
