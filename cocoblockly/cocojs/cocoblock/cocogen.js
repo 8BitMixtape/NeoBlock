@@ -256,11 +256,15 @@ Blockly.Arduino['coco_synth_setupvoice'] = function(block) {
   // TODO: Assemble Arduino into code variable.
 
 var declare = 'CocoSynth synth;\n'
-+'\n//disable millis'
-+'\n//make timer available for CocoSynth'
++'\n//override arduino main function'
++'\n//make timer and pwm available for CocoSynth'
 +'\nint main(void)'
 +'\n{'
++'\n    //disable millis & pwm'
 +'\n    //init();'
++'\n    //enable analogRead'
++'\n    ADC_PrescalerSelect( ADC_ARDUINO_PRESCALER );'
++'\n    ADC_Enable();'
 +'\n    setup();'
 +'\n    for (;;)'
 +'\n        loop();'
@@ -268,7 +272,7 @@ var declare = 'CocoSynth synth;\n'
 +'\n}'
 
 
-  Blockly.Arduino.addInclude('cocosynth', "#include <CocoSynth.h>");
+  Blockly.Arduino.addInclude('cocosynth', "#include <CocoSynth.h>\n" + "#include <core_adc.h>");
   Blockly.Arduino.addDeclaration('cocosynth', declare);
 
 
