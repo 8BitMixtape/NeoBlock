@@ -220,24 +220,26 @@ CocoBlockly.openFile = function() {
     ]
   });
   
-  var filename = file[0];
-  
-  fs.readFile(filename, 'utf8', function (err,xml_data) {
-  
-    if (err) {
-      return console.log(err);
-    }
-    CocoBlockly.config.newFile = 1
+  if (typeof(filename) !== 'undefined')
+  {
+    var filename = file[0];
+    
+    fs.readFile(filename, 'utf8', function (err,xml_data) {
+    
+      if (err) {
+        return console.log(err);
+      }
+      CocoBlockly.config.newFile = 1
 
-    CocoBlockly.workspace.clear();
-    var xml = Blockly.Xml.textToDom(xml_data);
-    Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
-    // $.notify("File loaded..")
+      CocoBlockly.workspace.clear();
+      var xml = Blockly.Xml.textToDom(xml_data);
+      Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
+      // $.notify("File loaded..")
 
-    CocoBlockly.config.currentFile = filename;
-    CocoBlockly.setDocTitle(filename)
-  });
-
+      CocoBlockly.config.currentFile = filename;
+      CocoBlockly.setDocTitle(filename)
+    });    
+  }
 }
 
 CocoBlockly.newFile = function() {
