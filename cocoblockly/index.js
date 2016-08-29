@@ -313,9 +313,17 @@ var cocoCompileCode = function(code, fun, funerr) {
     
     child.stderr.on('data', function(data) {
 			
-			cocoServer.compileError++;
+			//distinguish between error and warning
+
+			if (data.includes('===Warning:') !== true)
+			{
+				cocoServer.compileError++;
+			}
 
 			sendConsole("\n--------- error --------\n\n");	
+
+
+			//parse error and send the line number and error message to codemirror editor
 
 			if (data.includes(cocoServer.arduinoPath.scriptPath))
 			{			
@@ -351,6 +359,8 @@ var cocoCompileCode = function(code, fun, funerr) {
 			sendConsole(data);	
 	})
 
+    //parse compile progress and send to progressbar
+
 	child.stdout.on('data', function(data) {
 		var m;	 
 		if ((m = cocoServer.compileProgressRe.exec(data)) !== null) {
@@ -359,25 +369,28 @@ var cocoCompileCode = function(code, fun, funerr) {
 		    }
 			sendProgress({process: 'compile', progress:m[1]});
 		};
-		// }else{
-			sendConsole(data);
-		// }
+
+		//output everything to console
+		sendConsole(data);
 	});
 
 	child.on('close', function(code) {
+		
+		//send errors to linter codemirror
 		sendLinter(cocoServer.compile.errorLint);
 		
 		var isErr = 'false';
 
+		//get how many error
 		if (cocoServer.compile.errorLint.length > 0 || cocoServer.compileError > 0) isErr = 'true';
 
 		cocoServer.compile.errorLint.length = 0;
 
 		sendProgress({process: 'compile', error: isErr, progress:100});
 
-
         cocoServer.compilerBusy = 0;
 
+        //callback if error and success
         if(isErr !== 'true')
 	    {
 	    	fun(code);
