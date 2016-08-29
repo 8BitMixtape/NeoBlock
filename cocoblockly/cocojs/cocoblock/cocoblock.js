@@ -690,6 +690,14 @@ Blockly.Blocks['cocoutil_peakdetect'] = {
 
    this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
+  },
+  validate: function () {
+    var name = Blockly.Procedures.findLegalName(
+        this.getFieldValue('COCO_NAME'), this);
+    this.setFieldValue(name, 'COCO_NAME');
+  },
+  getProcedureDef: function() {
+    return [this.getFieldValue('COCO_NAME'), {}, false];
   }
 };
 

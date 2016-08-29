@@ -236,6 +236,8 @@ Blockly.Arduino['coco_interval_function'] = function(block) {
   var text_timer_name = block.getFieldValue('TIMER_NAME');
   var number_timer_interval = Blockly.Arduino.valueToCode(block, 'TIMER_INTERVAL', Blockly.Arduino.ORDER_ATOMIC) || '0';
 
+  
+
   var statements_do_blocks = Blockly.Arduino.statementToCode(block, 'DO_BLOCKS');
   // TODO: Assemble JavaScript into code variable.
 
