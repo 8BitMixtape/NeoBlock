@@ -363,6 +363,14 @@ Blockly.Blocks['coco_interval_function'] = {
     this.setColour(20);
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+  },
+  validate: function () {
+    var name = Blockly.Procedures.findLegalName(
+        this.getFieldValue('TIMER_NAME'), this);
+    this.setFieldValue(name, 'TIMER_NAME');
+  },
+  getProcedureDef: function() {
+    return [this.getFieldValue('TIMER_NAME'), {}, false];
   }
 };
 
