@@ -1,0 +1,6 @@
+CocoSynth: Arduino synth V4.1 -Dzl/Illutron 2014 modified by Badgeek to run on Attin85/84
+CocoMidi: based on Anyma.ch GnusbuinoMidi modified by Stahl & Badgeek
+CocoTouch: based on QTouchSense by jgeisler0303 modifed by Dusjagr & added main hum filter by Badgeek
+CocoKeyboard: Based on Obdev's AVRUSB code modified for Digispark by Digistump 
+CocoMouse: Based on Obdev's AVRUSB code modified for Digispark by Digistump
+CocoBlock: Based on ArduBlockly fork of Blockly modified for CocoMake7 UI/UX by Badgeek
