@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const Configstore = require('configstore');
-const conf = new Configstore("cocoblock");
+const conf = new Configstore("NeoBlock");
 
 let mainWindow;
 var exec = require('child_process').exec;
@@ -93,7 +93,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 
     if (os.platform() === 'darwin') {
     	
-    	var cocomakepath = appDataDir + '/../Arduino15/packages/CocoMake7/hardware/avr'
+    	var cocomakepath = appDataDir + '/../Arduino15/packages/8BitMixtape/hardware/avr'
 
     	var latest_ver = getLatestVer(cocomakepath)
 
@@ -115,7 +115,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 		    builtPath 	 : tmpCompileDir,
 			scriptPath 	 : tmpScript,
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
-			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/avrdude/macosx',
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/hex2wav/macosx',
 
 		}
 
@@ -213,8 +213,8 @@ var initArduinoPath = function() {
 
 var cocoUploadCode = function(fun) {
 
-    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + "avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath  + path.sep + "avrdude.conf\" -pattiny85 -cusbasp -D -Uflash:w:" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName +  ".ino.hex:i";
-
+    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + "hex2wav\" --dump-hex \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.hex\"" + " \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.wav\"";
+	sendConsole(uploadCmd);
 	sendProgress({process: 'upload', progress:0});
 
     var child = exec(uploadCmd);
@@ -261,6 +261,7 @@ var cocoCompileCode = function(code, fun, funerr) {
 		return '"' + str + '"';
 	}
 
+
     var build_opt = [
     	['-compile'],
     	['-logger=machine'],
@@ -271,8 +272,8 @@ var cocoCompileCode = function(code, fun, funerr) {
 		['-tools',quote(cocoServer.arduinoPath.toolHwManager)],
     	['-built-in-libraries',quote(cocoServer.arduinoPath.builtinLib)],
     	['-libraries',quote(cocoServer.arduinoPath.userLib)],    	
-    	['-fqbn=CocoMake7:avr:cocomake'],
-    	['-ide-version=10606'],
+    	['-fqbn=8BitMixtape:avr:8bitmixtapeneo:bootloader=tinyaudioboot,core=arduinocore'],
+    	['-ide-version=10801'],
     	['-build-path',quote(cocoServer.arduinoPath.builtPath)],
     	['-warnings=none'],
     	['-prefs=build.warn_data_percentage=75'],
@@ -471,6 +472,9 @@ app.on('ready', () => {
   	  minWidth: 816
 	});
 
+
+	mainWindow.openDevTools();
+
     mainWindow.on('close', function(e){
         app.quit();
     });
@@ -499,8 +503,12 @@ var menu = Menu.buildFromTemplate([
       {label: 'Save', accelerator: 'CmdOrCtrl+S', click: function() {sendIPCBroadcast({command: 'savefile'})}},    
       {label: 'Save As',click: function() {sendIPCBroadcast({command: 'saveasfile'})}}, 
       {label: 'Toggle Sidebar', accelerator: 'CmdOrCtrl+T',click: function() {sendIPCBroadcast({command: 'togsidebar'})}}, 
-
-      {label: 'Upload', accelerator: 'CmdOrCtrl+U', click: function() {sendIPCBroadcast({command: 'upload'})}},      
+	  {label: 'Upload', accelerator: 'CmdOrCtrl+U', click: function() {sendIPCBroadcast({command: 'upload'})}},      
+	  { type: "separator" },
+	  { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+	  { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+	  { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+	  { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" },	
       {label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: function() {force_quit=true; app.quit();}}
     ]
   }]);

@@ -1,9 +1,9 @@
 <html><head>
-    <title>CocoBlocks for CocoMake7</title>
+    <title>NeoBlocks for 8BitMixtapeNEO</title>
     <link rel="stylesheet" href="assets/theme.min.css">
     <link rel="stylesheet" href="vendor/codemirror.min.css">
     <link rel="stylesheet" href="assets/blockly_style.css">
-    <link rel="stylesheet" href="assets/cocoblockly.css">
+    <link rel="stylesheet" href="assets/NeoBlockly.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/addon/lint/lint.min.css">
 
 
@@ -48,8 +48,8 @@
     <script src="blockly/generators/arduino/tone.js"></script>
     <script src="blockly/generators/arduino/variables.js"></script>
 
-<!--     <script src="cocojs/cocoblock/cocoblock.js"></script>
-    <script src="cocojs/cocoblock/cocogen.js"></script>
+<!--     <script src="cocojs/NeoBlock/NeoBlock.js"></script>
+    <script src="cocojs/NeoBlock/cocogen.js"></script>
  -->
     <!-- Default language js files, user selection appended to head
     on load -->
@@ -97,7 +97,7 @@
     /* padding-left: 5px; */"><img height="32" alt="Brand" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTcuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ3Ni44IDQ3Ni44IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0NzYuOCA0NzYuODsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiPgo8cGF0aCBkPSJNNDE2LjE4NCwxMTkuMDU3Yy0wLjIwNy0wLjI3Mi0wLjQzMS0wLjUyMS0wLjY2NC0wLjc2Yy00LjUxOC01LjcxNi0xMC4yNjctMTEuMTg3LTE3LjIwOS0xNi4zMjIgIGMtMTYuMTcxLTExLjk2NC0zOC41MjItMjEuOTM2LTY0LjkxMS0yOS4wMDlWNDguNmMwLTMuODYsMy4xNC03LDctN2g2Mi40YzQuNDE4LDAsOC0zLjU4Miw4LThWOGMwLTQuNDE4LTMuNTgyLTgtOC04aC02Ni45NiAgYy0yNC4yNjIsMC00NCwxOS43MzgtNDQsNDR2MjAuNzQ5Yy0xNy4yNzMtMi4zMzEtMzUuMi0zLjUyNC01My40NC0zLjUyNGMtNzguNTQ4LDAtMTQ0LjQ4NCwyMS40NTUtMTczLjQzNCw1Mi44NjkgIGMtMC42NjksMC40NTItMS4yODMsMS4wMTEtMS44MSwxLjY3OUMzMS44ODgsMTU1LjQzMSwxNS4zNiwyMDMuMTQ2LDE1LjM2LDI1My43NmMwLDU5LjU3NiwyMy4yLDExNS41ODYsNjUuMzI3LDE1Ny43MTMgIEMxMjIuODEzLDQ1My42LDE3OC44MjQsNDc2LjgsMjM4LjQsNDc2LjhzMTE1LjU4Ni0yMy4yLDE1Ny43MTMtNjUuMzI3YzQyLjEyNy00Mi4xMjcsNjUuMzI3LTk4LjEzNyw2NS4zMjctMTU3LjcxMyAgQzQ2MS40NCwyMDQuNjU0LDQ0NS43OTEsMTU4LjA3NCw0MTYuMTg0LDExOS4wNTd6IE0zMzMuNCwxMzkuOTc1YzIuMjk5LDMuMDgsMy44OTUsNi41NzMsMy44OTUsMTAuMzQ1ICBjMCwzLjQyNS0xLjM0OCw2LjkyMi0zLjg5NSwxMC4zNVYxMzkuOTc1eiBNMzM1Ljg0LDE2aDU4Ljk2djkuNmgtNTQuNGMtMTIuNjgyLDAtMjMsMTAuMzE4LTIzLDIzdjEyNC45NDIgIGMtMi45MDUsMS41OTYtNi4xLDMuMTItOS41Niw0LjU1NFYxMTEuMjNjMC0wLjAyNiwwLTAuMDUxLDAtMC4wNzdWNDRDMzA3Ljg0LDI4LjU2MSwzMjAuNCwxNiwzMzUuODQsMTZ6IE0yMzguNCwxOTAuMTYgIGMtNTguMjgsMC05OC44OTUtMjAuOTk2LTk4Ljg5NS0zOS44NHM0MC42MTUtMzkuODQsOTguODk1LTM5Ljg0YzE5LjA3OSwwLDM3LjQxNCwyLjMwNyw1My40NCw2LjY4NXY2Ni4zNDQgIEMyNzYuODA3LDE4Ny42MTcsMjU4LjY3NCwxOTAuMTYsMjM4LjQsMTkwLjE2eiBNMjk1LjYsNDUyLjc1OGMyLjgyLTIuNTM0LDUuNTg5LTUuMjU1LDguMjk2LTguMTczICBjMTguMjc0LTE5LjY5NywzMy40ODgtNDcuNjY4LDQzLjk5OC04MC44OTFjMS4zMzMtNC4yMTMtMS4wMDItOC43MDgtNS4yMTQtMTAuMDQxYy00LjIxNS0xLjMzMy04LjcwOCwxLjAwMy0xMC4wNDEsNS4yMTQgIGMtMTkuODksNjIuODc0LTU2LDEwMS45MzItOTQuMjM5LDEwMS45MzJzLTc0LjM0OS0zOS4wNTgtOTQuMjM5LTEwMS45MzJjLTEuMzMzLTQuMjEyLTUuODI4LTYuNTQ2LTEwLjA0MS01LjIxNCAgYy00LjIxMiwxLjMzMy02LjU0Nyw1LjgyOC01LjIxNCwxMC4wNDFjMTAuNTEsMzMuMjIzLDI1LjcyNCw2MS4xOTQsNDMuOTk4LDgwLjg5MWMyLjcwOCwyLjkxOCw1LjQ3Nyw1LjYzOSw4LjI5Niw4LjE3MyAgQzk0Ljc3LDQyNy44NzcsMzEuMzYsMzQ4LjA4NywzMS4zNiwyNTMuNzZjMC0zMS40NDUsNi44ODEtNjEuNjc5LDIwLjEyNi04OS4yNzVjMTQuMDEzLDQyLjk5Nyw5MS4wODEsNzQuOTMsMTg2LjkxNCw3NC45MyAgYzM3LjU2NiwwLDczLjc4OC01LjAyNiwxMDQuNzUtMTQuNTM1YzQuMjI0LTEuMjk3LDYuNTk2LTUuNzcyLDUuMjk5LTkuOTk2Yy0xLjI5Ny00LjIyNS01Ljc3OC02LjU5Ni05Ljk5Ni01LjI5OSAgYy0yOS40NTksOS4wNDctNjQuMDU3LDEzLjgzLTEwMC4wNTIsMTMuODNjLTQ3LjI5OCwwLTkxLjY0Mi04LjE4OC0xMjQuODYtMjMuMDU0QzgyLjgxOSwxODYuNjEyLDY1LjIsMTY4LjM3Myw2NS4yLDE1MC4zMiAgczE3LjYxOS0zNi4yOTIsNDguMzQtNTAuMDQxYzMzLjIxOC0xNC44NjcsNzcuNTYyLTIzLjA1NCwxMjQuODYtMjMuMDU0YzE4LjI4MSwwLDM2LjIyMiwxLjIzNiw1My40NCwzLjY2N3YxOS43NDEgIGMtMTYuMzQ3LTQuMDM3LTM0LjU5OC02LjE1My01My40NC02LjE1M2MtMjkuNjU0LDAtNTcuNjU5LDUuMjI0LTc4Ljg1NCwxNC43MWMtMjMuMjQxLDEwLjQwMS0zNi4wNDEsMjUuMDA4LTM2LjA0MSw0MS4xMyAgczEyLjc5OSwzMC43MjksMzYuMDQxLDQxLjEzYzIxLjE5NSw5LjQ4Niw0OS4yLDE0LjcxLDc4Ljg1NCwxNC43MWMyMy4wMDQsMCw0NC45OTktMy4xNTYsNjMuNjA5LTguOTk1ICBjMC4xNTctMC4wNDQsMC4zMTEtMC4wOTQsMC40NjQtMC4xNDdjNS4yMDktMS42NTIsMTAuMTY1LTMuNTAzLDE0Ljc4Mi01LjU2OWMyMy4yNDEtMTAuNDAxLDM2LjA0MS0yNS4wMDgsMzYuMDQxLTQxLjEzICBjMC04LjQxNC0zLjU3Mi0yMC41NjUtMTkuODk1LTMyLjA4M1Y4OS41NjJjNDcuODQ0LDEzLjY1NCw3OC4yLDM2Ljk5MSw3OC4yLDYwLjc1OGMwLDE1Ljg5Ni0xMy4xODQsMjguNjM4LTI0LjI0MywzNi41MjcgIGMtMy41OTcsMi41NjUtNC40MzMsNy41NjItMS44NjcsMTEuMTU5YzEuNTYxLDIuMTg4LDQuMDIxLDMuMzU0LDYuNTIsMy4zNTRjMS42MDcsMCwzLjIzLTAuNDgzLDQuNjM5LTEuNDg4ICBjMTQuODM1LTEwLjU4MiwyNC41MzktMjIuNjEsMjguNjcxLTM1LjM1M2MxMy4yNDIsMjcuNjIsMjAuMTIsNTcuODc0LDIwLjEyLDg5LjI0QzQ0NS40NCwzNDguMDg3LDM4Mi4wMyw0MjcuODc3LDI5NS42LDQ1Mi43NTh6IiBmaWxsPSIjNjFiMDI4Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" style="
     position: absolute;
     top: -5px;
-    "><span style="padding-left: 40px;">CocoMake7</span></span>
+    "><span style="padding-left: 40px;">NeoBlock</span></span>
 
                        </a>
 
@@ -109,38 +109,38 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a onClick="CocoBlockly.newFile()" href="#">New</a>
+                    <a onClick="NeoBlockly.newFile()" href="#">New</a>
                   </li>                
                   <li>
-                    <a onClick="CocoBlockly.openFile()" href="#">Open</a>
+                    <a onClick="NeoBlockly.openFile()" href="#">Open</a>
                   </li>
                   <li>
-                    <a onClick="CocoBlockly.saveAsFile()" href="#">Save As</a>
+                    <a onClick="NeoBlockly.saveAsFile()" href="#">Save As</a>
                   </li>
                   <li>
-                    <a onClick="CocoBlockly.saveFile()" href="#">Save</a>
+                    <a onClick="NeoBlockly.saveFile()" href="#">Save</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a onClick="CocoBlockly.exportFile()" href="#">Export Code</a>
+                    <a onClick="NeoBlockly.exportFile()" href="#">Export Code</a>
                   </li>                  
                   <li>
-                    <a onClick="CocoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
+                    <a onClick="NeoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
                   </li>
                <li>
-                    <a  data-toggle="modal" data-backdrop="false"  href="#cocoblock-setting">Settings</a>
+                    <a  data-toggle="modal" data-backdrop="false"  href="#NeoBlock-setting">Settings</a>
                   </li> 
                 <li>
-                    <a onClick="CocoBlockly.updater.updateNow();" href="#">Update Block</a>
+                    <a onClick="NeoBlockly.updater.updateNow();" href="#">Update Block</a>
                   </li>
 
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a data-toggle="modal" data-backdrop="false" href="#cocoblock-about">About</a>
+                    <a data-toggle="modal" data-backdrop="false" href="#NeoBlock-about">About</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a onClick="CocoBlockly.quit()" href="#">Exit</a>
+                    <a onClick="NeoBlockly.quit()" href="#">Exit</a>
                   </li>                  
                 </ul>
               </li>
@@ -269,7 +269,7 @@
     </div>
 
 
-<xml id="CocoBlockInitial">
+<xml id="NeoBlockInitial">
 </xml>
 
 
@@ -542,7 +542,7 @@
   </block>
   </category>
 
-              <category id="catCocoSynth" name="CocoSynth">
+              <category id="catNeoSynth" name="NeoSynth">
                <block type="arduino_functions" id="^}@SOl,N#YB49.qgQN]M" x="38" y="38">
     <statement name="SETUP_FUNC">
       <block type="coco_synth_setupvoice" id="jP,[^(j_i6y1/vP,x1|8" inline="false">
@@ -569,7 +569,7 @@ Sine wave instrument
       </block>
     </statement>
     <statement name="LOOP_FUNC">
-      <block type="cocosynth_interval_function" id="~B8r^bj{E;NjR;M~,}8[">
+      <block type="NeoSynth_interval_function" id="~B8r^bj{E;NjR;M~,}8[">
         <field name="TIMER_NAME">synth_timer_1</field>
         <comment pinned="true" h="80" w="160">every 1 sec trigger metronome</comment>
         <value name="TIMER_INTERVAL">
@@ -587,7 +587,7 @@ Sine wave instrument
           </block>
         </statement>
         <next>
-          <block type="cocosynth_interval_function" id="wce5](b4h6H:U4}MwHwL">
+          <block type="NeoSynth_interval_function" id="wce5](b4h6H:U4}MwHwL">
             <field name="TIMER_NAME">synth_timer_2</field>
             <comment pinned="false" h="80" w="160">every 2 sec trigger noise instrument</comment>
             <value name="TIMER_INTERVAL">
@@ -968,12 +968,12 @@ Sine wave instrument
       </category>
             <sep></sep>
 
-            <category id="catCocoSynth" name="CocoSynth">
+            <category id="catNeoSynth" name="NeoSynth">
         <block type="coco_synth_setupvoice"></block>
         <block type="coco_synth_delay"></block>
 
 
-  <block type="cocosynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
+  <block type="NeoSynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
     <field name="TIMER_NAME">synth_timer_1</field>
     <value name="TIMER_INTERVAL">
       <block type="math_number" id=";=T})9b-GmWh.s+xKPpt">
@@ -1019,9 +1019,9 @@ Sine wave instrument
 
     </xml>
   
-  <div class="modal" id="cocoblock-setting">
+  <div class="modal" id="NeoBlock-setting">
       <div class="modal-dialog">
-        <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h4 class="modal-title" id="myModalLabel">CocoBlock Settings</h4></div>
+        <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h4 class="modal-title" id="myModalLabel">NeoBlock Settings</h4></div>
           
           <div class="modal-body">
             <form class="form-horizontal text-left" role="form">
@@ -1037,17 +1037,17 @@ Sine wave instrument
             </form>
           </div>
           
-        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" data-dismiss="modal" onClick="CocoBlockly.saveSettings()" class="btn btn-primary">Save changes</button></div></div>
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" data-dismiss="modal" onClick="NeoBlockly.saveSettings()" class="btn btn-primary">Save changes</button></div></div>
       </div>
     </div>
 
 
-<div class="modal" id="cocoblock-about">
+<div class="modal" id="NeoBlock-about">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h4 class="modal-title">About CocoBlock
+            <h4 class="modal-title">About NeoBlock
               <br>
             </h4>
           </div>
@@ -1057,7 +1057,7 @@ Sine wave instrument
                   <br>
                   http://cocomake7.github.io
                   <br>
-                  <p>CocoBlock Ide 0.1 by Budi Prakosa based on ArduBlockly</p>
+                  <p>NeoBlock Ide 0.1 by Budi Prakosa based on ArduBlockly</p>
                 </p>
           </div>
           <div class="modal-footer">
@@ -1072,11 +1072,11 @@ Sine wave instrument
       window.addEventListener('load', function load(event){
       window.removeEventListener('load', load, false);
       // checkUpdate()  
-      CocoBlockly.initAll()
+      NeoBlockly.initAll()
 
-      for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
+      for (var i = 0; i < NeoBlockly.updater.files.length; ++i)
       {
-        var file = CocoBlockly.updater.files[i]; 
+        var file = NeoBlockly.updater.files[i]; 
         var updated = conf.get(file.name)
 
         if (typeof(updated) === 'undefined') {
