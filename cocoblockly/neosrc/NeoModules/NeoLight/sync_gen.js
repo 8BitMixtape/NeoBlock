@@ -1,28 +1,17 @@
-Blockly.Arduino['NeoLight_setup'] = function(block) {
+Blockly.Arduino['NeoLight_sync'] = function(block) {
 
 //get_field_value(block, 'NEOLIGHT_COUNT');
 //get_field_value_atomic(block, 'NEOLIGHT_COUNT');
-
-var led_count = get_field_value(block, 'NEOLIGHT_COUNT');
-var output_pin = get_field_value(block, 'NEOLIGHT_PIN');
 
 var block_include = `
 #include <WS2812.h>
 `
 
-var block_declaration = `
-#define LEDCount ` + led_count + `
-#define outputPin ` + output_pin + `
+var block_declaration = ``
 
-WS2812 LED(LEDCount); 
-cRGB value;
-`
+var setup = ``
 
-var setup = `
-LED.setOutput(`+output_pin+`);
-`
-
-var code = ``
+var code = `LED.sync();`
 
 //add include
 Blockly.Arduino.addInclude("NeoLight", fix_newline(block_include));

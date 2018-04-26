@@ -1,4 +1,6 @@
 <category id="catNeoLight" name="NeoLight">
         <block type="NeoLight_setup"></block>
+        <block type="NeoLight_sync"></block>
+        <block type="NeoLight_setrgb"></block>        
 </category>
 <sep></sep>
