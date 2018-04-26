@@ -88,4 +88,9 @@ gulp.task('indexml', function() {
       .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('default', [ 'vendor', 'main', 'block', 'gen', 'xml', 'indexml' ]);
+gulp.task('electron', function(){
+    var exec = require('child_process').exec;
+    exec('electron ./dist');
+});
+
+gulp.task('default', [ 'vendor', 'main', 'block', 'gen', 'xml', 'indexml', 'electron' ]);
