@@ -34,7 +34,7 @@ Blockly.Arduino.addDeclaration("NeoLight", fix_newline(block_declaration));
 Blockly.Arduino.addSetup("NeoLight", fix_newline(setup));
 
 //add code
-return [code, Blockly.Arduino.ORDER_NONE];
+return code;
 
 };
 
