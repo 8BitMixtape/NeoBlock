@@ -13,7 +13,13 @@ goog.provide('Blockly.Arduino.coco');
 goog.require('Blockly.Arduino');
 
 
+var get_field_value = function(block, value_name) {
+  return block.getFieldValue(value_name);
+}
 
+var get_field_value_atomic = function(block, value_name) {
+    return Blockly.Arduino.valueToCode(block, value_name, Blockly.Arduino.ORDER_ATOMIC) || '0';
+}
 
  Blockly.Arduino['cocokey_sendkeystroke'] = function(block) {
 
