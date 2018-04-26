@@ -24,6 +24,23 @@
     //read
     get_field_value_atomic(block, "COCO_MOD")
 
+    //block interface
+
+    this.appendValueInput("NAME")
+        .appendField("NeoSynth set voice")
+    this.appendValueInput("COCO_MOD")
+        .setCheck(null)
+        .appendField("modulation to");
+        
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    
+    //modulation input inline
+    this.setInputsInline(true);
+        
+    //read
+    get_field_value_atomic(block, "COCO_MOD")
+
 */
 
 Blockly.Blocks['NeoLight_setup'] = {
@@ -39,7 +56,7 @@ Blockly.Blocks['NeoLight_setup'] = {
           .appendField("NeoLight pin ")
           .appendField(new Blockly.FieldTextInput("0"), "NEOLIGHT_PIN");
           
-
+      
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setTooltip('');
