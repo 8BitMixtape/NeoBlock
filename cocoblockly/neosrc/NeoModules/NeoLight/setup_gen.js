@@ -1,23 +1,18 @@
-
 Blockly.Arduino['NeoLight_setup'] = function(block) {
 
-  var get_block_value_atomic = function(block, value_name) {
-      return Blockly.Arduino.valueToCode(block, value_name, Blockly.Arduino.ORDER_ATOMIC) || '0';
-  }
+  //get_field_value(block, 'NEOLIGHT_COUNT');
+  //get_field_value_atomic(block, 'NEOLIGHT_COUNT');
 
-  var led_count = get_block_value_atomic(block, 'NEOLIGHT_COUNT');
-  var output_pin = get_block_value_atomic(block, 'NEOLIGHT_PIN');
+  var led_count = get_field_value(block, 'NEOLIGHT_COUNT');
+  var output_pin = get_field_value(block, 'NEOLIGHT_PIN');
 
-  var block_include = `
-  #include <WS2812.h>
-  `;
+  var block_include = 'include test.h'
+  var block_declaration = 'declaration ' + (led_count)
+  var setup = 'setup'
+  var code = 'code'
 
-  var block_declaration = `
-  #define LEDCount '+ led_count +'\
-  #define outputPin '+ output_pin +'\
-  `;
-
-  var code = ____include(esc('./setup_gen.txt'));
+  //add setup
+  Blockly.Arduino.addSetup("NeoLight", setup);
 
   //add include
   Blockly.Arduino.addInclude("NeoLight", block_include);
