@@ -49,6 +49,9 @@ Blockly.Blocks['NeoLight_setrgb'] = {
         this.appendDummyInput()
             .appendField("NeoLight Set RGB");
 
+        this.appendValueInput('NEOLIGHT_IDX')
+        .appendField("Led Index");
+
         this.appendValueInput('NEOLIGHT_R')
         .appendField("R");
 
