@@ -578,8 +578,8 @@ var addXMLScriptTag = function(id, xml_content)
 
 NeoBlockly.updater = {};
 NeoBlockly.updater.files = [
-  {name: "NeoBlock", local: "cocojs/NeoBlock/NeoBlock.js", url: "https://cocomake7.github.io/NeoBlockly/cocojs/NeoBlock/NeoBlock.js", type: "js"},
-  {name: "cocogen", local: "cocojs/NeoBlock/cocogen.js", url: "https://cocomake7.github.io/NeoBlockly/cocojs/NeoBlock/cocogen.js", type: "js"}
+  {name: "NeoBlock", local: "neosrc/NeoBlock/NeoBlock.js", url: "https://cocomake7.github.io/NeoBlockly/neosrc/NeoBlock/NeoBlock.js", type: "js"},
+  {name: "NeoGen", local: "neosrc/NeoBlock/NeoGen.js", url: "https://cocomake7.github.io/NeoBlockly/neosrc/NeoBlock/NeoGen.js", type: "js"}
 ]
 
 NeoBlockly.updater.blockNeedUpdate = function(name, url, fun)
