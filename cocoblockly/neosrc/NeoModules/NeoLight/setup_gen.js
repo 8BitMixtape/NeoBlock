@@ -1,26 +1,39 @@
 Blockly.Arduino['NeoLight_setup'] = function(block) {
 
-  //get_field_value(block, 'NEOLIGHT_COUNT');
-  //get_field_value_atomic(block, 'NEOLIGHT_COUNT');
+//get_field_value(block, 'NEOLIGHT_COUNT');
+//get_field_value_atomic(block, 'NEOLIGHT_COUNT');
 
-  var led_count = get_field_value(block, 'NEOLIGHT_COUNT');
-  var output_pin = get_field_value(block, 'NEOLIGHT_PIN');
+var led_count = get_field_value(block, 'NEOLIGHT_COUNT');
+var output_pin = get_field_value(block, 'NEOLIGHT_PIN');
 
-  var block_include = 'include test.h'
-  var block_declaration = 'declaration ' + (led_count)
-  var setup = 'setup'
-  var code = 'code'
+var block_include = `
+#include <WS2812.h>
+`
 
-  //add setup
-  Blockly.Arduino.addSetup("NeoLight", setup);
+var block_declaration = `
+include <test2.h>
+`
 
-  //add include
-  Blockly.Arduino.addInclude("NeoLight", block_include);
-  
-  //add declaration
-  Blockly.Arduino.addDeclaration("NeoLight", block_declaration);
+var setup = `
 
-  //add code
-  return [code, Blockly.Arduino.ORDER_NONE];
+`
+
+var code = `
+
+`
+
+//add setup
+Blockly.Arduino.addSetup("NeoLight", setup);
+
+//add include
+Blockly.Arduino.addInclude("NeoLight", block_include);
+
+//add declaration
+Blockly.Arduino.addDeclaration("NeoLight", block_declaration);
+
+//add code
+return [code, Blockly.Arduino.ORDER_NONE];
+
+
 };
 
