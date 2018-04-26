@@ -19,9 +19,8 @@ cRGB value;
 var setup = ``
 
 var code = `
-value.r = `+NEOLIGHT_R+`; value.g = `+NEOLIGHT_G+`; value.B = `+NEOLIGHT_B+`; // RGB Value -> Blue
+value.r = `+NEOLIGHT_R+`; value.g = `+NEOLIGHT_G+`; value.b = `+NEOLIGHT_B+`; // RGB Value -> Blue
 LED.set_crgb_at(`+NEOLIGHT_IDX+`, value); // Set value at LED found at index 0
-LED.sync(); // Sends the value to the LED
 `
 
 //add include

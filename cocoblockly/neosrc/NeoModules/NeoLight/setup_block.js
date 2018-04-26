@@ -46,7 +46,7 @@
 Blockly.Blocks['NeoLight_setup'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("NeoSynth Setup voice");
+          .appendField("NeoLight Setup");
 
       this.appendDummyInput()
           .appendField("NeoLight count ")
