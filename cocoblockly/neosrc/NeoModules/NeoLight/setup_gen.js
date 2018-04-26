@@ -15,7 +15,6 @@ var block_declaration = `
 #define outputPin ` + output_pin + `
 
 WS2812 LED(LEDCount); 
-cRGB value;
 `
 
 var setup = `
