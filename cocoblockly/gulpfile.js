@@ -12,7 +12,6 @@ var neoblock_vendor = [
 var neoblock_main = [
     './neosrc/*.js',    
     './index.js',
-    './index.html',
 ];
 
 var neomodule_block = {
@@ -81,4 +80,12 @@ gulp.task('xml', function() {
       .pipe(gulp.dest('./dist/'));
 });
 
+gulp.task('indexml', function() {
+    return gulp.src('./index.html')
+      .pipe(fileinclude({
+            basepath: './dist/',
+       }))   
+      .pipe(gulp.dest('./dist/'));
+});
 
+gulp.task('default', [ 'vendor', 'main', 'block', 'gen', 'xml', 'indexml' ]);
