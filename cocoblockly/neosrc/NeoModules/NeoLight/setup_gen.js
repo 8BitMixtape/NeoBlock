@@ -11,29 +11,30 @@ var block_include = `
 `
 
 var block_declaration = `
-include <test2.h>
+#define LEDCount ` + led_count + `
+#define outputPin ` + output_pin + `
+
+WS2812 LED(LEDCount); 
+cRGB value;
 `
 
 var setup = `
-
+LED.setOutput(outputPin);
 `
 
-var code = `
-
-`
-
-//add setup
-Blockly.Arduino.addSetup("NeoLight", setup);
+var code = ``
 
 //add include
-Blockly.Arduino.addInclude("NeoLight", block_include);
+Blockly.Arduino.addInclude("NeoLight", fix_newline(block_include));
 
 //add declaration
-Blockly.Arduino.addDeclaration("NeoLight", block_declaration);
+Blockly.Arduino.addDeclaration("NeoLight", fix_newline(block_declaration));
+
+//add setup
+Blockly.Arduino.addSetup("NeoLight", fix_newline(setup));
 
 //add code
 return [code, Blockly.Arduino.ORDER_NONE];
-
 
 };
 

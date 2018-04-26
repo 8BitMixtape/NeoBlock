@@ -21,6 +21,15 @@ var get_field_value_atomic = function(block, value_name) {
     return Blockly.Arduino.valueToCode(block, value_name, Blockly.Arduino.ORDER_ATOMIC) || '0';
 }
 
+var fix_newline = function(content) {
+  if (content.charAt(0) === "\n")
+  {
+    return content.substr(1);
+  }else{
+    return content;
+  }
+}
+
  Blockly.Arduino['cocokey_sendkeystroke'] = function(block) {
 
   Blockly.Arduino.addInclude('cocokey', '#include <CocoKeyboard.h>');
