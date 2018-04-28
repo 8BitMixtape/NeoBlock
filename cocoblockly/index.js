@@ -273,7 +273,7 @@ var cocoCompileCode = function(code, fun, funerr) {
 		['-tools',quote(cocoServer.arduinoPath.toolHwManager)],
     	['-built-in-libraries',quote(cocoServer.arduinoPath.builtinLib)],
     	['-libraries',quote(cocoServer.arduinoPath.userLib)],    	
-    	['-fqbn=8BitMixtape:avr:8bitmixtapeneo:bootloader=tinyaudioboot,core=arduinocore'],
+    	['-fqbn=8BitMixtape:avr:8bitmixtapeneo:bootloader=tinyaudioboot,core=teenyriotcore'],
     	['-ide-version=10801'],
     	['-build-path',quote(cocoServer.arduinoPath.builtPath)],
     	['-warnings=none'],
