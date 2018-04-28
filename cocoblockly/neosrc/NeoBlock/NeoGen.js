@@ -269,21 +269,30 @@ Blockly.Arduino['coco_synth_setupvoice'] = function(block) {
   var number_coco_mod = block.getFieldValue('COCO_MOD');
   // TODO: Assemble Arduino into code variable.
 
-var declare = 'NeoSynth synth;\n'
-+'\n//disable millis'
-+'\n//make timer available for NeoSynth'
-+'\nint main(void)'
-+'\n{'
-+'\n    //init();'
-+'\n    setup();'
-+'\n    for (;;)'
-+'\n        loop();'
-+'\n    return 0;'
-+'\n}'
+var declare = `
+NeoSynth synth;
+
+//disable millis
+//make timer available for NeoSynth
+int main(void)
+{
+    //init();
+ADC_PrescalerSelect( ADC_ARDUINO_PRESCALER );
+ADC_Enable();
+    setup();
+    for (;;)
+        loop();
+    return 0;
+}
+`
 
 
-  Blockly.Arduino.addInclude('NeoSynth', "#include <NeoSynth.h>");
-  Blockly.Arduino.addDeclaration('NeoSynth', declare);
+  Blockly.Arduino.addInclude('NeoSynth', fix_newline(`
+  #include <NeoSynth.h>
+  #include "core_adc.h"
+  `));
+
+  Blockly.Arduino.addDeclaration('NeoSynth', fix_newline(declare));
 
 
 
