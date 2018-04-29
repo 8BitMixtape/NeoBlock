@@ -425,120 +425,6 @@
 
 </category>
         
-                           <category id="catCocoTouch" name="CocoTouch to Midi">
-  <block type="arduino_functions" id="jt2UYe/a:4opih^:VQ`^" x="37" y="38">
-    <statement name="LOOP_FUNC">
-      <block type="cocotouch_touched" id="le|kxys6yaW20{S|+eXd">
-        <statement name="COCOTOUCH_DOTOUCHED">
-          <block type="cocomidi_sendcchires" id="g_(mUH|XSPN*et/tmi_M">
-            <value name="COCOMIDI_VALUE">
-              <block type="variables_get" id="]y8:aJT_sqB}[0.oBL7.">
-                <field name="VAR">filtered_value</field>
-              </block>
-            </value>
-            <value name="COCOMIDI_CHAN">
-              <block type="math_number" id="g(|%*{Au|EA*BcTk[w8S">
-                <field name="NUM">1</field>
-              </block>
-            </value>
-          </block>
-        </statement>
-        <next>
-          <block type="cocomidi_update" id="6jAg-g-R-821#79iBZX`"></block>
-        </next>
-      </block>
-    </statement>
-  </block>                           
-</category>
-               <category id="catCocoMidi" name="CocoMidi">
-                 <block type="arduino_functions" id="Gfs=i-2ol,.H[PFJytg(" x="63" y="88">
-    <statement name="LOOP_FUNC">
-      <block type="cocomidi_sendnote_var" id="SZV=[c-09L;lgu-cC[80">
-        <value name="COCOMIDI_STATE">
-          <block type="cocomidi_note_state" id="6t}AyCckvHfyBJMQ[ps]">
-            <field name="MIDI_NOTE_STATE">MIDI_NOTEON</field>
-          </block>
-        </value>
-        <value name="COCOMIDI_CHAN">
-          <block type="math_number" id="(lY+A#b}:9?v@oBmied%">
-            <field name="NUM">22</field>
-          </block>
-        </value>
-        <value name="COCOMIDI_VEL">
-          <block type="math_number" id="m2?u-m:pR+U*[DwmjnWj">
-            <field name="NUM">127</field>
-          </block>
-        </value>
-        <next>
-          <block type="cocomidi_delay" id="RQ[U*2U`nuOtn%pam3YI">
-            <value name="COCOMIDI_DELAY">
-              <block type="math_number" id="eSzr;WN5_[7@r0NC:KX=">
-                <field name="NUM">500</field>
-              </block>
-            </value>
-            <next>
-              <block type="cocomidi_sendnote_var" id="UvQ0RrSBXTYq@_/^jy7w">
-                <value name="COCOMIDI_STATE">
-                  <block type="cocomidi_note_state" id="w|pPWlU2{F*#yk36=]HU">
-                    <field name="MIDI_NOTE_STATE">MIDI_NOTEON</field>
-                  </block>
-                </value>
-                <value name="COCOMIDI_CHAN">
-                  <block type="math_number" id="]U=BoPM|4M@H0xRru9=l">
-                    <field name="NUM">22</field>
-                  </block>
-                </value>
-                <value name="COCOMIDI_VEL">
-                  <block type="math_number" id="4XPw~(I-5AX_[gAP[RDl">
-                    <field name="NUM">127</field>
-                  </block>
-                </value>
-                <next>
-                  <block type="cocomidi_delay" id="6Gy8(ln!)232WCTbtczw">
-                    <value name="COCOMIDI_DELAY">
-                      <block type="math_number" id="9QQMKwX.es;R|a1KkB8C">
-                        <field name="NUM">500</field>
-                      </block>
-                    </value>
-                  </block>
-                </next>
-              </block>
-            </next>
-          </block>
-        </next>
-      </block>
-    </statement>
-  </block>
-</category>
-
-              <category id="catCocoMidi" name="Potentio to CocoMidi">
-
-  <block type="arduino_functions" id="5Z;sl%)oCHl3Cn=6q%,," x="9" y="3">
-    <statement name="LOOP_FUNC">
-      <block type="cocomidi_sendcchires" id="I6,Pt_hsL)D@Zu46p_^[">
-        <value name="COCOMIDI_VALUE">
-          <block type="io_analogread" id="[a7Rtx/3pW)ceu%?7lK~">
-            <field name="PIN">A1</field>
-          </block>
-        </value>
-        <value name="COCOMIDI_CHAN">
-          <block type="math_number" id="7xxz3iUe8;BDZvI/5H]2">
-            <field name="NUM">1</field>
-          </block>
-        </value>
-        <next>
-          <block type="cocomidi_delay" id="O8M`2V:a5-L81PVvhW@/">
-            <value name="COCOMIDI_DELAY">
-              <block type="math_number" id="pK9nwuf/Sz_8YQ3FlP*p">
-                <field name="NUM">5</field>
-              </block>
-            </value>
-          </block>
-        </next>
-      </block>
-    </statement>
-  </block>
-  </category>
 
               <category id="catNeoSynth" name="NeoSynth">
                <block type="arduino_functions" id="^}@SOl,N#YB49.qgQN]M" x="38" y="38">
@@ -623,6 +509,40 @@ Sine wave instrument
   </block>
 </category>
             </category>
+
+            @@include('NeoGen.xml');
+
+            <category id="catNeoSynth" name="NeoSynth">
+              <block type="coco_synth_setupvoice"></block>
+              <block type="coco_synth_delay"></block>
+      
+      
+        <block type="NeoSynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
+          <field name="TIMER_NAME">synth_timer_1</field>
+          <value name="TIMER_INTERVAL">
+            <block type="math_number" id=";=T})9b-GmWh.s+xKPpt">
+              <field name="NUM">1000</field>
+            </block>
+          </value>
+        </block>
+      
+                      <block type="coco_synth_setmod"></block>
+              <block type="coco_synth_setmod_field"></block>
+      
+              <block type="coco_synth_trigger"></block>
+      <block type="coco_synth_miditrigger"></block>
+              
+              <block type="coco_synth_voice"></block>
+              <block type="coco_synth_setwave_field"></block>
+                      <block type="coco_synth_setenvelope_field"></block>
+      
+                      <block type="coco_synth_setpitch"></block>
+                      <block type="coco_synth_setlength"></block>
+      
+      </category>
+      
+                  <sep></sep>
+
       <sep></sep>
       <category id="catLogic" name="Logic">
         <block type="controls_if"></block>
@@ -863,139 +783,9 @@ Sine wave instrument
         <block type="spi_transfer_return"></block>
       </category>
       <sep></sep>
-      <category id="catCocoKey" name="CocoKeyboard">
-        <block type="cocokey_sendkeystroke">
-          <value name="COCOKEY_STROKE">
-            <block type="math_number">
-              <field name="NUM">0</field>
-            </block>
-          </value>
-        </block>
-
-          <block type="cocokey_sendkeystroke">
-    <value name="COCOKEY_STROKE">
-      <block type="cocomake_singlechar">
-        <field name="TEXT">C</field>
-      </block>
-    </value>
-  </block>
-
-        <block type="cocokey_delay">
-          <value name="COCOKEY_DELAY">
-            <block type="math_number">
-              <field name="NUM">500</field>
-            </block>
-          </value>
-        </block>
-        <block type="cocokey_print">
-          <value name="COCOKEY_PRINT">
-            <block type="text"></block>
-          </value>
-        </block>
-        <block type="cocokey_update"></block>
 
 
-
-
-      </category>
-      <sep></sep>
-      <category id="catCocoMidi" name="CocoMidi">
-        <block type="cocomidi_sendnote_var">
-          <value name="COCOMIDI_STATE">
-            <block type="cocomidi_note_state"></block>
-          </value>
-          <value name="COCOMIDI_CHAN">
-            <block type="math_number">
-              <field name="NUM">0</field>
-            </block>
-          </value>
-          <value name="COCOMIDI_VEL">
-            <block type="math_number">
-              <field name="NUM">0</field>
-            </block>
-          </value>
-        </block>
-        <block type="cocomidi_sendcchires">
-          <value name="COCOMIDI_VALUE">
-            <block type="math_number">
-              <field name="NUM">0</field>
-            </block>
-          </value>
-          <value name="COCOMIDI_CHAN">
-            <block type="math_number">
-              <field name="NUM">1</field>
-            </block>
-          </value>
-        </block>
-        <block type="cocomidi_sendcchires">
-          <value name="COCOMIDI_VALUE">
-            <block type="variables_get"></block>
-          </value>
-          <value name="COCOMIDI_CHAN">
-            <block type="variables_get"></block>
-          </value>
-        </block>
-        <block type="cocomidi_update"></block>
-        <block type="cocomidi_note_state"></block>
-        <block type="cocomidi_message"></block>
-        <block type="cocomidi_read"></block>
-        <block type="cocomidi_delay">
-          <value name="COCOMIDI_DELAY">
-            <block type="math_number">
-              <field name="NUM">500</field>
-            </block>
-          </value>
-        </block>
-      </category>
-      <sep></sep>
-      <category id="catCocoMouse" name="CocoMouse">
-        <block type="cocokey_update"></block>
-      </category>
-      <sep></sep>
-      <category id="catCocoTouch" name="CocoTouch">
-        <block type="cocotouch_touched"></block>
-        <block type="variables_get">
-          <field name="VAR">velocityValue</field>
-        </block>
-        <block type="variables_get">
-          <field name="VAR">prevVelocity</field>
-        </block>
-        <block type="variables_get">
-          <field name="VAR">filtered_value</field>
-        </block>
-      </category>
-            <sep></sep>
-
-            <category id="catNeoSynth" name="NeoSynth">
-        <block type="coco_synth_setupvoice"></block>
-        <block type="coco_synth_delay"></block>
-
-
-  <block type="NeoSynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
-    <field name="TIMER_NAME">synth_timer_1</field>
-    <value name="TIMER_INTERVAL">
-      <block type="math_number" id=";=T})9b-GmWh.s+xKPpt">
-        <field name="NUM">1000</field>
-      </block>
-    </value>
-  </block>
-
-                <block type="coco_synth_setmod"></block>
-        <block type="coco_synth_setmod_field"></block>
-
-        <block type="coco_synth_trigger"></block>
-<block type="coco_synth_miditrigger"></block>
-        
-        <block type="coco_synth_voice"></block>
-        <block type="coco_synth_setwave_field"></block>
-                <block type="coco_synth_setenvelope_field"></block>
-
-                <block type="coco_synth_setpitch"></block>
-                <block type="coco_synth_setlength"></block>
-
-</category>
-
-            <sep></sep>
+          
 
             <category id="catCocoUtil" name="CocoUtil">
                             <block type="cocoutil_peakdetect"></block>
@@ -1014,7 +804,6 @@ Sine wave instrument
     </value>
   </block>
 </category>
-@@include('NeoGen.xml');
     </xml>
   
   <div class="modal" id="NeoBlock-setting">
