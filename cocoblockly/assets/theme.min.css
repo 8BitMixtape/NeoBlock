@@ -3058,14 +3058,14 @@ fieldset[disabled] a.btn {
 }
 .btn-default:hover {
   color: #333333;
-  background-color: #e6e6e6;
+  background-color: #fbf1ff;
   border-color: #bebebe;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #333333;
-  background-color: #fdf5ff;
+  color: #ffffff;
+  background-color: #b78be0;
   border-color: #bebebe;
 }
 .btn-default:active:hover,
