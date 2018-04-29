@@ -200,7 +200,7 @@ padding: 0 !important;
 .blocklyWidgetDiv .goog-option-selected .goog-menuitem-icon {
 background: url(https://blockly-demo.appspot.com/static/media/sprites.png) no-repeat -48px -16px !important;
 }
-.blocklyToolboxDiv {background-color: rgba(234, 234, 234, 0.53);overflow-x: visible;overflow-y: auto;position: absolute;}
+.blocklyToolboxDiv {background-color: rgb(255, 255, 255);overflow-x: visible;overflow-y: auto;position: absolute;}
 .blocklyTreeRoot {
 padding: 4px 0;
 }
@@ -517,7 +517,7 @@ padding: 0;
   border: none !important;
   margin: 0px !important;
   padding: 0px 0px 0px 0px !important;
-  background: rgb(242, 249, 238) !important;  /* Arduino Light Teal */
+  background: rgb(255, 255, 255) !important;  /* Arduino Light Teal */
   overflow: hidden !important;
 }
 .blocklyTreeRow {
@@ -528,10 +528,10 @@ padding: 0;
   box-sizing: content-box !important;
 }
 .blocklyTreeSelected {
-  background-color: #E47128 !important;  /* arduino orange */
+  background-color: #6828e4 !important;  /* arduino orange */
 }
 .blocklyTreeRow:not(.blocklyTreeSelected):hover {
-  background-color: rgba(255, 204, 51, 1) !important;  /* arduino yellow */
+  background-color: rgb(242, 233, 255) !important;  /* arduino yellow */
 } 
 
 
@@ -542,7 +542,7 @@ padding: 0;
 
 /* Toolbox second column with blocks*/
 .blocklyFlyoutBackground {
-  fill: rgb(202, 209, 198) !important;
+  fill: rgb(233, 225, 255) !important;
   fill-opacity: 0.4 !important;
   -webkit-border-radius: 0px 0px 0px 0px !important;
   -moz-border-radius: 0px 0px 0px 0px !important;
