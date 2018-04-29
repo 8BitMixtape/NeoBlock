@@ -14,7 +14,7 @@ NeoBlockly.config = {
   showSidebar : 1,
   currentMode : 'block',
   currentFile : '_blank',
-  defaultTitle: 'NeoBlock for CocoMake7',
+  defaultTitle: 'NeoBlock for 8BitMixtapeNEO',
   modified: 0,
   newFile: 0,
   linter: []
