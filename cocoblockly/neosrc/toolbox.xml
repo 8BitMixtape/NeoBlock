@@ -260,7 +260,7 @@
             </statement>
          </block>
       </category>
-      <category id="catCocoSynth" name="CocoSynth">
+      <category id="catNeoSynth" name="NeoSynth">
          <block type="arduino_functions" id="^}@SOl,N#YB49.qgQN]M" x="38" y="38">
             <statement name="SETUP_FUNC">
                <block type="coco_synth_setupvoice" id="jP,[^(j_i6y1/vP,x1|8" inline="false">
@@ -286,7 +286,7 @@ Sine wave instrument</comment>
                </block>
             </statement>
             <statement name="LOOP_FUNC">
-               <block type="cocosynth_interval_function" id="~B8r^bj{E;NjR;M~,}8[">
+               <block type="NeoSynth_interval_function" id="~B8r^bj{E;NjR;M~,}8[">
                   <field name="TIMER_NAME">synth_timer_1</field>
                   <comment pinned="true" h="80" w="160">every 1 sec trigger metronome</comment>
                   <value name="TIMER_INTERVAL">
@@ -304,7 +304,7 @@ Sine wave instrument</comment>
                      </block>
                   </statement>
                   <next>
-                     <block type="cocosynth_interval_function" id="wce5](b4h6H:U4}MwHwL">
+                     <block type="NeoSynth_interval_function" id="wce5](b4h6H:U4}MwHwL">
                         <field name="TIMER_NAME">synth_timer_2</field>
                         <comment pinned="false" h="80" w="160">every 2 sec trigger noise instrument</comment>
                         <value name="TIMER_INTERVAL">
@@ -676,10 +676,10 @@ Sine wave instrument</comment>
       </block>
    </category>
    <sep />
-   <category id="catCocoSynth" name="CocoSynth">
+   <category id="catNeoSynth" name="NeoSynth">
       <block type="coco_synth_setupvoice" />
       <block type="coco_synth_delay" />
-      <block type="cocosynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
+      <block type="NeoSynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
          <field name="TIMER_NAME">synth_timer_1</field>
          <value name="TIMER_INTERVAL">
             <block type="math_number" id=";=T})9b-GmWh.s+xKPpt">

@@ -377,7 +377,7 @@ Blockly.Blocks['coco_interval_function'] = {
 Blockly.Blocks['coco_synth_setupvoice'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("CocoSynth Setup voice");
+        .appendField("NeoSynth Setup voice");
     this.appendDummyInput()
         .appendField("setup for voice channel")
         .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]]), "COCO_VOICE");
@@ -409,7 +409,7 @@ Blockly.Blocks['coco_synth_setupvoice'] = {
 Blockly.Blocks['coco_synth_setmod'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("CocoSynth set voice")
+        .appendField("NeoSynth set voice")
         .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]]), "COCO_VOICE");
     this.appendValueInput("COCO_MOD")
         .setCheck(null)
@@ -426,7 +426,7 @@ Blockly.Blocks['coco_synth_setmod'] = {
 Blockly.Blocks['coco_synth_setmod_field'] = {
   init: function() {
     this.appendValueInput("NAME")
-        .appendField("CocoSynth set voice")
+        .appendField("NeoSynth set voice")
     this.appendValueInput("COCO_MOD")
         .setCheck(null)
         .appendField("modulation to");
@@ -443,7 +443,7 @@ Blockly.Blocks['coco_synth_setmod_field'] = {
 Blockly.Blocks['coco_synth_setpitch'] = {
   init: function() {
     this.appendValueInput("NAME")
-        .appendField("CocoSynth set voice")
+        .appendField("NeoSynth set voice")
     this.appendValueInput("COCO_MOD")
         .setCheck(null)
         .appendField("pitch to");
@@ -459,7 +459,7 @@ Blockly.Blocks['coco_synth_setpitch'] = {
 Blockly.Blocks['coco_synth_setlength'] = {
   init: function() {
     this.appendValueInput("NAME")
-        .appendField("CocoSynth set voice")
+        .appendField("NeoSynth set voice")
     this.appendValueInput("COCO_MOD")
         .setCheck(null)
         .appendField("length to");
@@ -475,7 +475,7 @@ Blockly.Blocks['coco_synth_setlength'] = {
 Blockly.Blocks['coco_synth_setwave_field'] = {
   init: function() {
     this.appendValueInput("NAME")
-        .appendField("CocoSynth set voice")
+        .appendField("NeoSynth set voice")
     this.appendDummyInput("COCO_MOD")
         .appendField("wave to")
         .appendField(new Blockly.FieldDropdown([["Sine", "SINE"], ["Triangle", "TRIANGLE"], ["Square", "SQUARE"], ["Sawtooth", "SAW"], ["Ramp", "RAMP"], ["Noise", "NOISE"]]), "COCO_WAVEFORM")
@@ -492,7 +492,7 @@ Blockly.Blocks['coco_synth_setwave_field'] = {
 Blockly.Blocks['coco_synth_setenvelope_field'] = {
   init: function() {
     this.appendValueInput("NAME")
-        .appendField("CocoSynth set voice")
+        .appendField("NeoSynth set voice")
     this.appendDummyInput("COCO_MOD")
         .appendField("envelope to")
         .appendField(new Blockly.FieldDropdown([["ENV0", "ENVELOPE0"], ["ENV1", "ENVELOPE1"], ["ENV2", "ENVELOPE2"], ["ENV3", "ENVELOPE3"]]), "COCO_ENVELOPE");
@@ -510,7 +510,7 @@ Blockly.Blocks['coco_synth_trigger'] = {
   init: function() {
     this.appendValueInput("NAME")
         .setCheck(null)
-        .appendField("CocoSynth trigger voice");
+        .appendField("NeoSynth trigger voice");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -524,7 +524,7 @@ Blockly.Blocks['coco_synth_miditrigger'] = {
   init: function() {
     this.appendValueInput("NAME")
         .setCheck(null)
-        .appendField("CocoSynth trigger voice");
+        .appendField("NeoSynth trigger voice");
     this.appendValueInput("NOTE")
         .setCheck(null)
         .appendField("midi note");
@@ -540,7 +540,7 @@ Blockly.Blocks['coco_synth_miditrigger'] = {
 Blockly.Blocks['coco_synth_voice'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Cocosynth Voice")
+        .appendField("NeoSynth Voice")
         .appendField(new Blockly.FieldDropdown([["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]]), "COCO_VOICE");
     this.setInputsInline(true);
     this.setOutput(true, null);
@@ -560,7 +560,7 @@ Blockly.Blocks['coco_synth_delay'] = {
     this.setHelpUrl('http://arduino.cc/en/Reference/Millis');
     this.setColour(Blockly.Blocks.coco.HUE);
         this.appendDummyInput()
-        .appendField("CocoSynth delay");
+        .appendField("NeoSynth delay");
     this.appendValueInput('COCOKEY_DELAY')
         .appendField("milliseconds");
     this.setInputsInline(true);
@@ -575,12 +575,12 @@ Blockly.Blocks['coco_synth_delay'] = {
   }
 };
 
-Blockly.Blocks['cocosynth_interval_function'] = {
+Blockly.Blocks['NeoSynth_interval_function'] = {
 
   init: function() {
 
     this.appendDummyInput()
-        .appendField("CocoSynth Interval timer name")
+        .appendField("NeoSynth Interval timer name")
         .appendField(new Blockly.FieldTextInput("default"), "TIMER_NAME");
     this.appendDummyInput()
         .appendField("every")
