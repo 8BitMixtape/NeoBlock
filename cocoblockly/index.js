@@ -493,6 +493,7 @@ app.on('ready', () => {
       minHeight: 637,
   	  minWidth: 816
 	});
+	mainWindow.openDevTools();
 
     mainWindow.on('close', function(e){
         app.quit();
