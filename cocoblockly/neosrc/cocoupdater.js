@@ -2,9 +2,9 @@ var NeoBlockly = NeoBlockly || {};
 
 NeoBlockly.updater = {};
 NeoBlockly.updater.files = [
-  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/cocojs/toolbox.xml", type: "xmltoolbox"},
-  {name: "cocogen", local: "cocojs/NeoBlock/cocogen.js", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/cocojs/NeoBlock/cocogen.js", type: "js"},
-  {name: "NeoBlock", local: "cocojs/NeoBlock/NeoBlock.js", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/cocojs/NeoBlock/NeoBlock.js", type: "js"}
+  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/neosrc/toolbox.xml", type: "xmltoolbox"},
+  {name: "NeoGen", local: "neosrc/NeoBlock/NeoGen.js", url: "https://8bitmixtape.github.io/NeoBlockly/NeoBlockly/neosrc/NeoBlock/NeoGen.js", type: "js"},
+  {name: "NeoBlock", local: "neosrc/NeoBlock/NeoBlock.js", url: "https://8bitmixtape.github.io/NeoBlockly/NeoBlockly/neosrc/NeoBlock/NeoBlock.js", type: "js"}
 ]
 
 
