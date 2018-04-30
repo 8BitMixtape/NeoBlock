@@ -855,33 +855,46 @@ Sine wave instrument
     </div>
 
     <script type="text/javascript">
-      
-      window.addEventListener('load', function load(event){
-      window.removeEventListener('load', load, false);
-      // checkUpdate()  
-      NeoBlockly.initAll()
+    
 
-      for (var i = 0; i < NeoBlockly.updater.files.length; ++i)
-      {
-        var file = NeoBlockly.updater.files[i]; 
-        var updated = conf.get(file.name)
+    window.addEventListener('load', function load(event){
+    window.removeEventListener('load', load, false);
 
-        if (typeof(updated) === 'undefined') {
-          if (file.type === 'js')
-          {
+    for (var i = 0; i < NeoBlockly.updater.files.length; ++i)
+    {
+      var file = NeoBlockly.updater.files[i]; 
+      var updated = conf.get(file.name)
+
+      if (typeof(updated) === 'undefined') {
+        //if use stock file
+        switch (file.type) {
+          case 'js':
             addJsScriptURLTag(file.local)
-          }
-        }else{
-          if (file.type === 'js')
-          {
+            break;
+          case 'xmltoolbox':
+            addXMLScriptTag(file.name, NeoBlockly.toolboxStr)
+            break;                        
+          default:
+            break;
+        }
+      }else{
+        //if found updated file
+        switch (file.type) {
+          case 'js':
             addJsScriptTag(updated.content)
-          }else{
-            addXMLScriptTag(updated.content)
-          }
+            break;
+          case 'xmltoolbox':
+            NeoBlockly.toolboxStr = updated.content
+            break;                        
+          default:
+            break;
         }
       }
+    }
 
-});
+    NeoBlockly.initAll()
+    });
+
 
     </script>
 
