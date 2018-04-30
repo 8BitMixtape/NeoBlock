@@ -11,7 +11,6 @@
 'use strict';
 
 goog.provide('Blockly.Blocks.coco');
-
 goog.require('Blockly.Blocks');
 goog.require('Blockly.Types');
 
@@ -762,3 +761,4 @@ Blockly.Blocks['cocoutil_getmova'] = {
     return Blockly.Types.NUMBER;
   },
 };
+

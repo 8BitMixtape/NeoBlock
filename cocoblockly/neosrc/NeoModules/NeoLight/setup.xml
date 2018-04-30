@@ -1,0 +1,15 @@
+<category id="catNeoLight" name="NeoLight">
+<block type="NeoLight_setup">
+    <value name="NEOLIGHT_COUNT">
+    <block type="math_number">
+        <field name="NUM">8</field>
+    </block>
+    </value>
+    <value name="NEOLIGHT_PIN">
+    <block type="math_number">
+        <field name="NUM">8</field>
+    </block>
+    </value>          
+</block>
+</category>
+<sep></sep>

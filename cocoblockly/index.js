@@ -5,6 +5,7 @@ const os = require('os');
 const Configstore = require('configstore');
 const conf = new Configstore("NeoBlock");
 
+
 let mainWindow;
 var exec = require('child_process').exec;
 

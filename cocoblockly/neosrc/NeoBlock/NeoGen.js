@@ -10,7 +10,6 @@
 'use strict';
 
 goog.provide('Blockly.Arduino.coco');
-
 goog.require('Blockly.Arduino');
 
 
@@ -542,3 +541,5 @@ Blockly.Arduino['cocoutil_getmova'] = function(block) {
 var code = "get_moving_average(" + statements_do_blocks + "," + coco_ma_constant + "," + " &" + peak_name + "_accumulator" + ")"
   return [code, Blockly.Arduino.ORDER_NONE];
 };
+
+
