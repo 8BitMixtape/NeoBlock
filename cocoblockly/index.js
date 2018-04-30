@@ -95,7 +95,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 
     if (os.platform() === 'darwin') {
     	
-    	var cocomakepath = appDataDir + '/../Arduino15/packages/CocoMake7/hardware/avr'
+    	var cocomakepath = appDataDir + '/../Arduino15/packages/8BitMixtape/hardware/avr'
 
     	var latest_ver = getLatestVer(cocomakepath)
 
@@ -117,7 +117,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 		    builtPath 	 : tmpCompileDir,
 			scriptPath 	 : tmpScript,
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
-			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/avrdude/macosx',
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/hex2wav/macosx',
 
 		}
 
@@ -215,8 +215,8 @@ var initArduinoPath = function() {
 
 var cocoUploadCode = function(fun) {
 
-    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + "avrdude\" -C\"" + cocoServer.arduinoPath.cocoMakeAvrdudePath  + path.sep + "avrdude.conf\" -pattiny85 -cusbasp -D -Uflash:w:" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName +  ".ino.hex:i";
-
+    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + "hex2wav\" --dump-hex \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.hex\"" + " \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.wav\"";
+	sendConsole(uploadCmd);
 	sendProgress({process: 'upload', progress:0});
 
     var child = exec(uploadCmd);
@@ -274,8 +274,8 @@ var cocoCompileCode = function(code, fun, funerr) {
 		['-tools',quote(cocoServer.arduinoPath.toolHwManager)],
     	['-built-in-libraries',quote(cocoServer.arduinoPath.builtinLib)],
     	['-libraries',quote(cocoServer.arduinoPath.userLib)],    	
-    	['-fqbn=CocoMake7:avr:cocomake'],
-    	['-ide-version=10606'],
+    	['-fqbn=8BitMixtape:avr:8bitmixtapeneo:bootloader=tinyaudioboot,core=arduinocore'],
+    	['-ide-version=10801'],
     	['-build-path',quote(cocoServer.arduinoPath.builtPath)],
     	['-warnings=none'],
     	['-prefs=build.warn_data_percentage=75'],
