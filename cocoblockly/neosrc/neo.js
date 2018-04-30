@@ -646,8 +646,6 @@ NeoBlockly.initAll = function() {
     document.getElementById("txt-arduino-path").value = conf.get('arduinopath')        
 
 }
-<<<<<<< HEAD:cocoblockly/neosrc/neo.js
-=======
 
 var addJsScriptTag = function(script_str)
 {
@@ -774,4 +772,3 @@ NeoBlockly.updater.getUpdatedBlock = function(file_name, file_url, fun)
 
 }
 
->>>>>>> 9de884d3... refactor and gulp:cocoblockly/neosrc/neo.js
