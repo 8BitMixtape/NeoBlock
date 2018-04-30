@@ -548,8 +548,8 @@ NeoBlockly.blocks.loadBlocksFromDir = function(board_dir)
 NeoBlockly.initAll = function() {
 
 
-    NeoBlockly.toolBox = Blockly.Xml.textToDom(NeoBlockly.toolboxStr);
-
+  NeoBlockly.toolBox = document.getElementById('ArduBlocklyToolbox');
+    
     var custom_block_dom = NeoBlockly.blocks.loadBlocksFromDir();
     if(custom_block_dom.childElementCount > 0)
     {
@@ -579,9 +579,10 @@ NeoBlockly.initAll = function() {
             trashcan: true
     });
 
-    // var xml = Blockly.Xml.textToDom(xml_text);
-    var defaultBlocks = document.getElementById('NeoBlockInitial');
-    Blockly.Xml.domToWorkspace(NeoBlockly.workspace, defaultBlocks);
+
+  // var xml = Blockly.Xml.textToDom(xml_text);
+  var defaultBlocks = document.getElementById('NeoBlockInitial');
+  Blockly.Xml.domToWorkspace(NeoBlockly.workspace, defaultBlocks);
 
     NeoBlockly.CodeMirror = CodeMirror.fromTextArea(document.getElementById("codeDiv"), 
     {
