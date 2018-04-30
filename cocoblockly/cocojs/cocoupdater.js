@@ -1,10 +1,10 @@
-var CocoBlockly = CocoBlockly || {};
+var NeoBlockly = NeoBlockly || {};
 
-CocoBlockly.updater = {};
-CocoBlockly.updater.files = [
-  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/toolbox.xml", type: "xmltoolbox"},
-  {name: "cocogen", local: "cocojs/cocoblock/cocogen.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocogen.js", type: "js"},
-  {name: "cocoblock", local: "cocojs/cocoblock/cocoblock.js", url: "https://cocomake7.github.io/CocoBlockly/cocoblockly/cocojs/cocoblock/cocoblock.js", type: "js"}
+NeoBlockly.updater = {};
+NeoBlockly.updater.files = [
+  {name: "xmltoolbox", local: "", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/cocojs/toolbox.xml", type: "xmltoolbox"},
+  {name: "cocogen", local: "cocojs/NeoBlock/cocogen.js", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/cocojs/NeoBlock/cocogen.js", type: "js"},
+  {name: "NeoBlock", local: "cocojs/NeoBlock/NeoBlock.js", url: "https://cocomake7.github.io/NeoBlockly/NeoBlockly/cocojs/NeoBlock/NeoBlock.js", type: "js"}
 ]
 
 
@@ -33,13 +33,13 @@ var addXMLScriptTag = function(id, xml_content)
   document.body.appendChild(loader);
 }
 
-CocoBlockly.updater.blockNeedUpdate = function(name, url, fun)
+NeoBlockly.updater.blockNeedUpdate = function(name, url, fun)
 {
   if (typeof(conf.get(name)) === 'undefined')
   {
     fun(name, url)
   }else{
-    CocoBlockly.updater.checkUpdateBlock(name, url, function(file){
+    NeoBlockly.updater.checkUpdateBlock(name, url, function(file){
     if(file.needupdate)
     {
       console.log(name, url, ' need update')
@@ -49,26 +49,26 @@ CocoBlockly.updater.blockNeedUpdate = function(name, url, fun)
   }
 }
 
-CocoBlockly.updater.updateBlock = function(file_name, url)
+NeoBlockly.updater.updateBlock = function(file_name, url)
 {
-  CocoBlockly.updater.getUpdatedBlock(file_name, url, function(resp){
+  NeoBlockly.updater.getUpdatedBlock(file_name, url, function(resp){
     console.log(file_name, ' updated')
     $.notify(file_name + ' updated')
     conf.set(file_name, resp)
   })
 }
 
-CocoBlockly.updater.updateNow = function()
+NeoBlockly.updater.updateNow = function()
 {
   $.notify("checking for updates..")
-    for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
+    for (var i = 0; i < NeoBlockly.updater.files.length; ++i)
     {
-      CocoBlockly.updater.blockNeedUpdate(CocoBlockly.updater.files[i].name, CocoBlockly.updater.files[i].url, CocoBlockly.updater.updateBlock)
+      NeoBlockly.updater.blockNeedUpdate(NeoBlockly.updater.files[i].name, NeoBlockly.updater.files[i].url, NeoBlockly.updater.updateBlock)
     }
 }
 
 
-CocoBlockly.updater.checkUpdateBlock = function(file_name, file_url, fun)
+NeoBlockly.updater.checkUpdateBlock = function(file_name, file_url, fun)
 {
   var dateReq = new XMLHttpRequest();
   dateReq.onreadystatechange = function() {
@@ -94,7 +94,7 @@ CocoBlockly.updater.checkUpdateBlock = function(file_name, file_url, fun)
   dateReq.open("HEAD", file_url  + "?" + new Date().getTime()  , true);
   dateReq.send(null);
 }
-CocoBlockly.updater.getUpdatedBlock = function(file_name, file_url, fun)
+NeoBlockly.updater.getUpdatedBlock = function(file_name, file_url, fun)
 {
   var builtReq = new XMLHttpRequest();
 

@@ -1,9 +1,9 @@
 <html><head>
-    <title>CocoBlocks for CocoMake7</title>
+    <title>NeoBlocks for CocoMake7</title>
     <link rel="stylesheet" href="assets/theme.min.css">
     <link rel="stylesheet" href="vendor/codemirror.min.css">
     <link rel="stylesheet" href="assets/blockly_style.css">
-    <link rel="stylesheet" href="assets/cocoblockly.css">
+    <link rel="stylesheet" href="assets/NeoBlockly.css">
 
     <!-- Ardublockly - These three files contain the compress version -->
     <script src="blockly/blockly_compressed.js"></script>
@@ -50,8 +50,8 @@
     <script src="blockly/generators/arduino/tone.js"></script>
     <script src="blockly/generators/arduino/variables.js"></script>
 
-<!--     <script src="cocojs/cocoblock/cocoblock.js"></script>
-    <script src="cocojs/cocoblock/cocogen.js"></script>
+<!--     <script src="cocojs/NeoBlock/NeoBlock.js"></script>
+    <script src="cocojs/NeoBlock/cocogen.js"></script>
  -->
     <!-- Default language js files, user selection appended to head
     on load -->
@@ -112,38 +112,38 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a onClick="CocoBlockly.newFile()" href="#">New</a>
+                    <a onClick="NeoBlockly.newFile()" href="#">New</a>
                   </li>                
                   <li>
-                    <a onClick="CocoBlockly.openFile()" href="#">Open</a>
+                    <a onClick="NeoBlockly.openFile()" href="#">Open</a>
                   </li>
                   <li>
-                    <a onClick="CocoBlockly.saveAsFile()" href="#">Save As</a>
+                    <a onClick="NeoBlockly.saveAsFile()" href="#">Save As</a>
                   </li>
                   <li>
-                    <a onClick="CocoBlockly.saveFile()" href="#">Save</a>
+                    <a onClick="NeoBlockly.saveFile()" href="#">Save</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a onClick="CocoBlockly.exportFile()" href="#">Export Code</a>
+                    <a onClick="NeoBlockly.exportFile()" href="#">Export Code</a>
                   </li>                  
                   <li>
-                    <a onClick="CocoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
+                    <a onClick="NeoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
                   </li>
                <li>
-                    <a  data-toggle="modal" data-backdrop="false"  href="#cocoblock-setting">Settings</a>
+                    <a  data-toggle="modal" data-backdrop="false"  href="#NeoBlock-setting">Settings</a>
                   </li> 
                 <li>
-                    <a onClick="CocoBlockly.updater.updateNow();" href="#">Update Block</a>
+                    <a onClick="NeoBlockly.updater.updateNow();" href="#">Update Block</a>
                   </li>
 
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a data-toggle="modal" data-backdrop="false" href="#cocoblock-about">About</a>
+                    <a data-toggle="modal" data-backdrop="false" href="#NeoBlock-about">About</a>
                   </li>
                   <li role="separator" class="divider"></li>
                   <li>
-                    <a onClick="CocoBlockly.quit()" href="#">Exit</a>
+                    <a onClick="NeoBlockly.quit()" href="#">Exit</a>
                   </li>                  
                 </ul>
               </li>
@@ -272,12 +272,12 @@
     </div>
 
 
-<xml id="CocoBlockInitial">
+<xml id="NeoBlockInitial">
 </xml>
   
-  <div class="modal" id="cocoblock-setting">
+  <div class="modal" id="NeoBlock-setting">
       <div class="modal-dialog">
-        <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h4 class="modal-title" id="myModalLabel">CocoBlock Settings</h4></div>
+        <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h4 class="modal-title" id="myModalLabel">NeoBlock Settings</h4></div>
           
           <div class="modal-body">
             <form class="form-horizontal text-left" role="form">
@@ -293,17 +293,17 @@
             </form>
           </div>
           
-        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" data-dismiss="modal" onClick="CocoBlockly.saveSettings()" class="btn btn-primary">Save changes</button></div></div>
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" data-dismiss="modal" onClick="NeoBlockly.saveSettings()" class="btn btn-primary">Save changes</button></div></div>
       </div>
     </div>
 
 
-<div class="modal" id="cocoblock-about">
+<div class="modal" id="NeoBlock-about">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h4 class="modal-title">About CocoBlock
+            <h4 class="modal-title">About NeoBlock
               <br>
             </h4>
           </div>
@@ -313,7 +313,7 @@
                   <br>
                   http://cocomake7.github.io
                   <br>
-                  <p>CocoBlock Ide 0.1 by Budi Prakosa based on ArduBlockly</p>
+                  <p>NeoBlock Ide 0.1 by Budi Prakosa based on ArduBlockly</p>
                 </p>
           </div>
           <div class="modal-footer">
@@ -328,9 +328,9 @@
     window.addEventListener('load', function load(event){
     window.removeEventListener('load', load, false);
 
-    for (var i = 0; i < CocoBlockly.updater.files.length; ++i)
+    for (var i = 0; i < NeoBlockly.updater.files.length; ++i)
     {
-      var file = CocoBlockly.updater.files[i]; 
+      var file = NeoBlockly.updater.files[i]; 
       var updated = conf.get(file.name)
 
       if (typeof(updated) === 'undefined') {
@@ -340,7 +340,7 @@
             addJsScriptURLTag(file.local)
             break;
           case 'xmltoolbox':
-            addXMLScriptTag(file.name, CocoBlockly.toolboxStr)
+            addXMLScriptTag(file.name, NeoBlockly.toolboxStr)
             break;                        
           default:
             break;
@@ -352,7 +352,7 @@
             addJsScriptTag(updated.content)
             break;
           case 'xmltoolbox':
-            CocoBlockly.toolboxStr = updated.content
+            NeoBlockly.toolboxStr = updated.content
             break;                        
           default:
             break;
@@ -360,7 +360,7 @@
       }
     }
 
-    CocoBlockly.initAll()
+    NeoBlockly.initAll()
     });
 
     </script>

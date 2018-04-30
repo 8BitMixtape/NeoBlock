@@ -1,4 +1,4 @@
-var CocoBlockly = CocoBlockly || {};
+var NeoBlockly = NeoBlockly || {};
 
 const {app, dialog} = require('electron').remote
 var remote = require('electron').remote;
@@ -6,72 +6,72 @@ var fs = remote.require('fs')
 var path = remote.require('path')
 
 const Configstore = remote.require('configstore');
-const conf = new Configstore("cocoblock");
+const conf = new Configstore("NeoBlock");
 
-CocoBlockly.code = "";
+NeoBlockly.code = "";
 
-CocoBlockly.config = {
+NeoBlockly.config = {
   showSidebar : 1,
   currentMode : 'block',
   currentFile : '_blank',
-  defaultTitle: 'CocoBlock for CocoMake7',
+  defaultTitle: 'NeoBlock for CocoMake7',
   modified: 0,
   compiled: 0,
   newFile: 0,
   linter: []
 }
 
-CocoBlockly.PREV_ARDUINO_CODE_ = ""
-CocoBlockly.PREV_XML_CODE_ = ""
+NeoBlockly.PREV_ARDUINO_CODE_ = ""
+NeoBlockly.PREV_XML_CODE_ = ""
 
-CocoBlockly.quit = function()
+NeoBlockly.quit = function()
 {
   app.quit();
 }
 
-CocoBlockly.saveSettings = function()
+NeoBlockly.saveSettings = function()
 {
     var newpath = document.getElementById("txt-arduino-path").value;
     conf.set('arduinopath', newpath)
-    CocoBlockly.ipcSetPath(newpath);
+    NeoBlockly.ipcSetPath(newpath);
 }
 
-CocoBlockly.ipc = {};
-CocoBlockly.ipc.ipcRenderer = require('electron').ipcRenderer
-CocoBlockly.ipc.globalCounter = 0
+NeoBlockly.ipc = {};
+NeoBlockly.ipc.ipcRenderer = require('electron').ipcRenderer
+NeoBlockly.ipc.globalCounter = 0
 
-CocoBlockly.ipc.ipcRenderer.on('statusipc', (event, message) => {
-  CocoBlockly.ipc.processIpcBroadcast(message)
+NeoBlockly.ipc.ipcRenderer.on('statusipc', (event, message) => {
+  NeoBlockly.ipc.processIpcBroadcast(message)
 })
 
-CocoBlockly.ipc.processIpcBroadcast = function(data)
+NeoBlockly.ipc.processIpcBroadcast = function(data)
 { 
 var command = data['command'];
 var params = data['params'];
 
 switch (command) {
   case 'openfile':
-  CocoBlockly.openFile();
+  NeoBlockly.openFile();
   break;    
   case 'saveasfile':
-  CocoBlockly.saveAsFile();  
+  NeoBlockly.saveAsFile();  
   break;  
   case 'savefile':
-  CocoBlockly.saveFile();  
+  NeoBlockly.saveFile();  
   break;  
   case 'upload':
-  CocoBlockly.upload();  
+  NeoBlockly.upload();  
   break; 
   case 'togsidebar':
-  CocoBlockly.toggleSidebar();  
+  NeoBlockly.toggleSidebar();  
   break; 
 
   case 'linter':
 
-    CocoBlockly.CodeMirror.operation(function(){
-      for (var i = 0; i < CocoBlockly.config.linter.length; ++i)
-        CocoBlockly.CodeMirror.removeLineWidget(CocoBlockly.config.linter[i]);
-      CocoBlockly.config.linter.length = 0;
+    NeoBlockly.CodeMirror.operation(function(){
+      for (var i = 0; i < NeoBlockly.config.linter.length; ++i)
+        NeoBlockly.CodeMirror.removeLineWidget(NeoBlockly.config.linter[i]);
+      NeoBlockly.config.linter.length = 0;
     })
 
     for (var i = 0; i < params.length; ++i) {
@@ -82,31 +82,31 @@ switch (command) {
       // icon.className = "lint-error-icon";
       msg.appendChild(document.createTextNode(err.desc));
       msg.className = "lint-error";
-      CocoBlockly.config.linter.push(CocoBlockly.CodeMirror.addLineWidget(err.line - 1, msg, {coverGutter: false, noHScroll: true}));
+      NeoBlockly.config.linter.push(NeoBlockly.CodeMirror.addLineWidget(err.line - 1, msg, {coverGutter: false, noHScroll: true}));
     }
 
 
 
     break;
   case 'console':
-    CocoBlockly.CodeMirrorConsole.replaceRange(params, {line: Infinity});
-    CocoBlockly.CodeMirrorConsole.setCursor(CocoBlockly.CodeMirrorConsole.lastLine());
+    NeoBlockly.CodeMirrorConsole.replaceRange(params, {line: Infinity});
+    NeoBlockly.CodeMirrorConsole.setCursor(NeoBlockly.CodeMirrorConsole.lastLine());
     break;
   case 'progress':
 
     if (params.process === 'compile')
     {
-      if (typeof(CocoBlockly.notify) === 'undefined' || params.progress === 0)
+      if (typeof(NeoBlockly.notify) === 'undefined' || params.progress === 0)
       {
-        CocoBlockly.notify = $.notify('<strong>Compiling</strong> please wait...', {
+        NeoBlockly.notify = $.notify('<strong>Compiling</strong> please wait...', {
           allow_dismiss: false,
           showProgressbar: true,
           delay: 0,
           type: 'warning'
         });
       }else{
-        CocoBlockly.notify.update({'type': 'warning', 'progress': params.progress});
-        CocoBlockly.notify.close();
+        NeoBlockly.notify.update({'type': 'warning', 'progress': params.progress});
+        NeoBlockly.notify.close();
       }
 
       if(params.error === 'true')
@@ -118,7 +118,7 @@ switch (command) {
 
     if (params.process === 'upload_replug')
     {
-        CocoBlockly.upload_replug = $.notify({
+        NeoBlockly.upload_replug = $.notify({
           message: "Please replug CocoMake7",
         },{
           delay: 10000,
@@ -129,8 +129,8 @@ switch (command) {
 
     if (params.process === 'upload_replug_done')
     {
-        CocoBlockly.upload_replug.close();
-        CocoBlockly.notifyupload = $.notify({message: "Upload done.."}, {delay : 500});
+        NeoBlockly.upload_replug.close();
+        NeoBlockly.notifyupload = $.notify({message: "Upload done.."}, {delay : 500});
     }
 
     break;
@@ -139,62 +139,62 @@ switch (command) {
 }
 }
 
-CocoBlockly.ipc.sendBasicIpc = function(cmd, fun)
+NeoBlockly.ipc.sendBasicIpc = function(cmd, fun)
 {
- var localCallCounter = ++CocoBlockly.ipc.globalCounter;
- CocoBlockly.ipc.ipcRenderer.once('done-ipc' + localCallCounter, function (event, data) {
+ var localCallCounter = ++NeoBlockly.ipc.globalCounter;
+ NeoBlockly.ipc.ipcRenderer.once('done-ipc' + localCallCounter, function (event, data) {
      fun ( data );
  });
- CocoBlockly.ipc.ipcRenderer.send('do-ipc', {count: localCallCounter, command: cmd});
+ NeoBlockly.ipc.ipcRenderer.send('do-ipc', {count: localCallCounter, command: cmd});
 }
 
 
-CocoBlockly.ipc.sendParam = function (cmd, param, fun)
+NeoBlockly.ipc.sendParam = function (cmd, param, fun)
 {
   var command = {command: cmd};
   command.params = param;
-  CocoBlockly.ipc.sendBasicIpc(command, fun);
+  NeoBlockly.ipc.sendBasicIpc(command, fun);
 }
 
-CocoBlockly.ipcUploadCode = function(code, fun)
+NeoBlockly.ipcUploadCode = function(code, fun)
 {
-  CocoBlockly.ipc.sendParam('upload', '', fun);
+  NeoBlockly.ipc.sendParam('upload', '', fun);
 }
 
-CocoBlockly.ipcCompileCode = function(code, fun)
+NeoBlockly.ipcCompileCode = function(code, fun)
 {
-  CocoBlockly.ipc.sendParam('compile', code, fun);
+  NeoBlockly.ipc.sendParam('compile', code, fun);
 }
 
-CocoBlockly.ipcSetTitle = function(title)
+NeoBlockly.ipcSetTitle = function(title)
 {
-  CocoBlockly.ipc.sendParam('settitle', title, function(){});
+  NeoBlockly.ipc.sendParam('settitle', title, function(){});
 }
 
-CocoBlockly.ipcSetPath = function(path)
+NeoBlockly.ipcSetPath = function(path)
 {
-  CocoBlockly.ipc.sendParam('setpath', {arduinopath: path}, function(){});
+  NeoBlockly.ipc.sendParam('setpath', {arduinopath: path}, function(){});
 }
 
 
-CocoBlockly.upload = function()
+NeoBlockly.upload = function()
 {
-  if(CocoBlockly.config.compiled) {
-      CocoBlockly.ipc.sendParam('upload', '', function(){
+  if(NeoBlockly.config.compiled) {
+      NeoBlockly.ipc.sendParam('upload', '', function(){
         console.log('upload done..');
       }); 
 
       return    
   }
 
-  CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(status){
+  NeoBlockly.CodeMirrorConsole.getDoc().setValue("");
+  NeoBlockly.ipcCompileCode(NeoBlockly.code, function(status){
     if(status.compile === 'done')
     {
-      CocoBlockly.config.compiled = 1;
+      NeoBlockly.config.compiled = 1;
        $.notify("Compile succeed..",{type: 'success'})
-      CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-      CocoBlockly.ipc.sendParam('upload', '', function(){
+      NeoBlockly.CodeMirrorConsole.getDoc().setValue("");
+      NeoBlockly.ipc.sendParam('upload', '', function(){
         console.log('upload done..');
       });      
     }else{
@@ -203,34 +203,34 @@ CocoBlockly.upload = function()
   });
 }
 
-CocoBlockly.compile = function()
+NeoBlockly.compile = function()
 {
-  CocoBlockly.CodeMirrorConsole.getDoc().setValue("");
-  CocoBlockly.ipcCompileCode(CocoBlockly.code, function(status){
+  NeoBlockly.CodeMirrorConsole.getDoc().setValue("");
+  NeoBlockly.ipcCompileCode(NeoBlockly.code, function(status){
     if(status.compile === 'done') {
       $.notify("Compile succeed..",{type: 'success'})
-      CocoBlockly.config.compiled = 1;
+      NeoBlockly.config.compiled = 1;
     }
   });
 }
 
-CocoBlockly.setDocTitle = function(docname)
+NeoBlockly.setDocTitle = function(docname)
 {
-      CocoBlockly.ipcSetTitle(docname + ' - ' + CocoBlockly.config.defaultTitle)
+      NeoBlockly.ipcSetTitle(docname + ' - ' + NeoBlockly.config.defaultTitle)
 }
 
-CocoBlockly.setDefTitle = function(docname)
+NeoBlockly.setDefTitle = function(docname)
 {
-      CocoBlockly.ipcSetTitle('Untitled.cblock - ' + CocoBlockly.config.defaultTitle)
+      NeoBlockly.ipcSetTitle('Untitled.cblock - ' + NeoBlockly.config.defaultTitle)
 }
 
-CocoBlockly.openFile = function() {
+NeoBlockly.openFile = function() {
   
   var file = dialog.showOpenDialog({
-    title: "Open CocoBlock file",
+    title: "Open NeoBlock file",
     defaultPath: "",
     filters: [
-      {name: 'CocoBlock', extensions: ['cblock']},
+      {name: 'NeoBlock', extensions: ['cblock']},
     ]
   });
 
@@ -243,28 +243,28 @@ CocoBlockly.openFile = function() {
       if (err) {
         return console.log(err);
       }
-      CocoBlockly.config.newFile = 1
+      NeoBlockly.config.newFile = 1
 
-      CocoBlockly.workspace.clear();
+      NeoBlockly.workspace.clear();
       var xml = Blockly.Xml.textToDom(xml_data);
-      Blockly.Xml.domToWorkspace(CocoBlockly.workspace, xml);
+      Blockly.Xml.domToWorkspace(NeoBlockly.workspace, xml);
       // $.notify("File loaded..")
 
-      CocoBlockly.config.currentFile = filename;
-      CocoBlockly.setDocTitle(filename)
+      NeoBlockly.config.currentFile = filename;
+      NeoBlockly.setDocTitle(filename)
     });    
   }
 }
 
-CocoBlockly.newFile = function() {
-    CocoBlockly.config.currentFile = '_blank'
-    CocoBlockly.config.newFile = 1
-    CocoBlockly.config.modified = 0
-    CocoBlockly.workspace.clear();
-    CocoBlockly.setDefTitle();
+NeoBlockly.newFile = function() {
+    NeoBlockly.config.currentFile = '_blank'
+    NeoBlockly.config.newFile = 1
+    NeoBlockly.config.modified = 0
+    NeoBlockly.workspace.clear();
+    NeoBlockly.setDefTitle();
 }
 
-CocoBlockly.exportFile = function() {
+NeoBlockly.exportFile = function() {
     var filename = dialog.showSaveDialog({
     title: "Save as Arduino File",
     defaultPath: "",
@@ -275,100 +275,100 @@ CocoBlockly.exportFile = function() {
 
   var export_info = ""
   
-  if (CocoBlockly.config.currentFile !== '_blank')
+  if (NeoBlockly.config.currentFile !== '_blank')
   {
-     export_info = "// CocoMake7 code exported from " + CocoBlockly.config.currentFile + "\n\n"
+     export_info = "// CocoMake7 code exported from " + NeoBlockly.config.currentFile + "\n\n"
   }
 
-  fs.writeFileSync(filename, export_info + CocoBlockly.code);
+  fs.writeFileSync(filename, export_info + NeoBlockly.code);
   $.notify("Code export done..")
 }
 
-CocoBlockly.saveFile = function() {
-  if (CocoBlockly.config.currentFile !== '_blank')
+NeoBlockly.saveFile = function() {
+  if (NeoBlockly.config.currentFile !== '_blank')
   {
-      fs.writeFileSync(CocoBlockly.config.currentFile, CocoBlockly.xml);
+      fs.writeFileSync(NeoBlockly.config.currentFile, NeoBlockly.xml);
       $.notify("File updated..")
-      CocoBlockly.setDocTitle(CocoBlockly.config.currentFile)
-      CocoBlockly.config.modified = 0
+      NeoBlockly.setDocTitle(NeoBlockly.config.currentFile)
+      NeoBlockly.config.modified = 0
   }else{
-    CocoBlockly.saveAsFile();
+    NeoBlockly.saveAsFile();
   }
 
 }
 
-CocoBlockly.saveAsFile = function() {
+NeoBlockly.saveAsFile = function() {
   var filename = dialog.showSaveDialog({
-    title: "Save as CocoBlock file",
+    title: "Save as NeoBlock file",
     defaultPath: "",
     filters: [
-      {name: 'CocoBlock', extensions: ['cblock']},
+      {name: 'NeoBlock', extensions: ['cblock']},
     ]
   });
   if(typeof(filename) !== 'undefined')
   {
-    fs.writeFileSync(filename, CocoBlockly.xml);
+    fs.writeFileSync(filename, NeoBlockly.xml);
     $.notify("File saved..")
-    CocoBlockly.config.currentFile = filename
-    CocoBlockly.config.modified = 0
-    CocoBlockly.setDocTitle(filename)
+    NeoBlockly.config.currentFile = filename
+    NeoBlockly.config.modified = 0
+    NeoBlockly.setDocTitle(filename)
   }
 }
 
-CocoBlockly.isRunningElectron = function() {
-  return navigator.userAgent.toLowerCase().indexOf('cocoblock') > -1;
+NeoBlockly.isRunningElectron = function() {
+  return navigator.userAgent.toLowerCase().indexOf('NeoBlock') > -1;
 };
 
-CocoBlockly.clearWorkspace = function() {
-    CocoBlockly.workspace.clear();
+NeoBlockly.clearWorkspace = function() {
+    NeoBlockly.workspace.clear();
 }
 
-CocoBlockly.executeBlockCode = function() {
-  var code = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace);
+NeoBlockly.executeBlockCode = function() {
+  var code = Blockly.Arduino.workspaceToCode(NeoBlockly.workspace);
   console.log('play');
 }
         
-CocoBlockly.generateCode = function(event) {
-  var arduinoCode = Blockly.Arduino.workspaceToCode(CocoBlockly.workspace)
-  var xmlCode = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(CocoBlockly.workspace))
+NeoBlockly.generateCode = function(event) {
+  var arduinoCode = Blockly.Arduino.workspaceToCode(NeoBlockly.workspace)
+  var xmlCode = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(NeoBlockly.workspace))
 
-  CocoBlockly.code = arduinoCode;
-  CocoBlockly.xml  = xmlCode;
+  NeoBlockly.code = arduinoCode;
+  NeoBlockly.xml  = xmlCode;
 
-  CocoBlockly.CodeMirrorXML.getDoc().setValue(xmlCode)
+  NeoBlockly.CodeMirrorXML.getDoc().setValue(xmlCode)
 
-  if (xmlCode !== CocoBlockly.PREV_XML_CODE_)
+  if (xmlCode !== NeoBlockly.PREV_XML_CODE_)
   {
-    if (CocoBlockly.config.currentFile !== '_blank')
+    if (NeoBlockly.config.currentFile !== '_blank')
     {
-      if(CocoBlockly.config.newFile === 1)
+      if(NeoBlockly.config.newFile === 1)
       {
-        CocoBlockly.config.newFile = 0;
+        NeoBlockly.config.newFile = 0;
       }else{
-        CocoBlockly.setDocTitle('* ' + CocoBlockly.config.currentFile)
-        CocoBlockly.config.modified = 1;
+        NeoBlockly.setDocTitle('* ' + NeoBlockly.config.currentFile)
+        NeoBlockly.config.modified = 1;
       }
 
     }
-    CocoBlockly.PREV_XML_CODE_ = CocoBlockly.xml
+    NeoBlockly.PREV_XML_CODE_ = NeoBlockly.xml
   }
 
-  if (arduinoCode !== CocoBlockly.PREV_ARDUINO_CODE_)
+  if (arduinoCode !== NeoBlockly.PREV_ARDUINO_CODE_)
   {
-    CocoBlockly.config.compiled = 0;
-    CocoBlockly.CodeMirror.getDoc().setValue(CocoBlockly.code)
-    CocoBlockly.CodeMirrorPreview.getDoc().setValue(CocoBlockly.code)
-    CocoBlockly.PREV_ARDUINO_CODE_ = CocoBlockly.code
+    NeoBlockly.config.compiled = 0;
+    NeoBlockly.CodeMirror.getDoc().setValue(NeoBlockly.code)
+    NeoBlockly.CodeMirrorPreview.getDoc().setValue(NeoBlockly.code)
+    NeoBlockly.PREV_ARDUINO_CODE_ = NeoBlockly.code
   }
 
   return arduinoCode;
 }
 
 
-CocoBlockly.prompt = function(message, opt_defaultInput, opt_callback)
+NeoBlockly.prompt = function(message, opt_defaultInput, opt_callback)
 {
  var prompt_alert = alertify.prompt( 
-    'CocoBlock', message, opt_defaultInput, 
+    'NeoBlock', message, opt_defaultInput, 
     function(evt, val){
       opt_callback(val)
     },
@@ -385,56 +385,56 @@ CocoBlockly.prompt = function(message, opt_defaultInput, opt_callback)
 }
 
 
-CocoBlockly.hideSidebar = function()
+NeoBlockly.hideSidebar = function()
 {
   document.getElementById("simulator").style.display = "none";
-  Blockly.svgResize(CocoBlockly.workspace);
+  Blockly.svgResize(NeoBlockly.workspace);
 }
 
-CocoBlockly.showSidebar = function()
+NeoBlockly.showSidebar = function()
 {
   document.getElementById("simulator").style.display = "block";
-  Blockly.svgResize(CocoBlockly.workspace);
+  Blockly.svgResize(NeoBlockly.workspace);
 }
 
-CocoBlockly.toggleSidebar = function()
+NeoBlockly.toggleSidebar = function()
 {
-  if (CocoBlockly.config.currentMode === 'block')
+  if (NeoBlockly.config.currentMode === 'block')
   {    
-    if (CocoBlockly.config.showSidebar)
+    if (NeoBlockly.config.showSidebar)
     {
-      CocoBlockly.config.showSidebar = 0;
+      NeoBlockly.config.showSidebar = 0;
       document.body.className = "";
     }else{
-      CocoBlockly.config.showSidebar = 1;
+      NeoBlockly.config.showSidebar = 1;
       document.body.className = "simulator";
     }
-    Blockly.svgResize(CocoBlockly.workspace);    
+    Blockly.svgResize(NeoBlockly.workspace);    
   }
   
-  CocoBlockly.CodeMirrorPreview.refresh()
+  NeoBlockly.CodeMirrorPreview.refresh()
 }
 
-CocoBlockly.tabClick = function(clickedName) {
+NeoBlockly.tabClick = function(clickedName) {
   
-  CocoBlockly.config.currentMode = 'nonblock';
+  NeoBlockly.config.currentMode = 'nonblock';
 
   if (clickedName == 'blocks') {
-    CocoBlockly.config.currentMode = 'block';
-    CocoBlockly.workspace.setVisible(true);
+    NeoBlockly.config.currentMode = 'block';
+    NeoBlockly.workspace.setVisible(true);
     document.getElementById("pane-blocks").className = "tab-pane active";
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-console").className = "tab-pane";
 
-    if (CocoBlockly.config.showSidebar)
+    if (NeoBlockly.config.showSidebar)
     {
       document.body.className = "simulator";
     }
   }
 
   if (clickedName == 'code') {
-    CocoBlockly.workspace.setVisible(false);
+    NeoBlockly.workspace.setVisible(false);
     document.getElementById("pane-blocks").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane active";
@@ -445,7 +445,7 @@ CocoBlockly.tabClick = function(clickedName) {
   }
 
   if (clickedName == 'xml') {
-    CocoBlockly.workspace.setVisible(false);
+    NeoBlockly.workspace.setVisible(false);
     document.getElementById("pane-blocks").className = "tab-pane";
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane active";
@@ -456,7 +456,7 @@ CocoBlockly.tabClick = function(clickedName) {
 
 
   if (clickedName == 'console') {
-    CocoBlockly.workspace.setVisible(false);
+    NeoBlockly.workspace.setVisible(false);
     document.getElementById("pane-blocks").className = "tab-pane";
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane";
@@ -468,14 +468,14 @@ CocoBlockly.tabClick = function(clickedName) {
 };
 
 
-CocoBlockly.setProgressBar = function(value) {
+NeoBlockly.setProgressBar = function(value) {
   $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
 }
 
 
-CocoBlockly.blocks = {}
+NeoBlockly.blocks = {}
 
-CocoBlockly.blocks.domCreateToolCat = function(id,name)
+NeoBlockly.blocks.domCreateToolCat = function(id,name)
 {
      var xml_cat = document.createElement('category')
       xml_cat.setAttribute("id", id);
@@ -484,20 +484,20 @@ CocoBlockly.blocks.domCreateToolCat = function(id,name)
 }
 
 
-CocoBlockly.blocks.domCreateXMLBlock = function(block_name, block_file)
+NeoBlockly.blocks.domCreateXMLBlock = function(block_name, block_file)
 {
   // console.log(block_file)
     var block_string = fs.readFileSync(block_file)
     var new_block = Blockly.Xml.textToDom(block_string).firstElementChild;
     // console.log(new_block)
-    var toolBoxCat = CocoBlockly.blocks.domCreateToolCat(block_name, block_name)
+    var toolBoxCat = NeoBlockly.blocks.domCreateToolCat(block_name, block_name)
     toolBoxCat.appendChild(new_block)
     return toolBoxCat;
 }
 
 
 
-CocoBlockly.blocks.fileExists = function(filePath) {
+NeoBlockly.blocks.fileExists = function(filePath) {
     try
     {
         var stats = fs.statSync(filePath);
@@ -509,18 +509,18 @@ CocoBlockly.blocks.fileExists = function(filePath) {
     }
 }
   
-CocoBlockly.blocks.loadBlocksFromDir = function(board_dir)
+NeoBlockly.blocks.loadBlocksFromDir = function(board_dir)
 {
   var block_dir = (app.getPath('userData') + path.sep + "Blocks" )
 
-  if (!CocoBlockly.blocks.fileExists(block_dir))
+  if (!NeoBlockly.blocks.fileExists(block_dir))
   {
     fs.mkdirSync(block_dir);
   }
 
-  var toolBoxCustomCat = CocoBlockly.blocks.domCreateToolCat("Custom Blocks", "Custom Blocks")
+  var toolBoxCustomCat = NeoBlockly.blocks.domCreateToolCat("Custom Blocks", "Custom Blocks")
 
-  if(!CocoBlockly.blocks.fileExists(block_dir)) return toolBoxCustomCat
+  if(!NeoBlockly.blocks.fileExists(block_dir)) return toolBoxCustomCat
 
   var block_dir_array = fs.readdirSync(block_dir);
   var block_dir_array_length = block_dir_array.length
@@ -528,14 +528,14 @@ CocoBlockly.blocks.loadBlocksFromDir = function(board_dir)
   for (var i = 0; i < block_dir_array_length; i++) {
       var block_category_currentdir = block_dir_array[i];
       if (block_category_currentdir === '.DS_Store') continue;
-      var toolBoxSubCat = CocoBlockly.blocks.domCreateToolCat(block_category_currentdir, block_category_currentdir)
+      var toolBoxSubCat = NeoBlockly.blocks.domCreateToolCat(block_category_currentdir, block_category_currentdir)
       // console.log(' ', block_category_currentdir)
       // //iterate file inside ./Blocks/*/*
       var block_file_array = fs.readdirSync( block_dir + path.sep + block_category_currentdir )
       for (var j = 0; j < block_file_array.length; j++) {
         var current_block_file = block_file_array[j]
         // console.log('  ', current_block_file)
-        var new_block_dom = CocoBlockly.blocks.domCreateXMLBlock(current_block_file, block_dir + path.sep + block_category_currentdir + path.sep + current_block_file)
+        var new_block_dom = NeoBlockly.blocks.domCreateXMLBlock(current_block_file, block_dir + path.sep + block_category_currentdir + path.sep + current_block_file)
         toolBoxSubCat.appendChild(new_block_dom)
       }
       toolBoxCustomCat.appendChild(toolBoxSubCat)
@@ -545,22 +545,22 @@ CocoBlockly.blocks.loadBlocksFromDir = function(board_dir)
 
 }  
 
-CocoBlockly.initAll = function() {
+NeoBlockly.initAll = function() {
 
 
-    CocoBlockly.toolBox = Blockly.Xml.textToDom(CocoBlockly.toolboxStr);
+    NeoBlockly.toolBox = Blockly.Xml.textToDom(NeoBlockly.toolboxStr);
 
-    var custom_block_dom = CocoBlockly.blocks.loadBlocksFromDir();
+    var custom_block_dom = NeoBlockly.blocks.loadBlocksFromDir();
     if(custom_block_dom.childElementCount > 0)
     {
-      CocoBlockly.toolBox.insertBefore(custom_block_dom, CocoBlockly.toolBox.firstElementChild)
+      NeoBlockly.toolBox.insertBefore(custom_block_dom, NeoBlockly.toolBox.firstElementChild)
     }
     
 
-    CocoBlockly.workspace = Blockly.inject('blocklyDiv',
+    NeoBlockly.workspace = Blockly.inject('blocklyDiv',
     {
         css: false,
-        toolbox: CocoBlockly.toolBox,
+        toolbox: NeoBlockly.toolBox,
         media: 'blockly/',
             grid: {
                 spacing: 25,
@@ -580,10 +580,10 @@ CocoBlockly.initAll = function() {
     });
 
     // var xml = Blockly.Xml.textToDom(xml_text);
-    var defaultBlocks = document.getElementById('CocoBlockInitial');
-    Blockly.Xml.domToWorkspace(CocoBlockly.workspace, defaultBlocks);
+    var defaultBlocks = document.getElementById('NeoBlockInitial');
+    Blockly.Xml.domToWorkspace(NeoBlockly.workspace, defaultBlocks);
 
-    CocoBlockly.CodeMirror = CodeMirror.fromTextArea(document.getElementById("codeDiv"), 
+    NeoBlockly.CodeMirror = CodeMirror.fromTextArea(document.getElementById("codeDiv"), 
     {
       lineNumbers: true,
       lineWrapping: true,
@@ -592,7 +592,7 @@ CocoBlockly.initAll = function() {
     });
 
 
-    CocoBlockly.CodeMirrorPreview = CodeMirror.fromTextArea(document.getElementById("codePreviewDiv"), 
+    NeoBlockly.CodeMirrorPreview = CodeMirror.fromTextArea(document.getElementById("codePreviewDiv"), 
     {
       lineNumbers: true,
       lineWrapping: true,
@@ -601,7 +601,7 @@ CocoBlockly.initAll = function() {
     });
 
 
-    CocoBlockly.CodeMirrorXML = CodeMirror.fromTextArea(document.getElementById("xmlCodeDiv"), 
+    NeoBlockly.CodeMirrorXML = CodeMirror.fromTextArea(document.getElementById("xmlCodeDiv"), 
     {
       lineNumbers: true,
       lineWrapping: true,
@@ -609,7 +609,7 @@ CocoBlockly.initAll = function() {
       mode: "application/xml"
     });
 
-    CocoBlockly.CodeMirrorConsole = CodeMirror.fromTextArea(document.getElementById("consoleDiv"), 
+    NeoBlockly.CodeMirrorConsole = CodeMirror.fromTextArea(document.getElementById("consoleDiv"), 
     {
       lineNumbers: true,
       lineWrapping: true,
@@ -617,18 +617,18 @@ CocoBlockly.initAll = function() {
       mode: "application/xml"
     });
                               
-    CocoBlockly.workspace.addChangeListener(CocoBlockly.generateCode);
+    NeoBlockly.workspace.addChangeListener(NeoBlockly.generateCode);
 
-    document.getElementById("btn-mode-blocks").onclick = function(){CocoBlockly.tabClick('blocks')};
-    document.getElementById("btn-mode-code").onclick = function(){CocoBlockly.tabClick('code')};
-    document.getElementById("btn-mode-xml").onclick = function(){CocoBlockly.tabClick('xml')};
-    document.getElementById("btn-mode-console").onclick = function(){CocoBlockly.tabClick('console')};
-    document.getElementById("btn-mode-compile").onclick = function(){CocoBlockly.compile()};
-    document.getElementById("btn-mode-upload").onclick = function(){CocoBlockly.upload()};
+    document.getElementById("btn-mode-blocks").onclick = function(){NeoBlockly.tabClick('blocks')};
+    document.getElementById("btn-mode-code").onclick = function(){NeoBlockly.tabClick('code')};
+    document.getElementById("btn-mode-xml").onclick = function(){NeoBlockly.tabClick('xml')};
+    document.getElementById("btn-mode-console").onclick = function(){NeoBlockly.tabClick('console')};
+    document.getElementById("btn-mode-compile").onclick = function(){NeoBlockly.compile()};
+    document.getElementById("btn-mode-upload").onclick = function(){NeoBlockly.upload()};
 
 
     var svgresize = function() {
-        Blockly.svgResize(CocoBlockly.workspace);
+        Blockly.svgResize(NeoBlockly.workspace);
     }
 
     Split(['#main', '#simulator'], {
@@ -639,9 +639,9 @@ CocoBlockly.initAll = function() {
 
 
     // Original signature: function(message, opt_defaultInput, opt_callback)
-    Blockly.prompt = CocoBlockly.prompt;
+    Blockly.prompt = NeoBlockly.prompt;
 
-    CocoBlockly.newFile();
+    NeoBlockly.newFile();
     
     document.getElementById("txt-arduino-path").value = conf.get('arduinopath')        
 
