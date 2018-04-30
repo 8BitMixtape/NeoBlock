@@ -298,7 +298,7 @@ ADC_Enable();
 
 
 
-  Blockly.Arduino.addSetup('cocosynth', 'synth.begin();', true);
+  Blockly.Arduino.addSetup('NeoSynth', 'synth.begin();', true);
 
   var code = 'synth.setupVoice(' + dropdown_coco_voice + ',' + dropdown_coco_waveform + ',' + number_coco_pitch + ',' + dropdown_coco_envelope + ',' + number_coco_length + ',' + number_coco_mod + ');\n';
   return code;
@@ -404,7 +404,7 @@ Blockly.Arduino['coco_synth_voice'] = function(block) {
   return code;
 };
 
-Blockly.Arduino['cocosynth_interval_function'] = function(block) {
+Blockly.Arduino['NeoSynth_interval_function'] = function(block) {
   var text_timer_name = block.getFieldValue('TIMER_NAME');
   var number_timer_interval = Blockly.Arduino.valueToCode(block, 'TIMER_INTERVAL', Blockly.Arduino.ORDER_ATOMIC) || '0';
 
