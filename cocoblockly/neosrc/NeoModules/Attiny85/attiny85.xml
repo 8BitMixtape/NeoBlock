@@ -1,0 +1,19 @@
+<category id="catAttiny85" name="Attiny85">
+        <block type="NeoLib_enablepll"></block>
+        <block type="NeoLib_disableusi"></block>
+        <block type="NeoLib_noprescale"></block>        
+        <block type="NeoLib_adcprescale"></block>    
+        <block type="NeoLib_admuxadc"></block>      
+        <block type="NeoLib_adcvoltref"></block>  
+        <block type="NeoLib_interrupt"></block>  
+        <block type="NeoLib_startadc"></block>  
+
+        <block type="NeoLib_enableint"></block>  
+        <block type="NeoLib_aden"></block>  
+        <block type="NeoLib_adcauto"></block>  
+        
+                      
+                  
+                
+</category>
+<sep></sep>
