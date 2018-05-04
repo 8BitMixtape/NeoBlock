@@ -43,7 +43,7 @@
 
 */
 
-Blockly.Blocks['NeoLib_fastanalogread'] = {
+Blockly.Blocks['NeoLib_TCNT1'] = {
   /**
    * Block for reading an analogue input.
    * @this Blockly.Block
@@ -52,9 +52,7 @@ Blockly.Blocks['NeoLib_fastanalogread'] = {
     this.setHelpUrl('http://arduino.cc/en/Reference/AnalogRead');
     this.setColour(Blockly.Blocks.io.HUE);
     this.appendDummyInput()
-        .appendField(Blockly.Msg.ARD_ANALOGREAD + " (FAST)")
-        .appendField(new Blockly.FieldDropdown(
-            Blockly.Arduino.Boards.selected.analogPins), 'PIN');
+        .appendField("Read TCNT1");
     this.setOutput(true, Blockly.Types.NUMBER.output);
     this.setTooltip(Blockly.Msg.ARD_ANALOGREAD_TIP);
   },

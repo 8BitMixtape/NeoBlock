@@ -1,4 +1,4 @@
-Blockly.Arduino['NeoLib_timsk'] = function(block) {
+Blockly.Arduino['NeoLib_timsk1'] = function(block) {
 
 var division_factor = get_field_value(block, 'DIVISION_FACTOR');
 //get_field_value_atomic(block, 'NEOLIGHT_COUNT');
@@ -25,6 +25,7 @@ var get_bitwrite = function(reg_temp, selection){
 var code = "";
 
 
+
 code = code + get_bitwrite({
     reg_address: ['TIMSK'],
     reg_param: ['OCIE0A'],
@@ -32,7 +33,7 @@ code = code + get_bitwrite({
         0: [0],
         1: [1],
     }
-}, get_field_value(block, 'TIMER0A_MATCH'))
+}, get_field_value(block, 'TIMER1A_MATCH'))
 
 code = code + get_bitwrite({
     reg_address: ['TIMSK'],
@@ -41,17 +42,16 @@ code = code + get_bitwrite({
         0: [0],
         1: [1],
     }
-}, get_field_value(block, 'TIMER0B_MATCH'))
+}, get_field_value(block, 'TIMER1B_MATCH'))
 
 code = code + get_bitwrite({
     reg_address: ['TIMSK'],
-    reg_param: ['TOIE0'],
+    reg_param: ['TOIE1'],
     registers: {
         0: [0],
         1: [1],
     }
-}, get_field_value(block, 'TOIE0'))
-
+}, get_field_value(block, 'TOIE1'))
 
 
 

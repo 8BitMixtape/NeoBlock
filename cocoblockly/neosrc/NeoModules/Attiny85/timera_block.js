@@ -46,7 +46,7 @@
 Blockly.Blocks['NeoLib_timera'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Setup TIMERA/0");
+          .appendField("Setup TIMER A/0");
 
       this.appendDummyInput()
           .appendField("Waveform Generation Mode")

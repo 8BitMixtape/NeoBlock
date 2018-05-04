@@ -12,7 +12,7 @@ Blockly.Arduino['NeoLib_noprescale'] = function(block) {
 // Blockly.Arduino.addSetup('NeoLib_noprescale', fix_newline(``));
 
 //add code
-var code = fix_newline(`clock_prescale_set(clock_div_1); //NO PROCESSOR PRESCALE`)
+var code = fix_newline(`clock_prescale_set(clock_div_1); //NO PROCESSOR PRESCALE\n`)
 
 return code;
 

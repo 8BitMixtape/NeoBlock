@@ -46,7 +46,7 @@
 Blockly.Blocks['NeoLib_timerb'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Setup TIMERB/1");
+          .appendField("Setup TIMER B/1");
 
           this.appendDummyInput()
           .appendField("Enable CTC")
