@@ -71,21 +71,15 @@ Blockly.Blocks['NeoLib_timerb'] = {
           .appendField("Comparator A Mode (NORMAL)")
           .appendField(new Blockly.FieldDropdown([
               ["Default", "default"],               
-              ["Timer/Counter Comparator A disconnected from output pin OC1A.", "0"], 
-              ["Toggle the OC1A output line.", "1"], 
-              ["Clear the OC1A output line.", "2"], 
-              ["Set the OC1A output line.", "3"]          
-            ]), "COMPARATOR_MODE_NORMAL");
-
-        this.appendDummyInput()
-            .appendField("Comparator A Mode (PWM)")
-            .appendField(new Blockly.FieldDropdown([
-                ["Default", "default"],                 
-                ["OC1x/_OC1x_ not connected.", "0"], 
-                ["OC1x cleared on compare match/_OC1x_ set on compare match", "1"], 
-                ["OC1x cleared on compare match/_OC1x_ not connected", "2"], 
-                ["OC1x Set on compare match/_OC1x_ not connected", "3"]          
-              ]), "COMPARATOR_MODE_PWM");            
+              ["[norm] Timer/Counter Comparator A disconnected from output pin OC1A.", "0"], 
+              ["[norm] Toggle the OC1A output line.", "1"], 
+              ["[norm] Clear the OC1A output line.", "2"], 
+              ["[norm] Set the OC1A output line.", "3"],
+              ["[pwm] OC1x/_OC1x_ not connected.", "4"], 
+              ["[pwm] OC1x cleared on compare match/_OC1x_ set on compare match", "5"], 
+              ["[pwm] OC1x cleared on compare match/_OC1x_ not connected", "6"], 
+              ["[pwm] OC1x Set on compare match/_OC1x_ not connected", "7"]                           
+            ]), "COMPARATOR_MODE_NORMAL");       
 
         this.appendDummyInput()
             .appendField("Compare Output Mode")
