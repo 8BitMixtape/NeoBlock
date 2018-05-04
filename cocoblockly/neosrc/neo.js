@@ -426,6 +426,7 @@ NeoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-console").className = "tab-pane";
+    document.getElementById("pane-custom-code").className = "tab-pane";
 
     if (NeoBlockly.config.showSidebar)
     {
@@ -439,10 +440,23 @@ NeoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-xml").className = "tab-pane";    
     document.getElementById("pane-code").className = "tab-pane active";
     document.getElementById("pane-console").className = "tab-pane";
+    document.getElementById("pane-custom-code").className = "tab-pane";
 
     document.body.className = "";
 
   }
+
+  if (clickedName == 'customcode') {
+    NeoBlockly.workspace.setVisible(false);
+    document.getElementById("pane-blocks").className = "tab-pane";
+    document.getElementById("pane-xml").className = "tab-pane";    
+    document.getElementById("pane-code").className = "tab-pane";
+    document.getElementById("pane-console").className = "tab-pane";
+    document.getElementById("pane-custom-code").className = "tab-pane active";
+
+    document.body.className = "";
+
+  }  
 
   if (clickedName == 'xml') {
     NeoBlockly.workspace.setVisible(false);
@@ -450,6 +464,7 @@ NeoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane active";
     document.getElementById("pane-console").className = "tab-pane";
+    document.getElementById("pane-custom-code").className = "tab-pane";
 
     document.body.className = "";
   }
@@ -461,6 +476,7 @@ NeoBlockly.tabClick = function(clickedName) {
     document.getElementById("pane-code").className = "tab-pane";
     document.getElementById("pane-xml").className = "tab-pane";
     document.getElementById("pane-console").className = "tab-pane active";
+    document.getElementById("pane-custom-code").className = "tab-pane";
 
     document.body.className = "";
   }
@@ -592,6 +608,13 @@ NeoBlockly.initAll = function() {
       mode: "text/x-c++src"
     });
 
+    NeoBlockly.CodeMirrorCustom = CodeMirror.fromTextArea(document.getElementById("customCodeDiv"), 
+    {
+      lineNumbers: true,
+      lineWrapping: true,
+      readOnly: false,
+      mode: "text/x-c++src"
+    });
 
     NeoBlockly.CodeMirrorPreview = CodeMirror.fromTextArea(document.getElementById("codePreviewDiv"), 
     {
@@ -622,6 +645,7 @@ NeoBlockly.initAll = function() {
 
     document.getElementById("btn-mode-blocks").onclick = function(){NeoBlockly.tabClick('blocks')};
     document.getElementById("btn-mode-code").onclick = function(){NeoBlockly.tabClick('code')};
+    document.getElementById("btn-mode-customcode").onclick = function(){NeoBlockly.tabClick('customcode')};    
     document.getElementById("btn-mode-xml").onclick = function(){NeoBlockly.tabClick('xml')};
     document.getElementById("btn-mode-console").onclick = function(){NeoBlockly.tabClick('console')};
     document.getElementById("btn-mode-compile").onclick = function(){NeoBlockly.compile()};
