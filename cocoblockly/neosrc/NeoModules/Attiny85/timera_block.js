@@ -51,6 +51,7 @@ Blockly.Blocks['NeoLib_timera'] = {
       this.appendDummyInput()
           .appendField("Waveform Generation Mode")
           .appendField(new Blockly.FieldDropdown([
+              ["Default", "default"], 
               ["Normal", "0"], 
               ["PWM, Phase Correct", "1"], 
               ["CTC", "2"], 
@@ -62,6 +63,7 @@ Blockly.Blocks['NeoLib_timera'] = {
         this.appendDummyInput()
             .appendField("Compare Output Mode")
             .appendField(new Blockly.FieldDropdown([
+                ["Default", "default"],                 
                 ["Normal port operation, OC0A/OC0B disconnected.", "0"], 
                 ["Clear OC0A/OC0B on Compare Match, set OC0A/OC0B at BOTTOM (non-inverting mode)", "2"], 
                 ["Set OC0A/OC0B on Compare Match, clear OC0A/OC0B at BOTTOM (inverting mode)", "3"]         
@@ -70,6 +72,7 @@ Blockly.Blocks['NeoLib_timera'] = {
         this.appendDummyInput()
               .appendField("Clock Select")
               .appendField(new Blockly.FieldDropdown([
+                  ["Default", "default"],                   
                   ["No clock source (Timer/Counter stopped)", "0"], 
                   ["No prescaling", "1"], 
                   ["8 (From prescaler)", "2"],
