@@ -29,6 +29,9 @@
         <block type="NeoLib_setOCR0B"></block> 
         <block type="NeoLib_setTCNT0"></block>                   
         <block type="NeoLib_setTCNT1"></block>      
+        <block type="NeoLib_setOCR1A"></block>      
+        <block type="NeoLib_setOCR1B"></block>      
+
                                                                                          
 </category>
 
