@@ -23,7 +23,10 @@
         <block type="NeoLib_timsk"></block>  
         <block type="NeoLib_timsk1"></block>     
         <block type="NeoLib_TCNT0"></block>       
-        <block type="NeoLib_TCNT1"></block>                                                                                       
+        <block type="NeoLib_TCNT1"></block>      
+        <block type="NeoLib_resetpre"></block>      
+
+                                                                                         
 </category>
 
 <sep></sep>
