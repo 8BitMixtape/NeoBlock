@@ -47,7 +47,7 @@ Blockly.Blocks['NeoLib_enablepll'] = {
   init: function() {
       this.setColour(Blockly.Blocks.coco.HUE);
       this.appendDummyInput()
-          .appendField("Attiny85 Enable PLL");
+          .appendField("Timer B/1 Enable PLL");
       this.setInputsInline(true);
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
