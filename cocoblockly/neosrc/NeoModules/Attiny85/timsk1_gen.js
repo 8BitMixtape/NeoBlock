@@ -28,7 +28,7 @@ var code = "";
 
 code = code + get_bitwrite({
     reg_address: ['TIMSK'],
-    reg_param: ['OCIE0A'],
+    reg_param: ['OCIE1A'],
     registers: {
         0: [0],
         1: [1],
@@ -37,7 +37,7 @@ code = code + get_bitwrite({
 
 code = code + get_bitwrite({
     reg_address: ['TIMSK'],
-    reg_param: ['OCIE0B'],
+    reg_param: ['OCIE1B'],
     registers: {
         0: [0],
         1: [1],
