@@ -58,7 +58,7 @@ Blockly.Blocks['NeoLib_timerb'] = {
             
             
             this.appendDummyInput()
-            .appendField("Enable PWM")
+            .appendField("Enable PWM A (OCR1A)")
             .appendField(new Blockly.FieldDropdown([
                 ["Default", "default"],                 
                 ["PWM Disable", "0"], 
@@ -68,7 +68,7 @@ Blockly.Blocks['NeoLib_timerb'] = {
   
 
       this.appendDummyInput()
-          .appendField("Comparator A Mode (NORMAL)")
+          .appendField("Comparator A Mode")
           .appendField(new Blockly.FieldDropdown([
               ["Default", "default"],               
               ["[norm] Timer/Counter Comparator A disconnected from output pin OC1A.", "0"], 
@@ -112,6 +112,33 @@ Blockly.Blocks['NeoLib_timerb'] = {
                   ["PCK/16384", "15"],
                 ]), "PRESCALE_SELECT");
 
+
+                this.appendDummyInput()
+                .appendField("Setup Comparator B");
+      
+            
+                this.appendDummyInput()
+                .appendField("Enable PWM B (OCR1B)")
+                .appendField(new Blockly.FieldDropdown([
+                    ["Default", "default"],                 
+                    ["PWM Disable", "0"], 
+                    ["PWM Enable", "1"]       
+                  ]), "PWMB_ENABLE");          
+      
+                  this.appendDummyInput()
+                  .appendField("Comparator B Mode")
+                  .appendField(new Blockly.FieldDropdown([
+                      ["Default", "default"],               
+                      ["[norm] Timer/Counter Comparator A disconnected from output pin OC1A.", "0"], 
+                      ["[norm] Toggle the OC1A output line.", "1"], 
+                      ["[norm] Clear the OC1A output line.", "2"], 
+                      ["[norm] Set the OC1A output line.", "3"],
+                      ["[pwm] OC1x/_OC1x_ not connected.", "4"], 
+                      ["[pwm] OC1x cleared on compare match/_OC1x_ set on compare match", "5"], 
+                      ["[pwm] OC1x cleared on compare match/_OC1x_ not connected", "6"], 
+                      ["[pwm] OC1x Set on compare match/_OC1x_ not connected", "7"]                           
+                    ]), "COMPARATORB_MODE_NORMAL");       
+        
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setTooltip('');

@@ -45,6 +45,7 @@ Blockly.Arduino['NeoLib_timerb'] = function(block) {
     }
     
     code = code + get_bitwrite(register_template, get_field_value(block, 'PWM_ENABLE'))
+
     
 
     register_template = {
@@ -63,6 +64,35 @@ Blockly.Arduino['NeoLib_timerb'] = function(block) {
     }
     
     code = code + get_bitwrite(register_template, get_field_value(block, 'COMPARATOR_MODE_NORMAL'))
+
+    
+    register_template = {
+        reg_address: ['GTCCR', 'GTCCR'],
+        reg_param: ['COM1B1', 'COM1B0'],
+        registers: {
+            0: [0,0],
+            1: [0,1],
+            2: [1,0],
+            3: [1,1],
+            4: [0,0],
+            5: [0,1],
+            6: [1,0],
+            7: [1,1]            
+        }
+    }
+    
+    code = code + get_bitwrite(register_template, get_field_value(block, 'COMPARATORB_MODE_NORMAL'))
+    
+    var register_template = {
+        reg_address: ['GTCCR'],
+        reg_param: ['PWM1B'],
+        registers: {
+            0: [0],
+            1: [1],
+        }
+    }
+    
+    code = code + get_bitwrite(register_template, get_field_value(block, 'PWMB_ENABLE'))
     
 
     var register_template = {
