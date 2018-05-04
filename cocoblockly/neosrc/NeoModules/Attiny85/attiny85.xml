@@ -25,7 +25,10 @@
         <block type="NeoLib_TCNT0"></block>       
         <block type="NeoLib_TCNT1"></block>      
         <block type="NeoLib_resetpre"></block>      
-
+        <block type="NeoLib_setOCR0A"></block>      
+        <block type="NeoLib_setOCR0B"></block> 
+        <block type="NeoLib_setTCNT0"></block>                   
+        <block type="NeoLib_setTCNT1"></block>      
                                                                                          
 </category>
 
