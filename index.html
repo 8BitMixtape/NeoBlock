@@ -1,0 +1,910 @@
+<html><head>
+    <title>NeoBlocks for 8BitMixtapeNEO</title>
+    <link rel="stylesheet" href="assets/theme.min.css">
+    <link rel="stylesheet" href="vendor/codemirror.min.css">
+    <link rel="stylesheet" href="assets/blockly_style.css">
+    <link rel="stylesheet" href="assets/NeoBlockly.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.18.2/addon/lint/lint.min.css">
+
+
+    <!-- Ardublockly - These three files contain the compress version -->
+    <script src="blockly/blockly_compressed.js"></script>
+    <script src="blockly/blocks_compressed.js"></script>
+    <!-- <script src="blockly/arduino_compressed.js"></script> -->
+    <!-- <script src="blockly/blockly_uncompressed.js"></script> -->
+    <!-- <script src="blockly/blocks/logic.js"></script>
+    <script src="blockly/blocks/loops.js"></script>
+    <script src="blockly/blocks/math.js"></script>
+    <script src="blockly/blocks/text.js"></script>
+    <script src="blockly/blocks/lists.js"></script>
+    <script src="blockly/blocks/colour.js"></script>
+    <script src="blockly/blocks/variables.js"></script>
+    <script src="blockly/blocks/procedures.js"></script> -->
+    <script src="blockly/blocks/arduino/io.js"></script>
+    <script src="blockly/blocks/arduino/map.js"></script>
+    <script src="blockly/blocks/arduino/procedures.js"></script>
+    <script src="blockly/blocks/arduino/serial.js"></script>
+    <script src="blockly/blocks/arduino/servo.js"></script>
+    <script src="blockly/blocks/arduino/spi.js"></script>
+    <script src="blockly/blocks/arduino/stepper.js"></script>
+    <script src="blockly/blocks/arduino/time.js"></script>
+    <script src="blockly/blocks/arduino/tone.js"></script>
+    <script src="blockly/blocks/arduino/variables.js"></script>
+    <script src="blockly/generators/arduino.js"></script>
+    <script src="blockly/generators/arduino/boards.js"></script>
+    <script src="blockly/generators/arduino/io.js"></script>
+    <script src="blockly/generators/arduino/lists.js"></script>
+    <script src="blockly/generators/arduino/logic.js"></script>
+    <script src="blockly/generators/arduino/loops.js"></script>
+    <script src="blockly/generators/arduino/map.js"></script>
+    <script src="blockly/generators/arduino/math.js"></script>
+    <script src="blockly/generators/arduino/procedures.js"></script>
+    <script src="blockly/generators/arduino/serial.js"></script>
+    <script src="blockly/generators/arduino/servo.js"></script>
+    <script src="blockly/generators/arduino/spi.js"></script>
+    <script src="blockly/generators/arduino/stepper.js"></script>
+    <script src="blockly/generators/arduino/text.js"></script>
+    <script src="blockly/generators/arduino/time.js"></script>
+    <script src="blockly/generators/arduino/tone.js"></script>
+    <script src="blockly/generators/arduino/variables.js"></script>
+
+<!--     <script src="neosrc/NeoBlock/NeoBlock.js"></script>
+    <script src="neosrc/NeoBlock/NeoGen.js"></script>
+ -->
+    <!-- Default language js files, user selection appended to head
+    on load -->
+    <script src="blockly/en.js"></script>
+    <script src="blockly/msg/en.js"></script>
+    <!-- <script src="https://blockly-demo.appspot.com/static/demos/prettify.js"></script> -->
+    <!-- <link href="https://blockly-demo.appspot.com/static/demos/prettify.css"
+    rel="stylesheet"> -->
+    <!-- <link rel="stylesheet" href="prettify/arduino.css"> -->
+    <!-- <script src="ardublockly_toolbox.js"></script> -->
+    <script type="text/javascript" src="vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap-notify.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+
+    <link rel="stylesheet" href="vendor/alertify/alertify.min.css"/>    
+    <link rel="stylesheet" href="vendor/alertify/default.min.css"/>
+
+    <script type="text/javascript" src="vendor/codemirror.js"></script>
+    <script type="text/javascript" src="vendor/clike.min.js"></script>
+    <script type="text/javascript" src="vendor/split.min.js"></script>
+    <!-- <script type="text/javascript" src="vendor/socket.io-1.4.5.js"></script> -->
+
+    <script type="text/javascript" src="neosrc/toolbox.js"></script>
+    <script type="text/javascript" src="neosrc/cocoupdater.js"></script>
+    <script type="text/javascript" src="neosrc/neo.js"></script>
+  </head><body class="simulator">
+    <div id="wrapper">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+                       
+                       <a class="navbar-brand">
+                         
+
+
+<span style="position: relative;
+    /* padding-left: 5px; */">
+   <span style="padding-left: 0px;">NeoBlock</span></span>
+
+                       </a>
+
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a onClick="NeoBlockly.newFile()" href="#">New</a>
+                  </li>                
+                  <li>
+                    <a onClick="NeoBlockly.openFile()" href="#">Open</a>
+                  </li>
+                  <li>
+                    <a onClick="NeoBlockly.saveAsFile()" href="#">Save As</a>
+                  </li>
+                  <li>
+                    <a onClick="NeoBlockly.saveFile()" href="#">Save</a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a onClick="NeoBlockly.exportFile()" href="#">Export Code</a>
+                  </li>                  
+                  <li>
+                    <a onClick="NeoBlockly.toggleSidebar();" href="#">Toggle Sidebar</a>
+                  </li>
+               <li>
+                    <a  data-toggle="modal" data-backdrop="false"  href="#NeoBlock-setting">Settings</a>
+                  </li> 
+                <li>
+                    <a onClick="NeoBlockly.updater.updateNow();" href="#">Update Block</a>
+                  </li>
+
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a data-toggle="modal" data-backdrop="false" href="#NeoBlock-about">About</a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a onClick="NeoBlockly.quit()" href="#">Exit</a>
+                  </li>                  
+                </ul>
+              </li>
+              <li id="mode-group">
+                <p class="navbar-text">Mode:</p>
+                <div class="btn-group" data-toggle="buttons" role="group">
+                  <label id="btn-mode-blocks" class="btn btn-default navbar-btn active">
+                    <input type="radio" name="edit-mode" value="Blocks" autocomplete="off" checked="">
+                    <span>Blocks</span>
+                  </label>
+                  <label id="btn-mode-code" class="btn btn-default navbar-btn">
+                    <input type="radio" name="edit-mode" value="Code" autocomplete="off">
+                    <span>Code</span>
+                  </label>
+                  <label id="btn-mode-customcode" class="btn btn-default navbar-btn">
+                    <input type="radio" name="edit-mode" value="Code" autocomplete="off">
+                    <span>Custom Code</span>
+                  </label>
+                  
+                  <label style="display: none" id="btn-mode-xml" class="btn btn-default navbar-btn">
+                    <input type="radio" name="edit-mode" value="XML" autocomplete="off">
+                    <span>XML</span>
+                  </label>
+                  <label id="btn-mode-console" class="btn btn-default navbar-btn">
+                    <input type="radio" name="edit-mode" value="Console" autocomplete="off">
+                    <span>Console</span>
+                  </label>
+
+                </div>
+              </li>
+              <li>                <p class="navbar-text">Action:</p>
+
+                                  <label id="btn-mode-compile" class="btn btn-default navbar-btn">
+                    <span>Compile</span>
+                  </label>
+
+
+                                  <label id="btn-mode-upload" class="btn btn-default navbar-btn">
+                    <span>Upload</span>
+                  </label>
+           <!-- <div id="progressBar" class="nav navbar-text progress pull-right" style="width: 150px;">
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+          </div>
+        </div> -->
+
+              </li>
+            </ul>
+
+    <!--         <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help&nbsp;<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">Action</a>
+                  </li>
+                  <li>
+                    <a href="#">Another action</a>
+                  </li>
+                  <li>
+                    <a href="#">Something else here</a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a href="#">Separated link</a>
+                  </li>
+                </ul>
+              </li>
+            </ul> -->
+
+            <div class="dropdown navbar-btn">
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>
+                  <a href="#">Action</a>
+                </li>
+                <li>
+                  <a href="#">Another action</a>
+                </li>
+                <li>
+                  <a href="#">Something else here</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="#">Separated link</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+      </nav>
+      <div id="row-wrapper">
+        <div id="main">
+          <div id="panes-wrapper">
+            <div id="panes">
+              <div class="tab-pane active" id="pane-blocks">
+                <div class="full-height blockly-panel" id="blocklyDiv"></div>
+              </div>
+              <div class="tab-pane" id="pane-code">
+                <textarea id="codeDiv"></textarea>
+              </div>
+              <div class="tab-pane" id="pane-custom-code">
+                <textarea id="customCodeDiv"></textarea>
+              </div>              
+              <div class="tab-pane" id="pane-xml">
+                <textarea id="xmlCodeDiv"></textarea>
+              </div>
+              <div class="tab-pane" id="pane-console">
+                <textarea id="consoleDiv"></textarea>
+              </div>              
+            </div>
+          </div>
+        </div>
+        <div id="simulator">
+                  <div class="head">
+            <h5 class="text-primary">Chip Reference</h5>
+        </div>
+                 <div id="chipview" style="padding: 0px">
+        <img src="assets/ATtiny85-pins.png"
+          class="img-responsive center-block">
+        </div>
+
+          <div class="head">
+            <h5 class="text-primary">Code Preview</h5>
+        </div>
+          <div class="content code-preview-content">
+            <div class="diagram">
+              <textarea id="codePreviewDiv"></textarea>
+            </div>
+          </div>
+          <!-- /.content -->
+        </div>
+      </div>
+    </div>
+
+
+<xml id="NeoBlockInitial">
+</xml>
+
+
+    <xml id="ArduBlocklyToolbox">
+
+       <category id="catCocoExamples" name="Examples">
+
+        <category id="catCocoTouch" name="Blink led">
+  <block type="arduino_functions" id="jGvSo#,:^f_1q!cAp!^_" x="38" y="63">
+    <statement name="SETUP_FUNC">
+      <block type="variables_set" id="Y!~cJU3a=?G=,Es)*Ijn">
+        <field name="VAR">toggle_led</field>
+        <value name="VALUE">
+          <block type="logic_boolean" id="QU;Ks:IwY**S@FE=OwB!">
+            <field name="BOOL">TRUE</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="LOOP_FUNC">
+      <block type="coco_interval_function" id="r:ECGQ86IKq+FiSe2NO;">
+        <field name="TIMER_NAME">coco_timer_1</field>
+        <value name="TIMER_INTERVAL">
+          <block type="math_number" id="sjzURX_#s9EdaCRi=%#3">
+            <field name="NUM">1000</field>
+          </block>
+        </value>
+        <statement name="DO_BLOCKS">
+          <block type="io_digitalwrite" id="dH-pBT`M6@_IS/d?X3|e">
+            <field name="PIN">PB4</field>
+            <value name="STATE">
+              <block type="variables_get" id="q.QhVw^ad%/Kn/#YwKN_">
+                <field name="VAR">toggle_led</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="]/]lgm@@vkz}nFEtq|lm">
+                <field name="VAR">toggle_led</field>
+                <value name="VALUE">
+                  <block type="logic_negate" id="d|.]5P?^m73aRm8sYLZD">
+                    <value name="BOOL">
+                      <block type="variables_get" id="P4Du@TFbd-b,n)dgM=jd">
+                        <field name="VAR">toggle_led</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+         </category>
+         
+         <category id="catCocoTouch" name="CocoTouch to Led">
+           <block type="arduino_functions" id="rPo^`(@DV6rSUp%#6eYs" x="38" y="38">
+    <statement name="LOOP_FUNC">
+      <block type="cocotouch_touched" id="g}~M-6KLuJB`,W9qt?KQ">
+        <statement name="COCOTOUCH_DOTOUCHED">
+          <block type="cocoutil_peakdetect" id="rp|H2=5u6vB,#sVGr40G">
+            <field name="COCO_NAME">peak_detector_1</field>
+            <value name="COCO_VALUE">
+              <block type="variables_get" id="TWSfFo`[i7u:-Q~M%{7v">
+                <field name="VAR">velocityValue</field>
+              </block>
+            </value>
+            <statement name="COCO_DO">
+              <block type="controls_if" id="bHGSMJYcj{1t,T5yMwcs">
+                <mutation else="1"></mutation>
+                <value name="IF0">
+                  <block type="logic_compare" id="X0L9Kfzm_!#a8^bWXyB@">
+                    <field name="OP">GT</field>
+                    <value name="A">
+                      <block type="variables_get" id="t!`@Bc;(NsP)]2Lb^ATI">
+                        <field name="VAR">prevVelocity</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="NKGWYlE*^NoWWI5C01fH">
+                        <field name="NUM">520</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="io_digitalwrite" id="CHTen!b1?|No3lvZvsG]">
+                    <field name="PIN">PB1</field>
+                    <value name="STATE">
+                      <block type="io_highlow" id="rIWPXr0]a(Xd`u,Kpctz">
+                        <field name="STATE">HIGH</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="cocomidi_sendcchires" id="u:sr*?6Q_3_;_%kKsV`7" disabled="true">
+                        <value name="COCOMIDI_VALUE">
+                          <block type="variables_get" id="bnnbbf^4cgHVV9JT#j+5">
+                            <field name="VAR">prevVelocity</field>
+                          </block>
+                        </value>
+                        <value name="COCOMIDI_CHAN">
+                          <block type="math_number" id="xCxn@SzM+C!SA~VV,XVw">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <statement name="ELSE">
+                  <block type="cocomidi_sendcchires" id=",NK5e8npiD!{]Hh.Gy|," disabled="true">
+                    <value name="COCOMIDI_VALUE">
+                      <block type="math_number" id="y8a5_g{C~bc##WK!.)j1">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                    <value name="COCOMIDI_CHAN">
+                      <block type="math_number" id="5/o//)a^KW=SwIVGxhJ1">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </statement>
+          </block>
+        </statement>
+        <next>
+          <block type="coco_interval_function" id="RU)C%,4]UWYoZ.I5WQ0_">
+            <field name="TIMER_NAME">default</field>
+            <value name="TIMER_INTERVAL">
+              <block type="math_number" id="Ao]7q9mW~,@7TI3^[y5r">
+                <field name="NUM">1000</field>
+              </block>
+            </value>
+            <statement name="DO_BLOCKS">
+              <block type="io_digitalwrite" id="l5`wt~Vp?t.0]cMnxCTS">
+                <field name="PIN">PB1</field>
+                <value name="STATE">
+                  <block type="io_highlow" id="e|Rk6-(b6f2_tz`q:l^?">
+                    <field name="STATE">LOW</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <next>
+              <block type="cocomidi_update" id=":w?.oZcQNUU3+Q%C%f=^" disabled="true"></block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+
+</category>
+        
+
+              <category id="catNeoSynth" name="NeoSynth">
+               <block type="arduino_functions" id="^}@SOl,N#YB49.qgQN]M" x="38" y="38">
+    <statement name="SETUP_FUNC">
+      <block type="coco_synth_setupvoice" id="jP,[^(j_i6y1/vP,x1|8" inline="false">
+        <field name="COCO_VOICE">0</field>
+        <field name="COCO_WAVEFORM">SINE</field>
+        <field name="COCO_ENVELOPE">ENVELOPE0</field>
+        <field name="COCO_PITCH">77</field>
+        <field name="COCO_LENGTH">60</field>
+        <field name="COCO_MOD">64</field>
+        <comment pinned="true" h="80" w="160">Connect your speaker to pin 5
+Sine wave instrument
+        </comment>
+        <next>
+          <block type="coco_synth_setupvoice" id="^pTol#6@O}6=7MR%rEk`" inline="false" collapsed="true">
+            <field name="COCO_VOICE">1</field>
+            <field name="COCO_WAVEFORM">NOISE</field>
+            <field name="COCO_ENVELOPE">ENVELOPE0</field>
+            <field name="COCO_PITCH">50</field>
+            <field name="COCO_LENGTH">100</field>
+            <field name="COCO_MOD">32</field>
+            <comment pinned="false" h="80" w="160">Noise Instrument setup</comment>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="LOOP_FUNC">
+      <block type="NeoSynth_interval_function" id="~B8r^bj{E;NjR;M~,}8[">
+        <field name="TIMER_NAME">synth_timer_1</field>
+        <comment pinned="true" h="80" w="160">every 1 sec trigger metronome</comment>
+        <value name="TIMER_INTERVAL">
+          <block type="math_number" id="!!xw1WI#qCYFd*DDt,v9">
+            <field name="NUM">1000</field>
+          </block>
+        </value>
+        <statement name="DO_BLOCKS">
+          <block type="coco_synth_trigger" id="k#**O~xu3VaEGMV6q8vc">
+            <value name="NAME">
+              <block type="math_number" id="TM=3w+Rs:.2tTeaIrH!q">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="NeoSynth_interval_function" id="wce5](b4h6H:U4}MwHwL">
+            <field name="TIMER_NAME">synth_timer_2</field>
+            <comment pinned="false" h="80" w="160">every 2 sec trigger noise instrument</comment>
+            <value name="TIMER_INTERVAL">
+              <block type="math_number" id="yA;mqzu%REf[`Dna]wR,">
+                <field name="NUM">2000</field>
+              </block>
+            </value>
+            <statement name="DO_BLOCKS">
+              <block type="coco_synth_miditrigger" id="M`VMwwM4u?-[UOvcm:W[">
+                <value name="NAME">
+                  <block type="math_number" id="I~kA!gArS8.44rAa=A!G">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <value name="NOTE">
+                  <block type="math_random_int" id="U46gXu#9Iome+Y(VM,Ct">
+                    <value name="FROM">
+                      <block type="math_number" id="_QV*zM@aq-0U}u14)gdX">
+                        <field name="NUM">1</field>
+                      </block>
+                    </value>
+                    <value name="TO">
+                      <block type="math_number" id="j8AdqP7W~_d.2{:o%;x2">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</category>
+            </category>
+
+            @@include('NeoGen.xml');
+
+            <category id="catNeoSynth" name="NeoSynth">
+              <block type="coco_synth_setupvoice"></block>
+              <block type="coco_synth_delay"></block>
+      
+      
+        <block type="NeoSynth_interval_function" id="l#cYCg3[Xafg#bmHLYz6" x="162" y="488">
+          <field name="TIMER_NAME">synth_timer_1</field>
+          <value name="TIMER_INTERVAL">
+            <block type="math_number" id=";=T})9b-GmWh.s+xKPpt">
+              <field name="NUM">1000</field>
+            </block>
+          </value>
+        </block>
+      
+                      <block type="coco_synth_setmod"></block>
+              <block type="coco_synth_setmod_field"></block>
+      
+              <block type="coco_synth_trigger"></block>
+      <block type="coco_synth_miditrigger"></block>
+              
+              <block type="coco_synth_voice"></block>
+              <block type="coco_synth_setwave_field"></block>
+                      <block type="coco_synth_setenvelope_field"></block>
+      
+                      <block type="coco_synth_setpitch"></block>
+                      <block type="coco_synth_setlength"></block>
+      
+      </category>
+      
+                  <sep></sep>
+
+      <sep></sep>
+      <category id="catLogic" name="Logic">
+        <block type="controls_if"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_boolean"></block>
+        <block type="logic_null"></block>
+        <block type="logic_ternary"></block>
+      </category>
+      <sep></sep>
+      <category id="catLoops" name="Loops">
+        <block type="controls_repeat_ext">
+          <value name="TIMES">
+            <block type="math_number">
+              <field name="NUM">10</field>
+            </block>
+          </value>
+        </block>
+        <block type="controls_whileUntil"></block>
+        <block type="controls_for">
+          <value name="FROM">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+          <value name="TO">
+            <block type="math_number">
+              <field name="NUM">10</field>
+            </block>
+          </value>
+          <value name="BY">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+        </block>
+        <block type="controls_flow_statements"></block>
+      </category>
+      <sep></sep>
+      <category id="catMath" name="Math">
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="math_single"></block>
+        <block type="math_trig"></block>
+        <block type="math_constant"></block>
+        <block type="math_number_property"></block>
+        <block type="math_change">
+          <value name="DELTA">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+        </block>
+        <block type="math_round"></block>
+        <block type="math_modulo"></block>
+        <block type="math_constrain">
+          <value name="LOW">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+          <value name="HIGH">
+            <block type="math_number">
+              <field name="NUM">100</field>
+            </block>
+          </value>
+        </block>
+        <block type="math_random_int">
+          <value name="FROM">
+            <block type="math_number">
+              <field name="NUM">1</field>
+            </block>
+          </value>
+          <value name="TO">
+            <block type="math_number">
+              <field name="NUM">100</field>
+            </block>
+          </value>
+        </block>
+        <block type="math_random_float"></block>
+        <block type="base_map"></block>
+      </category>
+      <sep></sep>
+      <category id="catText" name="Text">
+        <block type="text"></block>
+        <block type="cocomake_singlechar"></block>
+        <block type="text_join"></block>
+        <block type="text_append">
+          <value name="TEXT">
+            <block type="text"></block>
+          </value>
+        </block>
+        <block type="text_length"></block>
+        <block type="text_isEmpty"></block>
+      </category>
+      <sep></sep>
+      <category id="catVariables" name="Variables">
+        <block type="variables_get"></block>
+        <block type="variables_set"></block>
+        <block type="variables_set">
+          <value name="VALUE">
+            <block type="variables_set_type"></block>
+          </value>
+        </block>
+        <block type="variables_set_type"></block>
+      </category>
+      <sep></sep>
+      <category id="catFunctions" name="Functions" custom="PROCEDURE"></category>
+      <sep></sep>
+      <category id="catInputOutput" name="Input/Output">
+        <block type="variables_set">
+          <value name="VALUE">
+            <block type="io_analogread"></block>
+          </value>
+        </block>
+        <block type="variables_set">
+          <value name="VALUE">
+            <block type="io_digitalread"></block>
+          </value>
+        </block>
+        <block type="io_digitalwrite">
+          <value name="STATE">
+            <block type="io_highlow"></block>
+          </value>
+        </block>
+        <block type="io_digitalread"></block>
+        <block type="coco_readpullup"></block>
+        
+        <block type="io_builtin_led">
+          <value name="STATE">
+            <block type="io_highlow"></block>
+          </value>
+        </block>
+        <block type="io_analogwrite"></block>
+        <block type="io_analogread"></block>
+        <block type="io_highlow"></block>
+        <block type="io_pulsein">
+          <value name="PULSETYPE">
+            <shadow type="io_highlow"></shadow>
+          </value>
+        </block>
+        <block type="io_pulsetimeout">
+          <value name="PULSETYPE">
+            <shadow type="io_highlow"></shadow>
+          </value>
+          <value name="TIMEOUT">
+            <block type="math_number"></block>
+          </value>
+        </block>
+      </category>
+      <sep></sep>
+      <category id="catTime" name="Time">
+        <block type="time_delay">
+          <value name="DELAY_TIME_MILI">
+            <block type="math_number">
+              <field name="NUM">1000</field>
+            </block>
+          </value>
+        </block>
+        <block type="coco_interval_function"></block>
+        <block type="time_delaymicros">
+          <value name="DELAY_TIME_MICRO">
+            <block type="math_number">
+              <field name="NUM">100</field>
+            </block>
+          </value>
+        </block>
+        <block type="time_millis"></block>
+        <block type="time_micros"></block>
+        <block type="coco_delayms"></block>
+        <block type="coco_delayus"></block>
+
+          <block type="coco_delayms" id="n8!w)48dfFK;8MobuzE:" x="112" y="362">
+    <value name="COCOMIDI_DELAY">
+      <block type="math_number" id="8Xx.],i5o:Iaqx+tc@!W">
+        <field name="NUM">100</field>
+      </block>
+    </value>
+  </block>
+        <block type="infinite_loop"></block>
+      </category>
+      <sep></sep>
+      <category id="catAudio" name="Audio">
+        <block type="io_tone">
+          <field name="TONEPIN">0</field>
+          <value name="FREQUENCY">
+            <shadow type="math_number">
+              <field name="NUM">220</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="io_notone"></block>
+      </category>
+      <sep></sep>
+      <category id="catMotors" name="Motors">
+        <block type="servo_write">
+          <value name="SERVO_ANGLE">
+            <block type="math_number">
+              <field name="NUM">90</field>
+            </block>
+          </value>
+        </block>
+        <block type="servo_read"></block>
+        <block type="stepper_config">
+          <field name="STEPPER_PIN1">1</field>
+          <field name="STEPPER_PIN2">2</field>
+          <value name="STEPPER_STEPS">
+            <block type="math_number">
+              <field name="NUM">100</field>
+            </block>
+          </value>
+          <value name="STEPPER_SPEED">
+            <block type="math_number">
+              <field name="NUM">10</field>
+            </block>
+          </value>
+        </block>
+        <block type="stepper_step">
+          <value name="STEPPER_STEPS">
+            <block type="math_number">
+              <field name="NUM">10</field>
+            </block>
+          </value>
+        </block>
+      </category>
+      <sep></sep>
+      <category id="catComms" name="Comms">
+        <block type="serial_setup"></block>
+        <block type="serial_print"></block>
+        <block type="text_prompt_ext">
+          <value name="TEXT">
+            <block type="text"></block>
+          </value>
+        </block>
+        <block type="spi_setup"></block>
+        <block type="spi_transfer"></block>
+        <block type="spi_transfer_return"></block>
+      </category>
+      <sep></sep>
+
+
+          
+
+            <category id="catCocoUtil" name="CocoUtil">
+                            <block type="cocoutil_peakdetect"></block>
+                            <block type="cocoutil_getvelocity"></block>
+  <block type="cocoutil_getmova" id="2aiF`je~9wv+%8u+HhEh" x="163" y="188">
+    <field name="COCO_NAME">coco_mova_1</field>
+    <value name="COCO_MA">
+      <block type="math_number" id="tR6T(Mzr*EsVe/*(f_uM">
+        <field name="NUM">0.2</field>
+      </block>
+    </value>
+    <value name="COCO_VALUE">
+      <block type="math_number" id="Xmi6=.7+8I(y_|V3*pIS">
+        <field name="NUM">0</field>
+      </block>
+    </value>
+  </block>
+</category>
+    </xml>
+  
+  <div class="modal" id="NeoBlock-setting">
+      <div class="modal-dialog">
+        <div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button><h4 class="modal-title" id="myModalLabel">NeoBlock Settings</h4></div>
+          
+          <div class="modal-body">
+            <form class="form-horizontal text-left" role="form">
+              <div class="form-group">
+                <div class="col-sm-2">
+                  <label class="control-label">Arduino Path</label>
+                </div>
+                <div class="col-sm-10">
+                  <input id="txt-arduino-path" type="text" class="form-control">
+                </div>
+              </div>
+           
+            </form>
+          </div>
+          
+        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" data-dismiss="modal" onClick="NeoBlockly.saveSettings()" class="btn btn-primary">Save changes</button></div></div>
+      </div>
+    </div>
+
+
+<div class="modal" id="NeoBlock-about">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h4 class="modal-title">About NeoBlock
+              <br>
+            </h4>
+          </div>
+          <div class="modal-body">
+                <p>A jugaad and low-cost educational platform for digital interactivity,
+                  compatible with Makey Makey (TM), using QTouch ADC and Attiny85
+                  <br>
+                  http://cocomake7.github.io
+                  <br>
+                  <p>NeoBlock Ide 0.1 by Budi Prakosa based on ArduBlockly</p>
+                </p>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-default" data-dismiss="modal">Close</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+    
+
+    window.addEventListener('load', function load(event){
+    window.removeEventListener('load', load, false);
+
+    for (var i = 0; i < NeoBlockly.updater.files.length; ++i)
+    {
+      var file = NeoBlockly.updater.files[i]; 
+      var updated = conf.get(file.name)
+
+      if (typeof(updated) === 'undefined') {
+        //if use stock file
+        switch (file.type) {
+          case 'js':
+            addJsScriptURLTag(file.local)
+            break;
+          case 'xmltoolbox':
+            addXMLScriptTag(file.name, NeoBlockly.toolboxStr)
+            break;                        
+          default:
+            break;
+        }
+      }else{
+        //if found updated file
+        switch (file.type) {
+          case 'js':
+            addJsScriptTag(updated.content)
+            break;
+          case 'xmltoolbox':
+            NeoBlockly.toolboxStr = updated.content
+            break;                        
+          default:
+            break;
+        }
+      }
+    }
+
+    NeoBlockly.initAll()
+    });
+
+
+    </script>
+
+</body></html>

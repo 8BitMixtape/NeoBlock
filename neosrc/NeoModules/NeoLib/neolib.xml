@@ -1,0 +1,7 @@
+<category id="catNeoLib" name="NeoLib">
+        <block type="NeoLib_fastanalogread"></block>
+        <block type="NeoLib_callfunc"></block>
+
+        
+</category>
+<sep></sep>
