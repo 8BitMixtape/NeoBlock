@@ -1,4 +1,4 @@
-# build 0.0.2
+# build 0.0.3
 # We are using the iOS build system to create Mac OS X python builds
 language: node_js
 node_js:
