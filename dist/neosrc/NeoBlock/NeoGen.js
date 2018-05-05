@@ -564,6 +564,59 @@ var code = "get_moving_average(" + statements_do_blocks + "," + coco_ma_constant
 
 
 
+Blockly.Arduino['NeoLib_callfunc'] = function(block) {
+
+//get_field_value(block, 'NeoOneLiner_COUNT');
+//get_field_value_atomic(block, 'NeoOneLiner_COUNT');
+
+// var NeoOneLiner_R = get_field_value_atomic(block, 'NeoOneLiner_R');
+// var NeoOneLiner_G = get_field_value_atomic(block, 'NeoOneLiner_G');
+// var NeoOneLiner_B = get_field_value_atomic(block, 'NeoOneLiner_B');
+// var NeoOneLiner_IDX = get_field_value_atomic(block, 'NeoOneLiner_IDX');
+
+var formula = get_field_value(block, 'USER_FORMULA');
+
+//add code
+return formula;
+
+};
+
+
+Blockly.Arduino['NeoLib_fastanalogread'] = function(block) {
+
+//get_field_value(block, 'NEOLIGHT_COUNT');
+//get_field_value_atomic(block, 'NEOLIGHT_COUNT');
+
+var pin = get_field_value(block, 'PIN');
+
+var pinSetupCode = 'pinMode(' + pin + ', INPUT);';
+
+//add declaration
+Blockly.Arduino.addDeclaration("NeoLib_fastanalogread", fix_newline(`
+int inline analogReadFast(byte ADCpin) 
+{ byte ADCSRAoriginal = ADCSRA; 
+  ADCSRA = (ADCSRA & B11111000) | 4; 
+  int adc = analogRead(ADCpin);  
+  ADCSRA = ADCSRAoriginal;
+  return adc;
+}
+`));
+
+//add setup
+Blockly.Arduino.addSetup('io_' + pin, pinSetupCode, false);
+
+//add code
+var code = 'analogReadFast(' + pin + ')';
+
+Blockly.Arduino.reservePin(block, pin, Blockly.Arduino.PinTypes.INPUT, 'Analogue Read');
+
+Blockly.Arduino.addSetup('io_' + pin, pinSetupCode, false);
+
+return [code, Blockly.Arduino.ORDER_ATOMIC];
+
+};
+
+
 Blockly.Arduino['NeoLib_adcauto'] = function(block) {
 
 //get_field_value(block, 'NEOLIGHT_COUNT');
@@ -1370,59 +1423,6 @@ code = code + get_bitwrite({
 
 
 return code + "\n";
-
-};
-
-
-Blockly.Arduino['NeoLib_callfunc'] = function(block) {
-
-//get_field_value(block, 'NeoOneLiner_COUNT');
-//get_field_value_atomic(block, 'NeoOneLiner_COUNT');
-
-// var NeoOneLiner_R = get_field_value_atomic(block, 'NeoOneLiner_R');
-// var NeoOneLiner_G = get_field_value_atomic(block, 'NeoOneLiner_G');
-// var NeoOneLiner_B = get_field_value_atomic(block, 'NeoOneLiner_B');
-// var NeoOneLiner_IDX = get_field_value_atomic(block, 'NeoOneLiner_IDX');
-
-var formula = get_field_value(block, 'USER_FORMULA');
-
-//add code
-return formula;
-
-};
-
-
-Blockly.Arduino['NeoLib_fastanalogread'] = function(block) {
-
-//get_field_value(block, 'NEOLIGHT_COUNT');
-//get_field_value_atomic(block, 'NEOLIGHT_COUNT');
-
-var pin = get_field_value(block, 'PIN');
-
-var pinSetupCode = 'pinMode(' + pin + ', INPUT);';
-
-//add declaration
-Blockly.Arduino.addDeclaration("NeoLib_fastanalogread", fix_newline(`
-int inline analogReadFast(byte ADCpin) 
-{ byte ADCSRAoriginal = ADCSRA; 
-  ADCSRA = (ADCSRA & B11111000) | 4; 
-  int adc = analogRead(ADCpin);  
-  ADCSRA = ADCSRAoriginal;
-  return adc;
-}
-`));
-
-//add setup
-Blockly.Arduino.addSetup('io_' + pin, pinSetupCode, false);
-
-//add code
-var code = 'analogReadFast(' + pin + ')';
-
-Blockly.Arduino.reservePin(block, pin, Blockly.Arduino.PinTypes.INPUT, 'Analogue Read');
-
-Blockly.Arduino.addSetup('io_' + pin, pinSetupCode, false);
-
-return [code, Blockly.Arduino.ORDER_ATOMIC];
 
 };
 
