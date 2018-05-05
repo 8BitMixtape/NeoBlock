@@ -206,6 +206,8 @@ NeoBlockly.upload = function()
 NeoBlockly.compile = function()
 {
   NeoBlockly.CodeMirrorConsole.getDoc().setValue("");
+  NeoBlockly.generateCode();
+
   NeoBlockly.ipcCompileCode(NeoBlockly.code, function(status){
     if(status.compile === 'done') {
       $.notify("Compile succeed..",{type: 'success'})
@@ -247,6 +249,12 @@ NeoBlockly.openFile = function() {
 
       NeoBlockly.workspace.clear();
       var xml = Blockly.Xml.textToDom(xml_data);
+
+      var custom_code = ((xml.getElementsByTagName('customcode')[0].outerText));
+
+      NeoBlockly.CodeMirrorCustom.getDoc().setValue(custom_code);
+
+
       Blockly.Xml.domToWorkspace(NeoBlockly.workspace, xml);
       // $.notify("File loaded..")
 
@@ -279,7 +287,8 @@ NeoBlockly.exportFile = function() {
   {
      export_info = "// CocoMake7 code exported from " + NeoBlockly.config.currentFile + "\n\n"
   }
-
+  
+  NeoBlockly.generateCode();
   fs.writeFileSync(filename, export_info + NeoBlockly.code);
   $.notify("Code export done..")
 }
@@ -287,6 +296,7 @@ NeoBlockly.exportFile = function() {
 NeoBlockly.saveFile = function() {
   if (NeoBlockly.config.currentFile !== '_blank')
   {
+      NeoBlockly.generateCode();
       fs.writeFileSync(NeoBlockly.config.currentFile, NeoBlockly.xml);
       $.notify("File updated..")
       NeoBlockly.setDocTitle(NeoBlockly.config.currentFile)
@@ -307,6 +317,7 @@ NeoBlockly.saveAsFile = function() {
   });
   if(typeof(filename) !== 'undefined')
   {
+    NeoBlockly.generateCode();
     fs.writeFileSync(filename, NeoBlockly.xml);
     $.notify("File saved..")
     NeoBlockly.config.currentFile = filename
@@ -330,12 +341,33 @@ NeoBlockly.executeBlockCode = function() {
         
 NeoBlockly.generateCode = function(event) {
   var arduinoCode = Blockly.Arduino.workspaceToCode(NeoBlockly.workspace)
-  var xmlCode = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(NeoBlockly.workspace))
+  var customCode = NeoBlockly.CodeMirrorCustom.getDoc().getValue()
 
+  var workspaceDOM = Blockly.Xml.workspaceToDom(NeoBlockly.workspace);
+  var custCodeDOM = goog.dom.createDom('customcode',{'id': 'customcode'}, customCode);
+
+  goog.dom.appendChild(workspaceDOM, custCodeDOM);
+
+  var xmlCode = Blockly.Xml.domToPrettyText(workspaceDOM)
+
+  // console.log((workspaceDOM.getElementsByTagName('customcode')[0].outerText));
+
+  // var newel = dom.createElement("CUSTOMCODE");
+  // var x = xmlDoc.getElementsByTagName("xml")[0];
+
+
+  // var p = dom.createElement("CUSTOMCODE");
+  // dom.xml.appendChild(p);
+
+
+
+  arduinoCode = arduinoCode + "\n\n" + customCode;
   NeoBlockly.code = arduinoCode;
   NeoBlockly.xml  = xmlCode;
 
   NeoBlockly.CodeMirrorXML.getDoc().setValue(xmlCode)
+
+
 
   if (xmlCode !== NeoBlockly.PREV_XML_CODE_)
   {
@@ -355,6 +387,7 @@ NeoBlockly.generateCode = function(event) {
 
   if (arduinoCode !== NeoBlockly.PREV_ARDUINO_CODE_)
   {
+
     NeoBlockly.config.compiled = 0;
     NeoBlockly.CodeMirror.getDoc().setValue(NeoBlockly.code)
     NeoBlockly.CodeMirrorPreview.getDoc().setValue(NeoBlockly.code)
@@ -604,7 +637,7 @@ NeoBlockly.initAll = function() {
     {
       lineNumbers: true,
       lineWrapping: true,
-      readOnly: false,
+      readOnly: true,
       mode: "text/x-c++src"
     });
 
