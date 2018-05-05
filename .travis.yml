@@ -2,7 +2,7 @@
 # We are using the iOS build system to create Mac OS X python builds
 language: node_js
 node_js:
-  - stable
+  - "9"
 
 env:
   global:
