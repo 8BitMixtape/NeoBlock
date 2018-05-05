@@ -24,11 +24,14 @@ script:
   - bash build-neoblock.sh
   - bash deploy-neoblock.sh
 
-
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep-history: true
+  provider: releases
+  api_key:
+    secure: $GITHUB_TOKEN
+  file:
+    - "cocoblockly/NeoBlock-darwin-x64.tar.gz"
+    - "cocoblockly/NeoBlock-win32-x32.tar.gz"
+  skip_cleanup: true
   on:
-    branch: dev
+    tags: true
+    
