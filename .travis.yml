@@ -33,6 +33,7 @@ deploy:
   file:
     - "cocoblockly/NeoBlock-darwin-x64.tar.gz"
     - "cocoblockly/NeoBlock-win32-ia32.zip"
+    - "cocoblockly/NeoBlock-linux-ia32.tar.gz"
   skip_cleanup: true
   on:
     tags: true
