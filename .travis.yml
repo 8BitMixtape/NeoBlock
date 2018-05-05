@@ -1,3 +1,4 @@
+# build 0,0,1
 # We are using the iOS build system to create Mac OS X python builds
 language: node_js
 node_js:
@@ -22,3 +23,12 @@ before_install:
 script:
   - bash build-neoblock.sh
   - bash deploy-neoblock.sh
+
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  on:
+    branch: gh-pages
