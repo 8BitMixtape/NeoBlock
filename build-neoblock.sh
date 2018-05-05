@@ -7,4 +7,4 @@ npm run buildwin
 ls -al
 tar -czvf NeoBlock-darwin-x64
 tar -czvf NeoBlock-darwin-x64.tar.gz NeoBlock-darwin-x64/
-tar -czvf NeoBlock-win32-ia32.tar.gz NeoBlock-win32-ia32/
+zip NeoBlock-win32-ia32.zip -r NeoBlock-win32-ia32/
