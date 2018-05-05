@@ -93,5 +93,5 @@ gulp.task('electron', function(){
     exec('electron ./dist');
 });
 
-gulp.task('default', [ 'vendor', 'main', 'block', 'gen', 'xml', 'indexml' ]);
+gulp.task('default', [ 'xml', 'indexml', 'vendor', 'main', 'block', 'gen' ]);
 gulp.task('run', [ 'vendor', 'main', 'block', 'gen', 'xml', 'indexml', 'electron' ]);
