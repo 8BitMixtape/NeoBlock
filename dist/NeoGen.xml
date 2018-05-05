@@ -1,10 +1,3 @@
-<category id="catNeoLib" name="NeoLib">
-        <block type="NeoLib_fastanalogread"></block>
-        <block type="NeoLib_callfunc"></block>
-
-        
-</category>
-<sep></sep>
 <category id="catAttiny85" name="Attiny85 ADC">
         <block type="NeoLib_disableusi"></block>
         <block type="NeoLib_adcprescale"></block>    
@@ -44,6 +37,13 @@
 
 <sep></sep>
 
+<category id="catNeoLib" name="NeoLib">
+        <block type="NeoLib_fastanalogread"></block>
+        <block type="NeoLib_callfunc"></block>
+
+        
+</category>
+<sep></sep>
 <category id="catNeoLight" name="NeoLight">
         <block type="NeoLight_setup"></block>
         <block type="NeoLight_sync"></block>
