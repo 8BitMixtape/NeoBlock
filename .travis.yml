@@ -32,7 +32,7 @@ deploy:
     secure: $GITHUB_TOKEN
   file:
     - "cocoblockly/NeoBlock-darwin-x64.tar.gz"
-    - "cocoblockly/NeoBlock-win32-x32.tar.gz"
+    - "cocoblockly/NeoBlock-win32-ia32.tar.gz"
   skip_cleanup: true
   on:
     tags: true
