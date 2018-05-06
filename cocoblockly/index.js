@@ -222,7 +222,13 @@ var initArduinoPath = function() {
 
 var cocoUploadCode = function(fun) {
 
-    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + "hex2wav\" --dump-hex \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.hex\"" + " \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.wav\"";
+	var hex2wavcmd = "hex2wav";
+
+	if (os.platform() === 'windows') {
+    	hex2wavcmd = "hex2wav.exe";
+	}
+
+    var uploadCmd = '"' + cocoServer.arduinoPath.cocoMakeAvrdudePath + path.sep + hex2wavcmd + "\" --dump-hex \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.hex\"" + " \"" + cocoServer.arduinoPath.builtPath + path.sep + cocoServer.arduinoPath.scriptName + ".ino.wav\"";
 	sendConsole(uploadCmd);
 	sendProgress({process: 'upload', progress:0});
 

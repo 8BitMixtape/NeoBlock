@@ -67,8 +67,8 @@ cp -r toolchain NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources
 cp -r tools_osx NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources/toolchain
 
 #windows
-cp -r toolchain NeoBlock-win32-ia32/
-cp -r tools_win NeoBlock-win32-ia32/toolchain
+cp -r toolchain NeoBlock-win32-ia32/resources/
+cp -r tools_win NeoBlock-win32-ia32/resources/toolchain
 
 #linux
 #cp -r toolchain NeoBlock-linux-ia32/
