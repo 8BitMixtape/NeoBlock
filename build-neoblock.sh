@@ -33,7 +33,7 @@ rm -fr Arduino.app
 #windows
 #wget https://downloads.arduino.cc/arduino-1.8.4-windows.zip
 #unzip arduino-1.8.4-windows.zip "arduino-1.8.4/arduino-builder.exe"
-#unzip arduino-1.8.4-windows.zip "arduino-1.8.4/tools-builder"
+#unzip arduino-1.8.4-windows.zip "arduino-1.8.4/tools-builder/*"
 #unzip arduino-1.8.4-windows.zip "arduino-1.8.4/hardware/*"
 #mv arduino-1.8.4/hardware ./tools_win
 #mv arduino-1.8.4/tools-builder ./tools_win
