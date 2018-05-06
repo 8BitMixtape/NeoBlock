@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var fileinclude = require('gulp-file-include');
+var shell = require('gulp-shell')
 
 var neoblock_vendor = [
     './assets/**/*.*',
@@ -93,5 +94,20 @@ gulp.task('electron', function(){
     exec('electron ./dist');
 });
 
-gulp.task('default', [ 'xml', 'indexml', 'vendor', 'main', 'block', 'gen' ]);
+gulp.task('move:package', () => {
+    gulp.src('package.json', { base: './' })
+      .pipe(gulp.dest('./dist'));
+  });
+
+gulp.task('move:node_modules', () => {
+    gulp.src('node_modules/**/*', { base: './' })
+    .pipe(gulp.dest('build/dist'));
+});
+  
+gulp.task('run:npm-install', shell.task([
+    'npm --prefix ./dist install ./dist --production'
+  ]));
+
+  
+gulp.task('default', ['xml', 'indexml', 'vendor', 'main', 'block', 'gen', 'run:npm-install', 'move:package' ]);
 gulp.task('run', [ 'vendor', 'main', 'block', 'gen', 'xml', 'indexml', 'electron' ]);
