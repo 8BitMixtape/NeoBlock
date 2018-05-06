@@ -70,8 +70,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 	var appDataDir = app.getPath('appData');
 	var appResourceDir = app.getAppPath();
 
-	appResourceDir = appResourceDir.substring(0, appResourceDir.lastIndexOf("/"));appResourceDir.substring(0, appResourceDir.lastIndexOf("/"));
-
+	appResourceDir = appResourceDir.substring(0, appResourceDir.lastIndexOf(path.sep));appResourceDir.substring(0, appResourceDir.lastIndexOf(path.sep));
 
     var tmpScriptDir = tmpSys + scriptName;
     var tmpScript = tmpScriptDir + path.sep + scriptName + ".ino";
@@ -139,19 +138,19 @@ var setArduinoFolder = function(arduino_path, script_name)
 			tmpScript  	 : tmpScript,
 			tmpCompileDir: tmpCompileDir,			
 			appPath 	 : arduinoAppPath,
-			hwManager 	 : appDataDir + '\\Arduino15\\packages',
-		    toolHwManager: appDataDir + '\\Arduino15\\packages',
+			hwManager 	 : appResourceDir + '\\toolchain\\platform',
+		    toolHwManager: appResourceDir + '\\toolchain\\platform',
 		    hwUserPath 	 : docDir + "\\Arduino\\hardware\\",
 		    userLib 	 : docDir + "\\Arduino\\libraries",
-		    builderPath  : arduinoAppPath + '\\arduino-builder',
-		    hwPath 		 : arduinoAppPath + '\\hardware',
-		    builtinLib 	 : arduinoAppPath + '\\libraries',
-		    toolbuilder  : arduinoAppPath + '\\tools-builder',
-		    toolAvr 	 : arduinoAppPath + '\\hardware\\tools\\avr',
+		    builderPath  : appResourceDir + '\\toolchain\\tools_win\\arduino-builder',
+		    hwPath 		 : appResourceDir + '\\toolchain\\tools_win\\hardware',
+		    builtinLib 	 : appResourceDir + '\\toolchain\\libraries',
+		    toolbuilder  : appResourceDir + '\\toolchain\\tools_win\\tools-builder',
+		    toolAvr 	 : appResourceDir + '\\toolchain\\tools_win\\hardware\\tools\\avr',
 		    builtPath 	 : tmpCompileDir,
 			scriptPath 	 : tmpScript,
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
-			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\avrdude\\windows',
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\hex2wav\\macosx',
 		}    
     }else if (os.platform() === 'linux') {
 
