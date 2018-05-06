@@ -19,7 +19,7 @@ unzip arduino-1.8.4-macosx.zip "Arduino.app/Contents/Java/hardware/*"
 unzip arduino-1.8.4-macosx.zip "Arduino.app/Contents/Java/tools-builder/*"
 unzip arduino-1.8.4-macosx.zip "Arduino.app/Contents/Java/libraries/*"
 unzip arduino-1.8.4-macosx.zip "Arduino.app/Contents/Java/arduino-builder"
-mv "Arduino.app/Contents/Java/hardware/hardware" ./toolchain/tools_osx
+mv "Arduino.app/Contents/Java/hardware/" ./toolchain/tools_osx
 mv "Arduino.app/Contents/Java/tools-builder" ./toolchain/tools_osx
 mv "Arduino.app/Contents/Java/arduino-builder" ./toolchain/tools_osx
 mv "Arduino.app/Contents/Java/libraries" ./toolchain/libraries
