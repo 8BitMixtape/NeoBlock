@@ -44,12 +44,12 @@ mv arduino-1.8.4/arduino-builder.exe ./tools_win
 rm -fr arduino-1.8.4
 
 #linux 64
-#wget https://downloads.arduino.cc/arduino-1.8.4-linux64.tar.xz
-#tar xf arduino-1.8.4-linux64.tar.xz
-#mv arduino-1.8.4/hardware  ./tools_linux64
-#mv arduino-1.8.4/tools-builder  ./tools_linux64
-#mv arduino-1.8.4/arduino-builder  ./tools_linux64
-#rm -fr arduino-1.8.4
+wget https://downloads.arduino.cc/arduino-1.8.4-linux64.tar.xz
+tar xf arduino-1.8.4-linux64.tar.xz
+mv arduino-1.8.4/hardware  ./tools_linux64
+mv arduino-1.8.4/tools-builder  ./tools_linux64
+mv arduino-1.8.4/arduino-builder  ./tools_linux64
+rm -fr arduino-1.8.4
 
 #linux 32
 #wget https://downloads.arduino.cc/arduino-1.8.4-linux32.tar.xz
@@ -71,12 +71,12 @@ cp -r toolchain NeoBlock-win32-ia32/resources/
 cp -r tools_win NeoBlock-win32-ia32/resources/toolchain
 
 #linux
-#cp -r toolchain NeoBlock-linux-ia32/
-#cp -r tools_osx NeoBlock-linux-ia32/toolchain
+cp -r toolchain NeoBlock-linux-x64/
+cp -r tools_osx NeoBlock-linux-x64/toolchain
 
 
 #ls -al
-#tar -czvf NeoBlock-linux-ia32.tar.gz NeoBlock-linux-ia32/
+tar -czvf NeoBlock-linux-x64.tar.gz NeoBlock-linux-x64/
 tar -czvf NeoBlock-darwin-x64.tar.gz NeoBlock-darwin-x64/
 zip NeoBlock-win32-ia32.zip -r NeoBlock-win32-ia32
 
@@ -84,5 +84,6 @@ mkdir releases
 
 mv NeoBlock-darwin-x64.tar.gz releases
 mv NeoBlock-win32-ia32.zip releases
+mv NeoBlock-linux-x64.tar.gz releases
 
 #zip NeoBlock-win32-ia32.zip -r NeoBlock-win32-ia32/
