@@ -31,16 +31,14 @@ deploy:
   api_key:
     secure: $GITHUB_TOKEN
   file:
-    - "cocoblockly/NeoBlock-darwin-x64.tar.gz"
-    - "cocoblockly/NeoBlock-win32-ia32.zip"
-    - "cocoblockly/NeoBlock-linux-ia32.tar.gz"
+    - "cocoblockly/releases/NeoBlock-darwin-x64.tar.gz"
   skip_cleanup: true
   on:
     tags: true
   
 deploy:
   provider: pages
-  local-dir: "cocoblockly/releases"
+  local-dir: "cocoblockly/dist"
   skip-cleanup: true
   github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep-history: true
