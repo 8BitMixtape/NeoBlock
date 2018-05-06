@@ -224,7 +224,7 @@ var cocoUploadCode = function(fun) {
 
 	var hex2wavcmd = "hex2wav";
 
-	if (os.platform() === 'windows') {
+	if (os.platform() === 'win32') {
     	hex2wavcmd = "hex2wav.exe";
 	}
 
