@@ -4,3 +4,5 @@ NeoBlock-linux-ia32/*
 NeoBlock-win32-ia32/*
 platform/*
 tools_osx/*
+toolchain/*
+package-lock.json

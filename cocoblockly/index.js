@@ -67,7 +67,12 @@ var setArduinoFolder = function(arduino_path, script_name)
 	var tmpSys = app.getPath('temp');
 
     var docDir = app.getPath('documents');
-    var appDataDir = app.getPath('appData');
+	var appDataDir = app.getPath('appData');
+	var appResourceDir = app.getAppPath();
+
+	appResourceDir = appResourceDir.substring(0, appResourceDir.lastIndexOf("/"));appResourceDir.substring(0, appResourceDir.lastIndexOf("/"));
+
+
     var tmpScriptDir = tmpSys + scriptName;
     var tmpScript = tmpScriptDir + path.sep + scriptName + ".ino";
 	var scriptNameCompile = scriptName + "Compile";    
@@ -95,7 +100,8 @@ var setArduinoFolder = function(arduino_path, script_name)
 
     if (os.platform() === 'darwin') {
     	
-    	var cocomakepath = appDataDir + '/../Arduino15/packages/8BitMixtape/hardware/avr'
+		var cocomakepath = appResourceDir + '/toolchain/platform/8BitMixtape/hardware/avr'
+		// var cocomakepath = appDataDir + '/../Arduino15/packages/8BitMixtape/hardware/avr'
 
     	var latest_ver = getLatestVer(cocomakepath)
 
@@ -105,15 +111,15 @@ var setArduinoFolder = function(arduino_path, script_name)
 			tmpScript  	 : tmpScript,
 			tmpCompileDir: tmpCompileDir,
 			appPath 	 : arduinoAppPath,
-			hwManager 	 : appDataDir + '/../Arduino15/packages',
-		    toolHwManager: appDataDir + '/../Arduino15/packages',
+			hwManager 	 : appResourceDir + '/toolchain/platform',
+		    toolHwManager: appResourceDir + '/toolchain/platform',
 		    hwUserPath 	 : docDir + '/Arduino/hardware',
 		    userLib 	 : docDir + '/Arduino/libraries',
-		    builderPath  : arduinoAppPath + '/Contents/Java/arduino-builder',
-		    hwPath 		 : arduinoAppPath + '/Contents/Java/hardware',
-		    builtinLib 	 : arduinoAppPath + '/Contents/Java/libraries',
-		    toolbuilder  : arduinoAppPath + '/Contents/Java/tools-builder',
-		    toolAvr 	 : arduinoAppPath + '/Contents/Java/hardware/tools/avr',
+		    builderPath  : appResourceDir + '/toolchain/tools_osx/arduino-builder',
+		    hwPath 		 : appResourceDir + '/toolchain/tools_osx/hardware',
+		    builtinLib 	 : appResourceDir + '/toolchain/libraries',
+		    toolbuilder  : appResourceDir + '/toolchain/tools_osx/tools-builder',
+		    toolAvr 	 : appResourceDir + '/toolchain/tools_osx/hardware/tools/avr',
 		    builtPath 	 : tmpCompileDir,
 			scriptPath 	 : tmpScript,
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
@@ -292,6 +298,8 @@ var cocoCompileCode = function(code, fun, funerr) {
 	}
 
     var build_command = quote(cocoServer.arduinoPath.builderPath) + ' ' + build_opt.join(' ');
+
+	sendConsole(build_command);	
 
     cocoServer.compilerBusy = 1;
 
