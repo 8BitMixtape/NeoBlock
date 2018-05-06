@@ -3,9 +3,9 @@ npm install
 gulp xml
 gulp
 
-if  [[ -n "$TRAVIS_TAG" ]]
-    exit 0
-fi
+# if  [[ -n "$TRAVIS_TAG" ]]
+#     exit 0
+# fi
 
 
 mkdir toolchain
@@ -71,8 +71,8 @@ cp -r toolchain NeoBlock-win32-ia32/
 cp -r tools_win NeoBlock-win32-ia32/toolchain
 
 #linux
-#cp -r toolchain NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources
-#cp -r tools_osx NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources/toolchain
+#cp -r toolchain NeoBlock-linux-ia32/
+#cp -r tools_osx NeoBlock-linux-ia32/toolchain
 
 
 #ls -al
