@@ -203,7 +203,7 @@ var setArduinoFolderFromList = function (path_array) {
 }
 
 var initArduinoPath = function() {
-
+	  /*
       if ( typeof(conf.get('arduinopath')) !== 'undefined' && conf.get('arduinopath') !== '')
       {
       	console.log('set path', conf.get('arduinopath'))
@@ -216,7 +216,9 @@ var initArduinoPath = function() {
 	    }else if (os.platform() === 'win32') {
 	    	setArduinoFolderFromList(cocoServer.arduino_paths_win)
 	    }
-      }
+	  }
+	  */
+	 setArduinoFolder(app.getAppPath(), "CocoTmp");
 }
 
 var cocoUploadCode = function(fun) {
@@ -279,7 +281,7 @@ var cocoCompileCode = function(code, fun, funerr) {
     	['-tools',quote(cocoServer.arduinoPath.toolAvr)],
 		['-tools',quote(cocoServer.arduinoPath.toolHwManager)],
     	['-built-in-libraries',quote(cocoServer.arduinoPath.builtinLib)],
-    	['-libraries',quote(cocoServer.arduinoPath.userLib)],    	
+    	// ['-libraries',quote(cocoServer.arduinoPath.userLib)],    	
     	['-fqbn=8BitMixtape:avr:8bitmixtapeneo:bootloader=tinyaudioboot,core=teenyriotcore'],
     	['-ide-version=10801'],
     	['-build-path',quote(cocoServer.arduinoPath.builtPath)],
