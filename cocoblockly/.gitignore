@@ -1,8 +1,9 @@
 node_modules/*
-NeoBlock-darwin-x64/*
-NeoBlock-linux-ia32/*
-NeoBlock-win32-ia32/*
+NeoBlock-darwin-x64/**/*
+NeoBlock-darwin-x64/**/*
+NeoBlock-darwin-x64/**/*
 platform/*
 tools_osx/*
-toolchain/*
+toolchain/***/*
 package-lock.json
+dist/**/*
