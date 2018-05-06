@@ -150,13 +150,13 @@ var setArduinoFolder = function(arduino_path, script_name)
 		    builtPath 	 : tmpCompileDir,
 			scriptPath 	 : tmpScript,
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
-			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\hex2wav\\macosx',
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools\\hex2wav\\windows',
 		}    
     }else if (os.platform() === 'linux') {
 
     	appDataDir = app.getPath('home')
 
-    	var cocomakepath = appDataDir + '/.arduino15/packages/CocoMake7/hardware/avr'
+		var cocomakepath = appResourceDir + '/toolchain/platform/8BitMixtape/hardware/avr'
 
     	var latest_ver = getLatestVer(cocomakepath)
 
@@ -166,19 +166,19 @@ var setArduinoFolder = function(arduino_path, script_name)
 			tmpScript  	 : tmpScript,
 			tmpCompileDir: tmpCompileDir,
 			appPath 	 : arduinoAppPath,
-			hwManager 	 : appDataDir + '/.arduino15/packages',
-		    toolHwManager: appDataDir + '/.arduino15/packages',
+			hwManager 	 : appResourceDir + '/toolchain/platform',
+		    toolHwManager: appResourceDir + '/toolchain/platform',
 		    hwUserPath 	 : docDir + '/Arduino/hardware',
 		    userLib 	 : docDir + '/Arduino/libraries',
-		    builderPath  : arduinoAppPath + '/arduino-builder',
-		    hwPath 		 : arduinoAppPath + '/hardware',
-		    builtinLib 	 : arduinoAppPath + '/libraries',
-		    toolbuilder  : arduinoAppPath + '/tools-builder',
-		    toolAvr 	 : arduinoAppPath + '/hardware/tools/avr',
+		    builderPath  : appResourceDir + '/toolchain/tools_linux64/arduino-builder',
+		    hwPath 		 : appResourceDir + '/toolchain/tools_linux64/hardware',
+		    builtinLib 	 : appResourceDir + '/toolchain/libraries',
+		    toolbuilder  : appResourceDir + '/toolchain/tools_linux64/tools-builder',
+			toolAvr 	 : appResourceDir + '/toolchain/tools_linux64/hardware/tools/avr',
 		    builtPath 	 : tmpCompileDir,
 			scriptPath 	 : tmpScript,
 			cocoMakePath : cocomakepath + path.sep + latest_ver,
-			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/avrdude/macosx',
+			cocoMakeAvrdudePath : cocomakepath + path.sep + latest_ver + path.sep + 'tools/hex2wav/linux',
 
 		}
 
