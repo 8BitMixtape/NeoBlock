@@ -128,7 +128,7 @@ var setArduinoFolder = function(arduino_path, script_name)
 
     }else if (os.platform() === 'win32') {
 
-    	var cocomakepath = appDataDir + '\\Arduino15\\packages\\CocoMake7\\hardware\\avr\\'
+    	var cocomakepath = appResourceDir + '\\toolchain\\platform\\8BitMixtape\\hardware\\avr\\'
 
     	var latest_ver = getLatestVer(cocomakepath)
 
