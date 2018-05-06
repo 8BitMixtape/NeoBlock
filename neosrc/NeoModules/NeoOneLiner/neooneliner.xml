@@ -1,5 +1,0 @@
-<category id="catNeoOneLiner" name="NeoOneLiner">
-        <block type="NeoOneLiner_setup"></block>
-        <block type="NeoOneLiner_formula"></block>
-</category>
-<sep></sep>
