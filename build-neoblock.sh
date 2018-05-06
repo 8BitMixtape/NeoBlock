@@ -57,4 +57,9 @@ cp -r toolchain NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources
 #ls -al
 #tar -czvf NeoBlock-linux-ia32.tar.gz NeoBlock-linux-ia32/
 tar -czvf NeoBlock-darwin-x64.tar.gz NeoBlock-darwin-x64/
+
+mkdir releases
+
+mv NeoBlock-darwin-x64.tar.gz releases
+
 #zip NeoBlock-win32-ia32.zip -r NeoBlock-win32-ia32/

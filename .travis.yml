@@ -1,4 +1,4 @@
-# build 0.0.7
+# build 0.0.8
 # We are using the iOS build system to create Mac OS X python builds
 language: node_js
 node_js:
@@ -40,7 +40,7 @@ deploy:
   
 deploy:
   provider: pages
-  local-dir: "cocoblockly"
+  local-dir: "cocoblockly/releases"
   skip-cleanup: true
   github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
   keep-history: true
