@@ -3,6 +3,9 @@ npm install
 gulp xml
 gulp
 
+if  [[ -n "$TRAVIS_TAG" ]]
+    exit 0
+fi
 
 
 mkdir toolchain
@@ -31,14 +34,14 @@ mv "Arduino.app/Contents/Java/arduino-builder" ./tools_osx
 rm -fr Arduino.app
 
 #windows
-#wget https://downloads.arduino.cc/arduino-1.8.4-windows.zip
-#unzip arduino-1.8.4-windows.zip "arduino-1.8.4/arduino-builder.exe"
-#unzip arduino-1.8.4-windows.zip "arduino-1.8.4/tools-builder/*"
-#unzip arduino-1.8.4-windows.zip "arduino-1.8.4/hardware/*"
-#mv arduino-1.8.4/hardware ./tools_win
-#mv arduino-1.8.4/tools-builder ./tools_win
-#mv arduino-1.8.4/arduino-builder.exe ./tools_win
-#rm -fr arduino-1.8.4
+wget https://downloads.arduino.cc/arduino-1.8.4-windows.zip
+unzip arduino-1.8.4-windows.zip "arduino-1.8.4/arduino-builder.exe"
+unzip arduino-1.8.4-windows.zip "arduino-1.8.4/tools-builder/*"
+unzip arduino-1.8.4-windows.zip "arduino-1.8.4/hardware/*"
+mv arduino-1.8.4/hardware ./tools_win
+mv arduino-1.8.4/tools-builder ./tools_win
+mv arduino-1.8.4/arduino-builder.exe ./tools_win
+rm -fr arduino-1.8.4
 
 #linux 64
 #wget https://downloads.arduino.cc/arduino-1.8.4-linux64.tar.xz
@@ -57,15 +60,15 @@ rm -fr Arduino.app
 #rm -fr arduino-1.8.4
 
 npm run buildosx
-#npm run buildwin
+npm run buildwin
 #npm run buildlinux
 
 cp -r toolchain NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources
 cp -r tools_osx NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources/toolchain
 
 #windows
-#cp -r toolchain NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources
-#cp -r tools_osx NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources/toolchain
+cp -r toolchain NeoBlock-win32-ia32/
+cp -r tools_win NeoBlock-win32-ia32/toolchain
 
 #linux
 #cp -r toolchain NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources
@@ -75,9 +78,11 @@ cp -r tools_osx NeoBlock-darwin-x64/NeoBlock.app/Contents/Resources/toolchain
 #ls -al
 #tar -czvf NeoBlock-linux-ia32.tar.gz NeoBlock-linux-ia32/
 tar -czvf NeoBlock-darwin-x64.tar.gz NeoBlock-darwin-x64/
+zip NeoBlock-win32-ia32.zip -r NeoBlock-win32-ia32
 
 mkdir releases
 
 mv NeoBlock-darwin-x64.tar.gz releases
+mv NeoBlock-win32-ia32.zip releases
 
 #zip NeoBlock-win32-ia32.zip -r NeoBlock-win32-ia32/
