@@ -66,6 +66,10 @@ var setArduinoFolder = function(arduino_path, script_name)
 
 	var tmpSys = app.getPath('temp');
 
+	if (os.platform() === 'linux') {
+		tmpSys = tmpSys + path.sep;
+	}
+	
     var docDir = app.getPath('documents');
 	var appDataDir = app.getPath('appData');
 	var appResourceDir = app.getAppPath();
