@@ -1,13 +1,13 @@
 Blockly.Arduino['NeoLib_timerb'] = function(block) {
     
-    //add declaration
-    Blockly.Arduino.addDeclaration("NeoLib_bitwrite", fix_newline(`
-    #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-    #define bitSet(value, bit) ((value) |= (1UL << (bit)))
-    #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-    #define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
-    `));
-    
+//add declaration
+Blockly.Arduino.addDeclaration("NeoLib_bitwrite", fix_newline(`
+#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+#define bitSet(value, bit) ((value) |= (1UL << (bit)))
+#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
+#define bitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
+`));
+
     //add setup
     // Blockly.Arduino.addSetup('NeoLib_adcprescale', fix_newline(``));
     

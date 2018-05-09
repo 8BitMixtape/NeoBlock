@@ -103,10 +103,10 @@ Blockly.Blocks['NeoLib_timerb'] = {
               ["[norm] Toggle the OC1A output line.", "1"], 
               ["[norm] Clear the OC1A output line.", "2"], 
               ["[norm] Set the OC1A output line.", "3"],
-              ["[pwm] OC1x/_OC1x_ not connected.", "4"], 
-              ["[pwm] OC1x cleared on compare match/_OC1x_ set on compare match", "5"], 
-              ["[pwm] OC1x cleared on compare match/_OC1x_ not connected", "6"], 
-              ["[pwm] OC1x Set on compare match/_OC1x_ not connected", "7"]                           
+              ["[pwm] OC1A/_OC1A_ not connected.", "4"], 
+              ["[pwm] OC1A cleared on compare match/_OC1A_ set on compare match", "5"], 
+              ["[pwm] OC1A cleared on compare match/_OC1A_ not connected", "6"], 
+              ["[pwm] OC1A Set on compare match/_OC1A_ not connected", "7"]                           
             ]), "COMPARATOR_MODE_NORMAL");       
 
               
@@ -130,10 +130,10 @@ Blockly.Blocks['NeoLib_timerb'] = {
                       ["[norm] Toggle the OC1A output line.", "1"], 
                       ["[norm] Clear the OC1A output line.", "2"], 
                       ["[norm] Set the OC1A output line.", "3"],
-                      ["[pwm] OC1x/_OC1x_ not connected.", "4"], 
-                      ["[pwm] OC1x cleared on compare match/_OC1x_ set on compare match", "5"], 
-                      ["[pwm] OC1x cleared on compare match/_OC1x_ not connected", "6"], 
-                      ["[pwm] OC1x Set on compare match/_OC1x_ not connected", "7"]                           
+                      ["[pwm] OC1B/_OC1B_ not connected.", "4"], 
+                      ["[pwm] OC1B cleared on compare match/_OC1B_ set on compare match", "5"], 
+                      ["[pwm] OC1B cleared on compare match/_OC1B_ not connected", "6"], 
+                      ["[pwm] OC1B Set on compare match/_OC1B_ not connected", "7"]                           
                     ]), "COMPARATORB_MODE_NORMAL");       
         
       this.setPreviousStatement(true, null);
