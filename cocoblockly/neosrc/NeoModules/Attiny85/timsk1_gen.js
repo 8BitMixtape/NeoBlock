@@ -16,7 +16,7 @@ var get_bitwrite = function(reg_temp, selection){
     var tmp = ""
     var waveform = reg_temp.registers[selection];
     for (let i = 0; i <  waveform.length; i++) {
-         tmp = tmp + 'bitWrite('+ reg_temp.reg_address[i]  +','+ reg_temp.reg_param[i] +','+ waveform[i] +')\n';
+         tmp = tmp + 'bitWrite('+ reg_temp.reg_address[i]  +','+ reg_temp.reg_param[i] +','+ waveform[i] +');\n';
     }
     return tmp
 }
