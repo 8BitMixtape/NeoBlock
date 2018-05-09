@@ -64,18 +64,18 @@ Blockly.Blocks['NeoLib_timera'] = {
             .appendField("Compare Output Mode A")
             .appendField(new Blockly.FieldDropdown([
                 ["Default", "default"],                 
-                ["Normal port operation, OC0A/OC0B disconnected.", "0"], 
-                ["Clear OC0A/OC0B on Compare Match, set OC0A/OC0B at BOTTOM (non-inverting mode)", "2"], 
-                ["Set OC0A/OC0B on Compare Match, clear OC0A/OC0B at BOTTOM (inverting mode)", "3"]         
+                ["Normal port operation, OC0A disconnected.", "0"], 
+                ["Clear OC0A on Compare Match, set OC0A at BOTTOM (non-inverting mode)", "2"], 
+                ["Set OC0A on Compare Match, clear OC0A at BOTTOM (inverting mode)", "3"]         
               ]), "COMPARE_MODE_A");
 
               this.appendDummyInput()
               .appendField("Compare Output Mode B")
               .appendField(new Blockly.FieldDropdown([
                   ["Default", "default"],                 
-                  ["Normal port operation, OC0A/OC0B disconnected.", "0"], 
-                  ["Clear OC0A/OC0B on Compare Match, set OC0A/OC0B at BOTTOM (non-inverting mode)", "2"], 
-                  ["Set OC0A/OC0B on Compare Match, clear OC0A/OC0B at BOTTOM (inverting mode)", "3"]         
+                  ["Normal port operation, OC0B disconnected.", "0"], 
+                  ["Clear OC0B on Compare Match, set OC0B at BOTTOM (non-inverting mode)", "2"], 
+                  ["Set OC0B on Compare Match, clear OC0B at BOTTOM (inverting mode)", "3"]         
                 ]), "COMPARE_MODE_B");
               
                 
